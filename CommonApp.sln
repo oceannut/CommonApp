@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThinkInBio.CommonApp", "ThinkInBio.CommonApp\ThinkInBio.CommonApp.csproj", "{5F6BF361-0265-433F-990E-351BBFA9EA1D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommonApp", "CommonApp", "{2025831F-82C7-447D-9A06-05D66DDF641A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThinkInBio.Common", "ThinkInBio.Common\ThinkInBio.Common.csproj", "{375D399D-647F-4C17-A152-1A8F54EED356}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{87F4BA6C-D0CE-4D0E-BE39-474E0980E0D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,8 +19,16 @@ Global
 		{5F6BF361-0265-433F-990E-351BBFA9EA1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F6BF361-0265-433F-990E-351BBFA9EA1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F6BF361-0265-433F-990E-351BBFA9EA1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{375D399D-647F-4C17-A152-1A8F54EED356}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{375D399D-647F-4C17-A152-1A8F54EED356}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{375D399D-647F-4C17-A152-1A8F54EED356}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{375D399D-647F-4C17-A152-1A8F54EED356}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5F6BF361-0265-433F-990E-351BBFA9EA1D} = {2025831F-82C7-447D-9A06-05D66DDF641A}
+		{375D399D-647F-4C17-A152-1A8F54EED356} = {87F4BA6C-D0CE-4D0E-BE39-474E0980E0D4}
 	EndGlobalSection
 EndGlobal
