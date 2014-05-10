@@ -44,6 +44,11 @@ namespace ThinkInBio.CommonApp
         /// <summary>
         /// 
         /// </summary>
+        public int Sequence { get; internal set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string Scope { get; set; }
 
         #endregion

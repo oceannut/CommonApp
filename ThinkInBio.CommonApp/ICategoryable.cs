@@ -11,6 +11,8 @@ namespace ThinkInBio.CommonApp
 
         long ParentId { get; }
 
+        int Sequence { get; }
+
     }
 
 }
