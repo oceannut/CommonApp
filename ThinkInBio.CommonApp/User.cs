@@ -7,9 +7,9 @@ namespace ThinkInBio.CommonApp
 {
 
     /// <summary>
-    /// 
+    /// 定义了用户信息及相关操作。
     /// </summary>
-    public class Category
+    public class User
     {
 
         /// <summary>
@@ -20,27 +20,22 @@ namespace ThinkInBio.CommonApp
         /// <summary>
         /// 
         /// </summary>
-        public string Code { get; set; }
+        public string Username { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string Name { get; set; }
+        public string PlainPwd { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string Description { get; set; }
+        public string EncryptPwd { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string ParentId { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Scope { get; set; }
+        public IList<long> Roles { get; set; }
 
     }
 
