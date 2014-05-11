@@ -18,6 +18,11 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             throw new NotImplementedException();
         }
 
+        public bool IsScopeExist(string scope)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 
 }

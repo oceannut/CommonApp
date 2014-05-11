@@ -119,6 +119,10 @@ namespace ThinkInBio.CommonApp
             }
         }
 
+        public void ChangeSequence(int newSequence)
+        {
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null)

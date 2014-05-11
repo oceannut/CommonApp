@@ -11,6 +11,8 @@ namespace ThinkInBio.CommonApp.BLL
 
         void SaveCategory(Category category);
 
+        bool IsScopeExist(string scope);
+
     }
 
 }
