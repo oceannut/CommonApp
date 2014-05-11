@@ -8,16 +8,12 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="ThinkInBio.CommonApp.TreeNode" Collapsed="true">
+  <Class Name="ThinkInBio.CommonApp.TreeNode&lt;T&gt;" Collapsed="true">
     <Position X="4.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEQAAAAAAACABAAAAgAABAAAA=</HashCode>
       <FileName>TreeNode.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Children" />
-      <Property Name="Parent" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="ThinkInBio.CommonApp.Role" Collapsed="true">
     <Position X="9.25" Y="1.75" Width="1.5" />
@@ -55,7 +51,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="ThinkInBio.CommonApp.TreeNodeCollection" Collapsed="true">
+  <Class Name="ThinkInBio.CommonApp.TreeNodeCollection&lt;T&gt;" Collapsed="true">
     <Position X="4.75" Y="0.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAIAAACAAAAAgAAAAAAABAAAAACAAAAAAAAAAAAAAAA=</HashCode>

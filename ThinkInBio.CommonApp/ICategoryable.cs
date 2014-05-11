@@ -6,7 +6,7 @@ using System.Text;
 namespace ThinkInBio.CommonApp
 {
 
-    interface ICategoryable
+    public interface ICategoryable
     {
 
         long ParentId { get; }

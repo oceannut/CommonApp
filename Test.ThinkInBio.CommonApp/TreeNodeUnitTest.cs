@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using ThinkInBio.CommonApp;
+
 namespace Test.ThinkInBio.CommonApp
 {
     /// <summary>
@@ -60,11 +62,25 @@ namespace Test.ThinkInBio.CommonApp
         #endregion
 
         [TestMethod]
-        public void TestMethod1()
+        public void TestCreate()
         {
-            //
-            // TODO: Add test logic here
-            //
+            TreeNode<TestCategory> node = new TreeNode<TestCategory>();
+            Assert.IsNull(node.Parent);
+            Assert.IsNotNull(node.Children);
+            Assert.AreEqual(0, node.Children.Count);
+        }
+
+        class TestCategory : ICategoryable
+        {
+            public long ParentId
+            {
+                get { return 0; }
+            }
+
+            public int Sequence
+            {
+                get { return 0; }
+            }
         }
     }
 }

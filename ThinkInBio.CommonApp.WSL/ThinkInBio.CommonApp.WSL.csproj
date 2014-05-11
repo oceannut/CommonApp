@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{375D399D-647F-4C17-A152-1A8F54EED356}</ProjectGuid>
+    <ProjectGuid>{65C806FE-91E2-4B87-82DE-D25FBA64272D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ThinkInBio.Common</RootNamespace>
-    <AssemblyName>ThinkInBio.Common</AssemblyName>
+    <RootNamespace>ThinkInBio.CommonApp.WSL</RootNamespace>
+    <AssemblyName>ThinkInBio.CommonApp.WSL</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,26 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\GenericDao.cs" />
-    <Compile Include="Data\IDao.cs" />
-    <Compile Include="Data\SQLHelper.cs" />
-    <Compile Include="Exceptions\BusinessLayerException.cs" />
-    <Compile Include="Exceptions\CyclicInheritanceException.cs" />
-    <Compile Include="Exceptions\ObjectAlreadyExistedException.cs" />
+    <Compile Include="ICategoryWcfService.cs" />
+    <Compile Include="Impl\CategoryWcfService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <ProjectReference Include="..\ThinkInBio.CommonApp.BLL\ThinkInBio.CommonApp.BLL.csproj">
+      <Project>{21CE46DC-33F9-4C44-8B69-D3A61B3F643B}</Project>
+      <Name>ThinkInBio.CommonApp.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ThinkInBio.CommonApp\ThinkInBio.CommonApp.csproj">
+      <Project>{5F6BF361-0265-433F-990E-351BBFA9EA1D}</Project>
+      <Name>ThinkInBio.CommonApp</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
