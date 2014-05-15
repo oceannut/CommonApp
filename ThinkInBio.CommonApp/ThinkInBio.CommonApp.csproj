@@ -45,6 +45,7 @@
     <Compile Include="GenericGuid.cs" />
     <Compile Include="ICategoryable.cs" />
     <Compile Include="CategoryTree.cs" />
+    <Compile Include="IDisuseable.cs" />
     <Compile Include="IGuid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs" />
