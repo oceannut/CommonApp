@@ -17,7 +17,8 @@ namespace ThinkInBio.Common.Data
         /// 保存对象信息。
         /// </summary>
         /// <param name="entity">对象信息。</param>
-        void Save(T entity);
+        /// <returns>返回true表示数据被保存；否则返回false表示数据未被保存。</returns>
+        bool Save(T entity);
 
         /// <summary>
         /// 保存多个对象信息。

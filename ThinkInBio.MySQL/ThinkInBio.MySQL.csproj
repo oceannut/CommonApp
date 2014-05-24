@@ -48,12 +48,6 @@
     <Compile Include="DbFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ThinkInBio.Common\ThinkInBio.Common.csproj">
-      <Project>{375D399D-647F-4C17-A152-1A8F54EED356}</Project>
-      <Name>ThinkInBio.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

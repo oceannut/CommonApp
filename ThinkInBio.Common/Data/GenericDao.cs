@@ -9,9 +9,9 @@ namespace ThinkInBio.Common.Data
     public class GenericDao<T> : IDao<T>
     {
 
-        public virtual void Save(T entity)
+        public virtual bool Save(T entity)
         {
-            
+            return false;
         }
 
         public virtual void Save(ICollection<T> col)
