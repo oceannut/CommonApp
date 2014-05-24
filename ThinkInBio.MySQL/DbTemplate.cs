@@ -6,15 +6,32 @@ using System.Data;
 
 namespace ThinkInBio.MySQL
 {
+
+    /// <summary>
+    /// 
+    /// </summary>
     public static class DbTemplate
     {
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataSource"></param>
+        /// <param name="commandBuilder"></param>
+        /// <returns></returns>
         public static bool Save(string dataSource,
             Action<IDbCommand> commandBuilder)
         {
             return Save(dataSource, commandBuilder, null);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataSource"></param>
+        /// <param name="commandBuilder"></param>
+        /// <param name="autoIncrementIdAccessor"></param>
+        /// <returns></returns>
         public static bool Save(string dataSource, 
             Action<IDbCommand> commandBuilder, 
             Action<long> autoIncrementIdAccessor)
@@ -44,6 +61,12 @@ namespace ThinkInBio.MySQL
             return rowsAffected > 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataSource"></param>
+        /// <param name="commandBuilder"></param>
+        /// <returns></returns>
         public static bool UpdateOrDelete(string dataSource, 
             Action<IDbCommand> commandBuilder)
         {
@@ -67,6 +90,14 @@ namespace ThinkInBio.MySQL
             return rowsAffected > 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataSource"></param>
+        /// <param name="commandBuilder"></param>
+        /// <param name="populate"></param>
+        /// <returns></returns>
         public static T Get<T>(string dataSource, 
             Action<IDbCommand> commandBuilder, 
             Func<IDataReader, T> populate)
@@ -100,12 +131,25 @@ namespace ThinkInBio.MySQL
             return entity;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataSource"></param>
+        /// <param name="commandBuilder"></param>
+        /// <returns></returns>
         public static int GetCount(string dataSource, 
             Action<IDbCommand> commandBuilder)
         {
             return GetCount(dataSource, commandBuilder, null);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dataSource"></param>
+        /// <param name="commandBuilder"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public static int GetCount(string dataSource,
             Action<IDbCommand> commandBuilder,
             ICollection<KeyValuePair<string, object>> parameters)
@@ -137,6 +181,14 @@ namespace ThinkInBio.MySQL
             return count;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataSource"></param>
+        /// <param name="commandBuilder"></param>
+        /// <param name="populate"></param>
+        /// <returns></returns>
         public static IList<T> GetList<T>(string dataSource,
             Action<IDbCommand> commandBuilder,
             Func<IDataReader, T> populate)
@@ -144,6 +196,15 @@ namespace ThinkInBio.MySQL
             return GetList<T>(dataSource, commandBuilder, null, populate);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dataSource"></param>
+        /// <param name="commandBuilder"></param>
+        /// <param name="parameters"></param>
+        /// <param name="populate"></param>
+        /// <returns></returns>
         public static IList<T> GetList<T>(string dataSource,
             Action<IDbCommand> commandBuilder,
             ICollection<KeyValuePair<string, object>> parameters,

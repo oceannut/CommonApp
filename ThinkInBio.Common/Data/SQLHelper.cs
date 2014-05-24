@@ -6,9 +6,18 @@ using System.Text;
 
 namespace ThinkInBio.Common.Data
 {
+
+    /// <summary>
+    /// 
+    /// </summary>
     public static class SQLHelper
     {
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="parameters"></param>
         public static void AppendOp(StringBuilder buffer, ICollection parameters)
         {
             if (parameters.Count == 0)
