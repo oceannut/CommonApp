@@ -19,9 +19,9 @@ namespace ThinkInBio.Common.Data
             
         }
 
-        public virtual void Update(T entity)
+        public virtual bool Update(T entity)
         {
-            
+            return false;
         }
 
         public virtual void Update(ICollection<T> col)
@@ -29,9 +29,9 @@ namespace ThinkInBio.Common.Data
             
         }
 
-        public virtual void Delete(T entity)
+        public virtual bool Delete(T entity)
         {
-            
+            return false;
         }
 
         public virtual void Delete(ICollection<T> col)

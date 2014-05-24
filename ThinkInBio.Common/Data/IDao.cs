@@ -29,7 +29,8 @@ namespace ThinkInBio.Common.Data
         /// 更新对象信息。
         /// </summary>
         /// <param name="entity">对象信息。</param>
-        void Update(T entity);
+        /// <returns>返回true表示数据被更新；否则返回false表示无数据被更新。</returns>
+        bool Update(T entity);
 
         /// <summary>
         /// 更新多个对象信息。
@@ -41,7 +42,8 @@ namespace ThinkInBio.Common.Data
         /// 删除对象信息。
         /// </summary>
         /// <param name="entity">对象信息。</param>
-        void Delete(T entity);
+        /// <returns>返回true表示数据被删除；否则返回false表示无数据被删除。</returns>
+        bool Delete(T entity);
 
         /// <summary>
         /// 删除多个对象信息。
