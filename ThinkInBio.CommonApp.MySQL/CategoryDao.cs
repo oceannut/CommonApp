@@ -13,7 +13,7 @@ namespace ThinkInBio.CommonApp.MySQL
     public class CategoryDao : GenericDao<Category>, ICategoryDao
     {
 
-        public override void Save(Category entity)
+        public override bool Save(Category entity)
         {
             throw new NotImplementedException();
         }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ThinkInBio.CommonApp.WSL")]
+[assembly: AssemblyTitle("ThinkInBio.Spring")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SkyUN.Org")]
-[assembly: AssemblyProduct("ThinkInBio.CommonApp.WSL")]
+[assembly: AssemblyProduct("ThinkInBio.Spring")]
 [assembly: AssemblyCopyright("Copyright © SkyUN.Org 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b137c8c6-59a2-4c2f-8fd2-192a66b3ef74")]
+[assembly: Guid("290685fc-891a-425a-a049-233b154e3835")]
 
 // Version information for an assembly consists of the following four values:
 //
