@@ -17,11 +17,6 @@ namespace ThinkInBio.CommonApp
         #region properties
 
         /// <summary>
-        /// 编号。
-        /// </summary>
-        public long Id { get; set; }
-
-        /// <summary>
         /// 用户名。
         /// </summary>
         public string Username { get; internal set; }
@@ -37,14 +32,9 @@ namespace ThinkInBio.CommonApp
         public string EncryptPwd { get; internal set; }
 
         /// <summary>
-        /// 电子邮件。
-        /// </summary>
-        public string Email { get; set; }
-
-        /// <summary>
         /// 角色。
         /// </summary>
-        public IList<long> Roles { get; set; }
+        public IList<string> Roles { get; set; }
 
         /// <summary>
         /// 显示姓名。
@@ -123,7 +113,7 @@ namespace ThinkInBio.CommonApp
         /// <param name="action"></param>
         public void Update(Action<User> action)
         {
-            if (this.Id == 0 || string.IsNullOrWhiteSpace(this.Username))
+            if (string.IsNullOrWhiteSpace(this.Username))
             {
                 throw new InvalidOperationException();
             }

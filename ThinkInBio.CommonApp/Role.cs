@@ -9,13 +9,13 @@ namespace ThinkInBio.CommonApp
     public class Role
     {
 
-        public long Id { get; set; }
+        public string Id { get; set; }
 
         public string Name { get; set; }
 
-        public IList<long> Users { get; set; }
+        public IList<string> Users { get; set; }
 
-        public IList<long> Premissions { get; set; }
+        public IList<string> Premissions { get; set; }
 
     }
 

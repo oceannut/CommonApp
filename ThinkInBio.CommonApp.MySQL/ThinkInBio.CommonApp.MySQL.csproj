@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="CategoryDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserDao.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ThinkInBio.CommonApp.DAL\ThinkInBio.CommonApp.DAL.csproj">
@@ -56,6 +57,13 @@
       <Project>{375D399D-647F-4C17-A152-1A8F54EED356}</Project>
       <Name>ThinkInBio.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ThinkInBio.MySQL\ThinkInBio.MySQL.csproj">
+      <Project>{9B7A6DFA-ACB1-4CE6-A7D8-02323AFD83E4}</Project>
+      <Name>ThinkInBio.MySQL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="tables.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

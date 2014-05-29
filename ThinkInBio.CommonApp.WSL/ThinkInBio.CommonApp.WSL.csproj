@@ -46,6 +46,7 @@
     <Compile Include="IDemoWcfService.cs" />
     <Compile Include="Impl\CategoryWcfService.cs" />
     <Compile Include="Impl\DemoWcfService.cs" />
+    <Compile Include="ISignWcfService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
