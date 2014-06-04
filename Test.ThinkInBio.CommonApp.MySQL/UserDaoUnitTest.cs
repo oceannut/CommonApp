@@ -28,7 +28,7 @@ namespace Test.ThinkInBio.CommonApp.MySQL
         [TestMethod]
         public void TestMethod1()
         {
-            User user = new User("temp", "temp");
+            User user = new User("temp", "temp", new PlainPasswordProvider());
             user.Save(
                 (e) =>
                 {
@@ -43,6 +43,19 @@ namespace Test.ThinkInBio.CommonApp.MySQL
             userDao.Delete(user);
             isExisted = userDao.IsExist("temp");
             Assert.IsFalse(isExisted);
+        }
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            IList<User> list = userDao.GetList();
+            if (list != null && list.Count > 0)
+            {
+                foreach (User item in list)
+                {
+                    Console.WriteLine(item.Name);
+                }
+            }
         }
 
     }

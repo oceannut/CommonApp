@@ -14,7 +14,9 @@ namespace ThinkInBio.CommonApp.BLL
 
         bool IsUserExist(string username);
 
-        string GetPwd(string username);
+        IList<User> GetUserList();
+
+        //string GetPwd(string username);
 
     }
 }

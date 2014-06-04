@@ -10,31 +10,23 @@ namespace ThinkInBio.Common.ServiceModel
     public class ServiceResponse
     {
 
-        public ServiceResponseCode Code { get; private set; }
+        public ServiceResponseCode Code { get; set; }
 
-        public string Message { get; private set; }
-
-        protected ServiceResponse() { }
-
-        protected ServiceResponse(ServiceResponseCode code)
-        {
-            this.Code = code;
-        }
-
-        protected ServiceResponse(ServiceResponseCode code, string message)
-        {
-            this.Code = code;
-            this.Message = message;
-        }
+        public string Message { get; set; }
 
         public static ServiceResponse BuildNormal()
         {
-            return new ServiceResponse(ServiceResponseCode.Normal);
+            ServiceResponse response = new ServiceResponse();
+            response.Code = ServiceResponseCode.Normal;
+            return response;
         }
 
         public static ServiceResponse Build(ServiceResponseCode code, string message)
         {
-            return new ServiceResponse(code, message);
+            ServiceResponse response = new ServiceResponse();
+            response.Code = code;
+            response.Message = message;
+            return response;
         }
 
     }
@@ -42,34 +34,26 @@ namespace ThinkInBio.Common.ServiceModel
     public class ServiceResponse<T>
     {
 
-        public ServiceResponseCode Code { get; private set; }
+        public ServiceResponseCode Code { get; set; }
 
-        public string Message { get; private set; }
+        public string Message { get; set; }
 
-        public T Result { get; private set; }
-
-        protected ServiceResponse() { }
-
-        protected ServiceResponse(ServiceResponseCode code, T result)
-        {
-            this.Code = code;
-            this.Result = result;
-        }
-
-        protected ServiceResponse(ServiceResponseCode code, string message)
-        {
-            this.Code = code;
-            this.Message = message;
-        }
+        public T Result { get; set; }
 
         public static ServiceResponse<T> BuildResult(T result)
         {
-            return new ServiceResponse<T>(ServiceResponseCode.Normal, result);
+            ServiceResponse<T> response = new ServiceResponse<T>();
+            response.Code = ServiceResponseCode.Normal;
+            response.Result = result;
+            return response;
         }
 
         public static ServiceResponse<T> Build(ServiceResponseCode code, string message)
         {
-            return new ServiceResponse<T>(code, message);
+            ServiceResponse<T> response = new ServiceResponse<T>();
+            response.Code = code;
+            response.Message = message;
+            return response;
         }
 
     }

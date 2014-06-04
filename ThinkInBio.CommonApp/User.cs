@@ -19,12 +19,12 @@ namespace ThinkInBio.CommonApp
         /// <summary>
         /// 用户名。
         /// </summary>
-        public string Username { get; internal set; }
+        public string Username { get; set; }
 
         /// <summary>
         /// 验证码。
         /// </summary>
-        public string Pwd { get; internal set; }
+        public string Pwd { get; private set; }
 
         /// <summary>
         /// 角色。
@@ -44,12 +44,12 @@ namespace ThinkInBio.CommonApp
         /// <summary>
         /// 创建时间。
         /// </summary>
-        public DateTime Creation { get; internal set; }
+        public DateTime Creation { get; set; }
 
         /// <summary>
         /// 修改时间。
         /// </summary>
-        public DateTime Modification { get; internal set; }
+        public DateTime Modification { get; set; }
 
         #endregion
 
@@ -65,28 +65,31 @@ namespace ThinkInBio.CommonApp
         /// </summary>
         /// <param name="username"></param>
         /// <param name="pwd"></param>
-        public User(string username, string pwd)
+        /// <param name="passwordProvider"></param>
+        public User(string username, string pwd, 
+            IPasswordProvider passwordProvider)
         {
-            if (string.IsNullOrWhiteSpace(username))
+            if (string.IsNullOrWhiteSpace(username) 
+                || string.IsNullOrWhiteSpace(pwd))
             {
                 throw new ArgumentNullException();
             }
             this.Username = username;
-            this.Pwd = pwd;
+            this.Pwd = passwordProvider.Encrypt(pwd);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="username"></param>
-        /// <param name="pwd"></param>
         /// <param name="name"></param>
         /// <param name="group"></param>
         /// <param name="creation"></param>
         /// <param name="modification"></param>
         public User(string username,
             string name, string group,
-            DateTime creation, DateTime modification)
+            DateTime creation, DateTime modification,
+            string pwd)
         {
             if (string.IsNullOrWhiteSpace(username)
                 || creation == DateTime.MinValue
@@ -99,6 +102,7 @@ namespace ThinkInBio.CommonApp
             this.Group = group;
             this.Creation = creation;
             this.Modification = modification;
+            this.Pwd = pwd;
         }
 
         #endregion

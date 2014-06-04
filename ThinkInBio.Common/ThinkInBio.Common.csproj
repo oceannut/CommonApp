@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="ServiceModel\ServiceResponse.cs" />
     <Compile Include="ServiceModel\ServiceResponseCode.cs" />
+    <Compile Include="Utilities\HashHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

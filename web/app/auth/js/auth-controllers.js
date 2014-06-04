@@ -7,12 +7,27 @@ define(function (require) {
     require('./auth-services');
 
     angular.module('auth.controllers', ['configs', 'auth.services'])
-        .controller('SignInCtrl', ['$scope', '$location',
-            function ($scope, $location) {
+        .controller('SignInCtrl', ['$scope', '$location', 'currentUser', 'SignInService',
+            function ($scope, $location, currentUser, SignInService) {
+
                 console.log("signin");
 
-                $scope.login = function () {
-                    window.location.href = "../cully/index.htm?username=" + $scope.username;
+                $scope.signin = function () {
+                    SignInService.save({
+                        'username': $scope.username,
+                        'pwd': $scope.pwd
+                    })
+                        .$promise
+                            .then(function (result) {
+                                console.log(result);
+                                if (result.Code == 0) {
+                                    alert($scope.username + " is login.");
+                                } else {
+                                    alert(result.Message);
+                                }
+                            }, function (error) {
+                                console.log(error);
+                            });
                 }
 
             } ])

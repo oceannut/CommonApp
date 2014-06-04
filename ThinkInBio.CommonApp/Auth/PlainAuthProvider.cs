@@ -8,6 +8,9 @@ namespace ThinkInBio.CommonApp
 
     public class PlainAuthProvider : IAuthProvider
     {
+
+        internal IPasswordProvider PasswordProvider { get; set; }
+
         public bool Authenticate(string pwd, User user)
         {
             if (string.IsNullOrWhiteSpace(pwd)
@@ -16,8 +19,10 @@ namespace ThinkInBio.CommonApp
                 throw new ArgumentNullException();
             }
 
-            return pwd == user.Pwd;
+            string encryptPwd = PasswordProvider.Encrypt(pwd);
+            return encryptPwd == user.Pwd;
         }
+
     }
 
 }

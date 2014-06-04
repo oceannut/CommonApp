@@ -30,7 +30,7 @@ namespace ThinkInBio.CommonApp.WSL
             UriTemplate = "/signup/{username}/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        ServiceResponse<User> SignUp(string username, string pwd, string name);
+        ServiceResponse SignUp(string username, string pwd, string name);
 
     }
 

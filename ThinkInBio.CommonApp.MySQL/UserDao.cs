@@ -58,7 +58,7 @@ namespace ThinkInBio.CommonApp.MySQL
             return DbTemplate.Get<User>(dataSource,
                 (command) =>
                 {
-                    command.CommandText = @"select username,name,_group,creation,modification from cyUser 
+                    command.CommandText = @"select username,name,_group,creation,modification,pwd from cyUser 
                                                 where username=@username";
                     command.Parameters.Add(DbFactory.CreateParameter("username", id));
                 },
@@ -80,20 +80,33 @@ namespace ThinkInBio.CommonApp.MySQL
             return (count > 0);
         }
 
-        public string GetPwd(string username)
+        public IList<User> GetList()
         {
-            return DbTemplate.Get<string>(dataSource,
+            return DbTemplate.GetList<User>(dataSource,
                 (command) =>
                 {
-                    command.CommandText = @"select pwd from cyUser 
-                                                where username=@username";
-                    command.Parameters.Add(DbFactory.CreateParameter("username", username));
+                    command.CommandText = "select username,name,_group,creation,modification,pwd from cyUser";
                 },
                 (reader) =>
                 {
-                    return reader.IsDBNull(0) ? null : reader.GetString(0);
+                    return Populate(reader);
                 });
         }
+
+//        public string GetPwd(string username)
+//        {
+//            return DbTemplate.Get<string>(dataSource,
+//                (command) =>
+//                {
+//                    command.CommandText = @"select pwd from cyUser 
+//                                                where username=@username";
+//                    command.Parameters.Add(DbFactory.CreateParameter("username", username));
+//                },
+//                (reader) =>
+//                {
+//                    return reader.IsDBNull(0) ? null : reader.GetString(0);
+//                });
+//        }
 
         private User Populate(IDataReader reader)
         {
@@ -101,7 +114,8 @@ namespace ThinkInBio.CommonApp.MySQL
                 reader.IsDBNull(1) ? null : reader.GetString(1),
                 reader.IsDBNull(2) ? null : reader.GetString(2),
                 reader.GetDateTime(3),
-                reader.GetDateTime(4));
+                reader.GetDateTime(4),
+                reader.GetString(5));
 
             return entity;
         }

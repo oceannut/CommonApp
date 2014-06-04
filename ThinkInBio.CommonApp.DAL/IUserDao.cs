@@ -11,7 +11,9 @@ namespace ThinkInBio.CommonApp.DAL
     public interface IUserDao : IDao<User>
     {
 
-        string GetPwd(string username);
+        //string GetPwd(string username);
+
+        IList<User> GetList();
 
     }
 

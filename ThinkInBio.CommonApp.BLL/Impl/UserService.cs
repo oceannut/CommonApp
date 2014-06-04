@@ -43,15 +43,20 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             return UserDao.IsExist(username);
         }
 
-        public string GetPwd(string username)
+        public IList<User> GetUserList()
         {
-            if (string.IsNullOrWhiteSpace(username))
-            {
-                throw new ArgumentNullException();
-            }
-
-            return UserDao.GetPwd(username);
+            return UserDao.GetList();
         }
+
+        //public string GetPwd(string username)
+        //{
+        //    if (string.IsNullOrWhiteSpace(username))
+        //    {
+        //        throw new ArgumentNullException();
+        //    }
+
+        //    return UserDao.GetPwd(username);
+        //}
 
     }
 }

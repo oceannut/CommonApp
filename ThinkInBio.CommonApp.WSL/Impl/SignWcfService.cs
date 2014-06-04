@@ -17,6 +17,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
 
         internal IUserService UserService { get; set; }
         internal IAuthProvider AuthProvider { get; set; }
+        internal IPasswordProvider PasswordProvider { get; set; }
 
         public ServiceResponse SignIn(string username, string pwd)
         {
@@ -43,18 +44,17 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             }
         }
 
-        public ServiceResponse<User> SignUp(string username, string pwd, string name)
+        public ServiceResponse SignUp(string username, string pwd, string name)
         {
             if (string.IsNullOrWhiteSpace(username)
                 || string.IsNullOrWhiteSpace(pwd))
             {
-                return ServiceResponse<User>.Build(ServiceResponseCode.ArgumentNullException, R.EmptyUsernameOrPwd);
+                return ServiceResponse.Build(ServiceResponseCode.ArgumentNullException, R.EmptyUsernameOrPwd);
             }
 
             try
             {
-
-                User user = new User(username, pwd);
+                User user = new User(username, pwd, PasswordProvider);
                 user.Name = name;
                 user.Save(
                     (e) =>
@@ -65,11 +65,11 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     {
                         UserService.SaveUser(e);
                     });
-                return ServiceResponse<User>.BuildResult(user);
+                return ServiceResponse.BuildNormal();
             }
             catch (ObjectAlreadyExistedException)
             {
-                return ServiceResponse<User>.Build(ServiceResponseCode.ObjectAlreadyExistedException, R.ExistedUser);
+                return ServiceResponse.Build(ServiceResponseCode.ObjectAlreadyExistedException, R.ExistedUser);
             }
         }
     }
