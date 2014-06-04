@@ -5,12 +5,14 @@ using System.Text;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 
+using ThinkInBio.Common.ServiceModel;
 using ThinkInBio.CommonApp;
 using ThinkInBio.CommonApp.BLL;
 
 namespace ThinkInBio.CommonApp.WSL
 {
 
+    [ServiceContract]
     public interface ISignWcfService
     {
 
@@ -20,7 +22,7 @@ namespace ThinkInBio.CommonApp.WSL
             UriTemplate = "/signin/{username}/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        bool SignIn(string username, string pwd);
+        ServiceResponse SignIn(string username, string pwd);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -28,7 +30,7 @@ namespace ThinkInBio.CommonApp.WSL
             UriTemplate = "/signup/{username}/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        User SignUp(string username, string pwd, string name);
+        ServiceResponse<User> SignUp(string username, string pwd, string name);
 
     }
 

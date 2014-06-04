@@ -3,7 +3,7 @@
 define(function (require) {
 
     angular.module('configs', [])
-        .constant("wcfApp", "http://localhost:15453/web")
+        .constant("wcfApp", "http://localhost:2258/web")
         .value('currentUser', { username: '' });
 
 });

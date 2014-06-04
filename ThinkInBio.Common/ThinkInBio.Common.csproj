@@ -46,6 +46,7 @@
     <Compile Include="ExceptionHandling\FileLogExceptionHandler.cs" />
     <Compile Include="ExceptionHandling\IExceptionHandler.cs" />
     <Compile Include="Exceptions\BusinessLayerException.cs" />
+    <Compile Include="Exceptions\ObjectNotFoundException.cs" />
     <Compile Include="Exceptions\CyclicInheritanceException.cs" />
     <Compile Include="Exceptions\ObjectAlreadyExistedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -54,6 +55,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ServiceModel\ServiceResponse.cs" />
+    <Compile Include="ServiceModel\ServiceResponseCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

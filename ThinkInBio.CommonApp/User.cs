@@ -22,14 +22,9 @@ namespace ThinkInBio.CommonApp
         public string Username { get; internal set; }
 
         /// <summary>
-        /// 明文验证码。
+        /// 验证码。
         /// </summary>
-        public string PlainPwd { get; internal set; }
-
-        /// <summary>
-        /// 密文验证码。
-        /// </summary>
-        public string EncryptPwd { get; internal set; }
+        public string Pwd { get; internal set; }
 
         /// <summary>
         /// 角色。
@@ -77,7 +72,33 @@ namespace ThinkInBio.CommonApp
                 throw new ArgumentNullException();
             }
             this.Username = username;
-            this.PlainPwd = pwd;
+            this.Pwd = pwd;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="pwd"></param>
+        /// <param name="name"></param>
+        /// <param name="group"></param>
+        /// <param name="creation"></param>
+        /// <param name="modification"></param>
+        public User(string username,
+            string name, string group,
+            DateTime creation, DateTime modification)
+        {
+            if (string.IsNullOrWhiteSpace(username)
+                || creation == DateTime.MinValue
+                || modification == DateTime.MinValue)
+            {
+                throw new ArgumentException();
+            }
+            this.Username = username;
+            this.Name = name;
+            this.Group = group;
+            this.Creation = creation;
+            this.Modification = modification;
         }
 
         #endregion
@@ -123,6 +144,26 @@ namespace ThinkInBio.CommonApp
             {
                 action(this);
             }
+        }
+
+        /// <summary>
+        /// 验证用户的合法性，如登录输入的密码验证。
+        /// </summary>
+        /// <param name="pwd">输入的验证码。</param>
+        /// <param name="provider">验证服务。</param>
+        /// <returns>返回true表示用户验证通过；否则返回false表示未通过验证，用户不合法。</returns>
+        public bool Authenticate(string pwd, IAuthProvider provider)
+        {
+            if (string.IsNullOrWhiteSpace(pwd))
+            {
+                throw new ArgumentNullException("pwd");
+            }
+            if (provider == null)
+            {
+                throw new ArgumentNullException("provider");
+            }
+
+            return provider.Authenticate(pwd, this);
         }
 
     }

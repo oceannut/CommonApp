@@ -10,6 +10,9 @@ namespace ThinkInBio.CommonApp.DAL
 
     public interface IUserDao : IDao<User>
     {
+
+        string GetPwd(string username);
+
     }
 
 }

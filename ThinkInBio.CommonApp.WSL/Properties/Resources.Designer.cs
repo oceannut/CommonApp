@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ThinkInBio.Common.Properties {
+namespace ThinkInBio.CommonApp.WSL.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ThinkInBio.Common.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ThinkInBio.Common.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ThinkInBio.CommonApp.WSL.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,38 @@ namespace ThinkInBio.Common.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There is a cyclic reference between the parent and itself..
+        ///   Looks up a localized string similar to The username or pwd is empty..
         /// </summary>
-        internal static string CyclicInheritanceEx {
+        internal static string EmptyUsernameOrPwd {
             get {
-                return ResourceManager.GetString("CyclicInheritanceEx", resourceCulture);
+                return ResourceManager.GetString("EmptyUsernameOrPwd", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The {0} is already exist in the application..
+        ///   Looks up a localized string similar to The username is already existed. Please change another username and try it..
         /// </summary>
-        internal static string ObjectAlreadyExistedEx {
+        internal static string ExistedUser {
             get {
-                return ResourceManager.GetString("ObjectAlreadyExistedEx", resourceCulture);
+                return ResourceManager.GetString("ExistedUser", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The {0} is not found. Maybe it be removed..
+        ///   Looks up a localized string similar to The username is not existed..
         /// </summary>
-        internal static string ObjectNotFoundEx {
+        internal static string NotFoundUser {
             get {
-                return ResourceManager.GetString("ObjectNotFoundEx", resourceCulture);
+                return ResourceManager.GetString("NotFoundUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password input is wrong..
+        /// </summary>
+        internal static string WrongPwd {
+            get {
+                return ResourceManager.GetString("WrongPwd", resourceCulture);
             }
         }
     }

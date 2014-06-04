@@ -16,10 +16,24 @@ define(function (require) {
                 }
 
             } ])
-        .controller('SignUpCtrl', ['$scope', '$location', 'currentUser',
-            function ($scope, $location, currentUser) {
+        .controller('SignUpCtrl', ['$scope', '$location', 'currentUser', 'SignUpService',
+            function ($scope, $location, currentUser, SignUpService) {
 
                 console.log("signup");
+
+                $scope.signup = function () {
+                    SignUpService.save({
+                        'username': $scope.username,
+                        'pwd': $scope.pwd,
+                        'name': $scope.name
+                    })
+                        .$promise
+                            .then(function (result) {
+                                console.log(result);
+                            }, function (error) {
+                                console.log(error);
+                            });
+                }
 
             } ]);
 

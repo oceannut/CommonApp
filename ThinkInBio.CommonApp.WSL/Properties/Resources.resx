@@ -117,13 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CyclicInheritanceEx" xml:space="preserve">
-    <value>There is a cyclic reference between the parent and itself.</value>
+  <data name="EmptyUsernameOrPwd" xml:space="preserve">
+    <value>The username or pwd is empty.</value>
   </data>
-  <data name="ObjectAlreadyExistedEx" xml:space="preserve">
-    <value>The {0} is already exist in the application.</value>
+  <data name="ExistedUser" xml:space="preserve">
+    <value>The username is already existed. Please change another username and try it.</value>
   </data>
-  <data name="ObjectNotFoundEx" xml:space="preserve">
-    <value>The {0} is not found. Maybe it be removed.</value>
+  <data name="NotFoundUser" xml:space="preserve">
+    <value>The username is not existed.</value>
+  </data>
+  <data name="WrongPwd" xml:space="preserve">
+    <value>The password input is wrong.</value>
   </data>
 </root>
