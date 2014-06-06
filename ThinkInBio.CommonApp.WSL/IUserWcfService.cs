@@ -16,6 +16,11 @@ namespace ThinkInBio.CommonApp.WSL
     {
 
         [OperationContract]
+        [WebGet(UriTemplate = "/user/{username}/",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        User GetUser(string username);
+
+        [OperationContract]
         [WebGet(UriTemplate = "/user/",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         User[] GetUserList();

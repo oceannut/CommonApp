@@ -13,6 +13,15 @@ namespace ThinkInBio.CommonApp.WSL.Impl
 
         internal IUserService UserService { get; set; }
 
+        public User GetUser(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                throw new ArgumentNullException();
+            }
+            return UserService.GetUser(username);
+        }
+
         public User[] GetUserList()
         {
             IList<User> list = UserService.GetUserList();
