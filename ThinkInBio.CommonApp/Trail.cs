@@ -23,9 +23,9 @@ namespace ThinkInBio.CommonApp
         public string Resource { get; set; }
 
         /// <summary>
-        /// 
+        /// 资源的编号。
         /// </summary>
-        public string Number { get; set; }
+        public string ResourceId { get; set; }
 
         /// <summary>
         /// 操作。

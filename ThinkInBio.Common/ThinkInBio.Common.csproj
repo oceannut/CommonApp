@@ -45,6 +45,7 @@
     <Compile Include="Data\SQLHelper.cs" />
     <Compile Include="ExceptionHandling\FileLogExceptionHandler.cs" />
     <Compile Include="ExceptionHandling\IExceptionHandler.cs" />
+    <Compile Include="Exceptions\AuthorizationException.cs" />
     <Compile Include="Exceptions\BusinessLayerException.cs" />
     <Compile Include="Exceptions\ObjectNotFoundException.cs" />
     <Compile Include="Exceptions\CyclicInheritanceException.cs" />

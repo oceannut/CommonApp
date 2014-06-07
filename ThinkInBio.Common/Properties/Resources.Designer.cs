@@ -61,6 +61,15 @@ namespace ThinkInBio.Common.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is not authorized to {1}..
+        /// </summary>
+        internal static string AuthorizationEx {
+            get {
+                return ResourceManager.GetString("AuthorizationEx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is a cyclic reference between the parent and itself..
         /// </summary>
         internal static string CyclicInheritanceEx {

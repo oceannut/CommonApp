@@ -1,0 +1,192 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data;
+
+using ThinkInBio.Common.Data;
+using ThinkInBio.MySQL;
+using ThinkInBio.CommonApp;
+using ThinkInBio.CommonApp.DAL;
+
+namespace ThinkInBio.CommonApp.MySQL
+{
+
+    public class BizNotificationDao : GenericDao<BizNotification>, IBizNotificationDao
+    {
+
+        private string dataSource;
+
+        public BizNotificationDao(string dataSource)
+        {
+            if (string.IsNullOrWhiteSpace(dataSource))
+            {
+                throw new ArgumentNullException();
+            }
+            this.dataSource = dataSource;
+        }
+
+        public override bool Save(BizNotification entity)
+        {
+            return DbTemplate.Save(dataSource,
+                (command) =>
+                {
+                    command.CommandText = @"insert into cyBizNotification (id,sender,receiver,creation,_resource,resourceId) 
+                                                values (NULL,@sender,@receiver,@creation,@resource,@resourceId)";
+                    command.Parameters.Add(DbFactory.CreateParameter("sender", entity.Sender));
+                    command.Parameters.Add(DbFactory.CreateParameter("receiver", entity.Receiver));
+                    command.Parameters.Add(DbFactory.CreateParameter("creation", entity.Creation));
+                    command.Parameters.Add(DbFactory.CreateParameter("resource", entity.Resource));
+                    command.Parameters.Add(DbFactory.CreateParameter("resourceId", entity.ResourceId));
+                },
+                (id) =>
+                {
+                    entity.Id = id;
+                });
+        }
+
+        public override bool Update(BizNotification entity)
+        {
+            return DbTemplate.UpdateOrDelete(dataSource,
+                (command) =>
+                {
+                    command.CommandText = @"update cyBizNotification 
+                                                set review=@review
+                                                where id=@id";
+                    command.Parameters.Add(DbFactory.CreateParameter("review", entity.Review));
+                    command.Parameters.Add(DbFactory.CreateParameter("id", entity.Id));
+                });
+        }
+
+        public override bool Delete(BizNotification entity)
+        {
+            return DbTemplate.UpdateOrDelete(dataSource,
+                (command) =>
+                {
+                    command.CommandText = @"delete from cyBizNotification 
+                                                where id=@id";
+                    command.Parameters.Add(DbFactory.CreateParameter("id", entity.Id));
+                });
+        }
+
+        public override BizNotification Get(object id)
+        {
+            return DbTemplate.Get<BizNotification>(dataSource,
+                (command) =>
+                {
+                    command.CommandText = @"select id,sender,receiver,creation,review,_resource,resourceId from cyBizNotification 
+                                                where id=@id";
+                    command.Parameters.Add(DbFactory.CreateParameter("id", id));
+                },
+                (reader) =>
+                {
+                    return Populate(reader);
+                });
+        }
+
+        public int GetCount(DateTime? startTime, DateTime? endTime, bool? isReceived, 
+            string sender, string receiver, string resource)
+        {
+            List<KeyValuePair<string, object>> parameters = new List<KeyValuePair<string, object>>();
+            return DbTemplate.GetCount(dataSource,
+                (command) =>
+                {
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append("select count(t.id) from cyBizNotification t ");
+                    BuildSql(sql, parameters, startTime, endTime, isReceived, sender, receiver, resource);
+                    command.CommandText = sql.ToString();
+                },
+                parameters);
+        }
+
+        public IList<BizNotification> GetList(DateTime? startTime, DateTime? endTime, bool? isReceived, 
+            string sender, string receiver, string resource, 
+            bool asc, int startRowIndex, int maxRowsCount)
+        {
+            List<KeyValuePair<string, object>> parameters = new List<KeyValuePair<string, object>>();
+            return DbTemplate.GetList<BizNotification>(dataSource,
+                (command) =>
+                {
+                    StringBuilder sql = new StringBuilder();
+                    sql.Append("select t.id,t.sender,t.receiver,t.creation,t.review,t._resource,t.resourceId from cyBizNotification t ");
+                    BuildSql(sql, parameters, startTime, endTime, isReceived, sender, receiver, resource);
+                    sql.Append(" order by t.creation ");
+                    if (!asc)
+                    {
+                        sql.Append(" desc ");
+                    }
+                    if (maxRowsCount < int.MaxValue)
+                    {
+                        sql.Append(" limit ").Append(startRowIndex).Append(",").Append(startRowIndex + maxRowsCount);
+                    }
+                    command.CommandText = sql.ToString();
+                },
+                parameters,
+                (reader) =>
+                {
+                    return Populate(reader);
+                });
+        }
+
+        private void BuildSql(StringBuilder sql, List<KeyValuePair<string, object>> parameters,
+            DateTime? startTime, DateTime? endTime, bool? isReceived,
+            string sender, string receiver, string resource)
+        {
+            if (startTime.HasValue && startTime.Value != DateTime.MinValue
+                    && endTime.HasValue && endTime.Value != DateTime.MinValue
+                    && endTime.Value > startTime.Value)
+            {
+                SQLHelper.AppendOp(sql, parameters);
+                sql.Append(" t.creation between @startTime and @endTime ");
+                parameters.Add(new KeyValuePair<string, object>("startTime", startTime.Value));
+                parameters.Add(new KeyValuePair<string, object>("endTime", endTime.Value));
+            }
+            if (!string.IsNullOrWhiteSpace(sender))
+            {
+                SQLHelper.AppendOp(sql, parameters);
+                sql.Append(" t.sender=@sender ");
+                parameters.Add(new KeyValuePair<string, object>("sender", sender));
+            }
+            if (!string.IsNullOrWhiteSpace(receiver))
+            {
+                SQLHelper.AppendOp(sql, parameters);
+                sql.Append(" t.receiver=@receiver ");
+                parameters.Add(new KeyValuePair<string, object>("receiver", receiver));
+            }
+            if (!string.IsNullOrWhiteSpace(resource))
+            {
+                SQLHelper.AppendOp(sql, parameters);
+                sql.Append(" t.resource=@resource ");
+                parameters.Add(new KeyValuePair<string, object>("resource", resource));
+            }
+            if (isReceived.HasValue)
+            {
+                SQLHelper.AppendOp(sql, parameters);
+                if (isReceived.Value)
+                {
+                    sql.Append(" t.review is not null ");
+                }
+                else
+                {
+                    sql.Append(" t.review is null ");
+                }
+            }
+        }
+
+        private BizNotification Populate(IDataReader reader)
+        {
+            BizNotification entity = new BizNotification();
+            entity.Id = reader.GetInt64(0);
+            entity.Sender = reader.GetString(1);
+            entity.Receiver = reader.GetString(2);
+            entity.Creation = reader.GetDateTime(3);
+            entity.Review = reader.IsDBNull(4) ? new DateTime?() : reader.GetDateTime(4);
+            entity.Resource = reader.GetString(5);
+            entity.ResourceId = reader.GetString(6);
+
+            return entity;
+        }
+
+    }
+
+}
