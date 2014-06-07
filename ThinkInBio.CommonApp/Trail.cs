@@ -23,14 +23,14 @@ namespace ThinkInBio.CommonApp
         public string Resource { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public string Number { get; set; }
+
+        /// <summary>
         /// 操作。
         /// </summary>
         public string Method { get; set; }
-
-        /// <summary>
-        /// 次数。
-        /// </summary>
-        public int Count { get; set; }
 
         /// <summary>
         /// 备注。
