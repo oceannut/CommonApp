@@ -15,9 +15,11 @@ namespace ThinkInBio.CommonApp.BLL
 
         void UpdateNotification(BizNotification bizNotification);
 
-        IList<BizNotification> GetUnreceivedBizNotificationByReceiver(string receiver);
+        BizNotification GetNotification(long id);
 
-        IList<BizNotification> GetUnreceivedBizNotificationByReceiver(string receiver, string resource);
+        IList<BizNotification> GetUntreatedBizNotificationByReceiver(string receiver);
+
+        IList<BizNotification> GetUntreatedBizNotificationByReceiver(string receiver, string resource);
 
     }
 

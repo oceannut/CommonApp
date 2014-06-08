@@ -42,8 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IBizNotificationWcfService.cs" />
     <Compile Include="ICategoryWcfService.cs" />
     <Compile Include="IDemoWcfService.cs" />
+    <Compile Include="Impl\BizNotificationWcfService.cs" />
     <Compile Include="Impl\CategoryWcfService.cs" />
     <Compile Include="Impl\DemoWcfService.cs" />
     <Compile Include="Impl\SignWcfService.cs" />

@@ -31,12 +31,21 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             BizNotificationDao.Update(bizNotification);
         }
 
-        public IList<BizNotification> GetUnreceivedBizNotificationByReceiver(string receiver)
+        public BizNotification GetNotification(long id)
         {
-            return GetUnreceivedBizNotificationByReceiver(receiver, null);
+            if (id == 0)
+            {
+                throw new ArgumentException();
+            }
+            return BizNotificationDao.Get(id);
         }
 
-        public IList<BizNotification> GetUnreceivedBizNotificationByReceiver(string receiver, string resource)
+        public IList<BizNotification> GetUntreatedBizNotificationByReceiver(string receiver)
+        {
+            return GetUntreatedBizNotificationByReceiver(receiver, null);
+        }
+
+        public IList<BizNotification> GetUntreatedBizNotificationByReceiver(string receiver, string resource)
         {
             if (string.IsNullOrWhiteSpace(receiver))
             {
