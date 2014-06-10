@@ -46,6 +46,7 @@ create table cyBizNotification
 	id						BIGINT	unsigned	NOT NULL AUTO_INCREMENT,
 	sender					VARCHAR(32)		NOT NULL,
 	receiver				VARCHAR(32)		NOT NULL,
+	content					VARCHAR(255),
 	creation				DATETIME		NOT NULL,
 	review					DATETIME,
 	_resource				VARCHAR(32)		NOT NULL,

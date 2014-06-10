@@ -30,6 +30,11 @@ namespace ThinkInBio.CommonApp
         public string Receiver { get; set; }
 
         /// <summary>
+        /// 内容。
+        /// </summary>
+        public string Content { get; set; }
+
+        /// <summary>
         /// 创建时间。
         /// </summary>
         public DateTime Creation { get; set; }
@@ -80,6 +85,17 @@ namespace ThinkInBio.CommonApp
             {
                 action(this);
             }
+        }
+
+        /// <summary>
+        /// 发送通知。
+        /// </summary>
+        /// <param name="content">通知内容。</param>
+        /// <param name="action">保存通知的操作定义。</param>
+        public void Send(string content, Action<Notification> action)
+        {
+            this.Content = content;
+            Send(action);
         }
 
         /// <summary>

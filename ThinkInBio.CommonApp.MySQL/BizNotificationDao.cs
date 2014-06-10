@@ -31,10 +31,11 @@ namespace ThinkInBio.CommonApp.MySQL
             return DbTemplate.Save(dataSource,
                 (command) =>
                 {
-                    command.CommandText = @"insert into cyBizNotification (id,sender,receiver,creation,_resource,resourceId) 
-                                                values (NULL,@sender,@receiver,@creation,@resource,@resourceId)";
+                    command.CommandText = @"insert into cyBizNotification (id,sender,receiver,content,creation,_resource,resourceId) 
+                                                values (NULL,@sender,@receiver,@content,@creation,@resource,@resourceId)";
                     command.Parameters.Add(DbFactory.CreateParameter("sender", entity.Sender));
                     command.Parameters.Add(DbFactory.CreateParameter("receiver", entity.Receiver));
+                    command.Parameters.Add(DbFactory.CreateParameter("content", entity.Content));
                     command.Parameters.Add(DbFactory.CreateParameter("creation", entity.Creation));
                     command.Parameters.Add(DbFactory.CreateParameter("resource", entity.Resource));
                     command.Parameters.Add(DbFactory.CreateParameter("resourceId", entity.ResourceId));
@@ -74,7 +75,7 @@ namespace ThinkInBio.CommonApp.MySQL
             return DbTemplate.Get<BizNotification>(dataSource,
                 (command) =>
                 {
-                    command.CommandText = @"select id,sender,receiver,creation,review,_resource,resourceId from cyBizNotification 
+                    command.CommandText = @"select id,sender,receiver,content,creation,review,_resource,resourceId from cyBizNotification 
                                                 where id=@id";
                     command.Parameters.Add(DbFactory.CreateParameter("id", id));
                 },
@@ -108,7 +109,7 @@ namespace ThinkInBio.CommonApp.MySQL
                 (command) =>
                 {
                     StringBuilder sql = new StringBuilder();
-                    sql.Append("select t.id,t.sender,t.receiver,t.creation,t.review,t._resource,t.resourceId from cyBizNotification t ");
+                    sql.Append("select t.id,t.sender,t.receiver,t.content,t.creation,t.review,t._resource,t.resourceId from cyBizNotification t ");
                     BuildSql(sql, parameters, startTime, endTime, isReceived, sender, receiver, resource);
                     sql.Append(" order by t.creation ");
                     if (!asc)
@@ -179,10 +180,11 @@ namespace ThinkInBio.CommonApp.MySQL
             entity.Id = reader.GetInt64(0);
             entity.Sender = reader.GetString(1);
             entity.Receiver = reader.GetString(2);
-            entity.Creation = reader.GetDateTime(3);
-            entity.Review = reader.IsDBNull(4) ? new DateTime?() : reader.GetDateTime(4);
-            entity.Resource = reader.GetString(5);
-            entity.ResourceId = reader.GetString(6);
+            entity.Content = reader.IsDBNull(3) ? null : reader.GetString(3);
+            entity.Creation = reader.GetDateTime(4);
+            entity.Review = reader.IsDBNull(5) ? new DateTime?() : reader.GetDateTime(5);
+            entity.Resource = reader.GetString(6);
+            entity.ResourceId = reader.GetString(7);
 
             return entity;
         }

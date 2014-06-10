@@ -22,7 +22,7 @@ namespace ThinkInBio.CommonApp.WSL
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         BizNotification SendBizNotification(string user, string to, 
-            string resource, string resourceId);
+            string content, string resource, string resourceId);
 
         [OperationContract]
         [WebInvoke(Method = "PUT",

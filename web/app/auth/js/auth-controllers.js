@@ -21,7 +21,7 @@ define(function (require) {
                             .then(function (result) {
                                 console.log(result);
                                 if (result.Code == 0) {
-                                    alert($scope.username + " is login.");
+                                    window.location.href = "../common/index.htm?username=" + $scope.username;
                                 } else {
                                     alert(result.Message);
                                 }

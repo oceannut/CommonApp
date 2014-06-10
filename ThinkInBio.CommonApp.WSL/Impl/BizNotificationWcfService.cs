@@ -15,8 +15,8 @@ namespace ThinkInBio.CommonApp.WSL.Impl
 
         internal IBizNotificationService BizNotificationService { get; set; }
 
-        public BizNotification SendBizNotification(string user, string to, 
-            string resource, string resourceId)
+        public BizNotification SendBizNotification(string user, string to,
+            string content, string resource, string resourceId)
         {
             if (string.IsNullOrWhiteSpace(user))
             {
@@ -33,6 +33,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             }
 
             BizNotification notification = new BizNotification(user, to);
+            notification.Content = content;
             notification.Resource = resource;
             notification.ResourceId = resourceId;
             notification.Send(
