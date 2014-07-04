@@ -23,6 +23,36 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             throw new NotImplementedException();
         }
 
+        public IList<Category> GetCategoryList(string scope)
+        {
+            return GetCategoryList(scope, null);
+        }
+
+        public IList<Category> GetCategoryList(string scope, long? parentId)
+        {
+            if (string.IsNullOrWhiteSpace(scope))
+            {
+                throw new ArgumentNullException();
+            }
+
+            return CategoryDao.GetList(scope, parentId, null);
+        }
+
+        public IList<Category> GetOrderedCategoryList(string scope)
+        {
+            return GetOrderedCategoryList(scope, null);
+        }
+
+        public IList<Category> GetOrderedCategoryList(string scope, long? parentId)
+        {
+            if (string.IsNullOrWhiteSpace(scope))
+            {
+                throw new ArgumentNullException();
+            }
+
+            return CategoryDao.GetList(scope, parentId, true);
+        }
+
     }
 
 }

@@ -12,12 +12,14 @@ namespace ThinkInBio.CommonApp.WSL.Impl
 
         internal ICategoryService CategoryService { get; set; }
 
-        public Category SaveCategory(string scope, string name, string code, string description, string sequence)
+        public Category SaveCategory(string scope, string name, string code, 
+            string description, string icon, string sequence)
         {
-            return SaveCategory(scope, null, name, code, description, sequence);
+            return SaveCategory(scope, null, name, code, description, icon, sequence);
         }
 
-        public Category SaveCategory(string scope, string parentId, string name, string code, string description, string sequence)
+        public Category SaveCategory(string scope, string parentId, string name, string code, 
+            string description, string icon, string sequence)
         {
             if (string.IsNullOrWhiteSpace(scope) ||
                 string.IsNullOrWhiteSpace(name))
@@ -70,6 +72,28 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             return category;
         }
 
+
+
+        public Category[] GetCategoryList(string scope)
+        {
+            return GetCategoryList(scope, null);
+        }
+
+        public Category[] GetCategoryList(string scope, string parentId)
+        {
+            if (string.IsNullOrWhiteSpace(scope))
+            {
+                throw new ArgumentNullException();
+            }
+
+            long? _parentId = string.IsNullOrWhiteSpace(parentId) ? null : new long?(Convert.ToInt64(parentId));
+            IList<Category> list = CategoryService.GetCategoryList(scope, _parentId);
+            if(list != null){
+                   return list.ToArray();
+            }else{
+                return null;
+            }
+        }
     }
 
 }

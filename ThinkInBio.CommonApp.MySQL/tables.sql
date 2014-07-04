@@ -4,6 +4,7 @@ drop table cyUserRole;
 drop table cyRole;
 drop table cyRolePremission;
 drop table cyBizNotification;
+drop table cyCategory;
 
 create table cyUser
 (
@@ -51,5 +52,18 @@ create table cyBizNotification
 	review					DATETIME,
 	_resource				VARCHAR(32)		NOT NULL,
 	resourceId				VARCHAR(32)		NOT NULL,
+	PRIMARY KEY (id)
+);
+
+create table cyCategory
+(
+	id						BIGINT	unsigned	NOT NULL AUTO_INCREMENT,
+	code					VARCHAR(32)		NOT NULL,
+	name					VARCHAR(32)		NOT NULL,
+	description				VARCHAR(255),
+	icon					VARCHAR(32),
+	parentId				BIGINT,
+	sequence				INT				NOT NULL,
+	scope					VARCHAR(32)		NOT NULL,
 	PRIMARY KEY (id)
 );

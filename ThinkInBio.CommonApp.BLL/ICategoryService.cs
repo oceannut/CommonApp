@@ -13,6 +13,14 @@ namespace ThinkInBio.CommonApp.BLL
 
         bool IsScopeExist(string scope);
 
+        IList<Category> GetCategoryList(string scope);
+
+        IList<Category> GetCategoryList(string scope, long? parentId);
+
+        IList<Category> GetOrderedCategoryList(string scope);
+
+        IList<Category> GetOrderedCategoryList(string scope, long? parentId);
+
     }
 
 }

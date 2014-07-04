@@ -11,6 +11,11 @@ namespace ThinkInBio.CommonApp.DAL
 
     public interface ICategoryDao : IDao<Category>
     {
+
+        Category Get(string scope, string code);
+
+        IList<Category> GetList(string scope, long? parentId, bool? asc);
+
     }
 
 }

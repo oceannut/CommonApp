@@ -21,7 +21,7 @@ namespace ThinkInBio.CommonApp.WSL
             UriTemplate = "/category/{scope}/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        Category SaveCategory(string scope, string name, string code, string description, string sequence);
+        Category SaveCategory(string scope, string name, string code, string description, string icon, string sequence);
 
         [OperationContract(Name = "SaveCategory4Parent")]
         [WebInvoke(Method = "POST",
@@ -29,7 +29,17 @@ namespace ThinkInBio.CommonApp.WSL
             UriTemplate = "/category/{scope}/{parentId}/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        Category SaveCategory(string scope, string parentId, string name, string code, string description, string sequence);
+        Category SaveCategory(string scope, string parentId, string name, string code, string description, string icon, string sequence);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/category/{scope}/",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        Category[] GetCategoryList(string scope);
+
+        [OperationContract(Name = "GetCategoryListByParent")]
+        [WebGet(UriTemplate = "/category/{scope}/{parentId}/",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        Category[] GetCategoryList(string scope, string parentId);
 
     }
 
