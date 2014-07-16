@@ -13,6 +13,8 @@ namespace ThinkInBio.CommonApp.BLL
 
         void SaveNotification(BizNotification bizNotification);
 
+        void SaveNotification(ICollection<BizNotification> col);
+
         void UpdateNotification(BizNotification bizNotification);
 
         BizNotification GetNotification(long id);

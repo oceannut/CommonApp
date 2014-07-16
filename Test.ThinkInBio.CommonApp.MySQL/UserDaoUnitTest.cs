@@ -26,6 +26,46 @@ namespace Test.ThinkInBio.CommonApp.MySQL
         public void MyTestCleanup() { }
 
         [TestMethod]
+        public void Demo()
+        {
+            User user = new User("zsp", "zsp", new PlainPasswordProvider());
+            user.Name = "张少平";
+            user.Save(
+                (e) =>
+                {
+                    return false;
+                },
+                (e) =>
+                {
+                    userDao.Save(e);
+                });
+
+            user = new User("lj", "lj", new PlainPasswordProvider());
+            user.Name = "李静";
+            user.Save(
+                (e) =>
+                {
+                    return false;
+                },
+                (e) =>
+                {
+                    userDao.Save(e);
+                });
+
+            user = new User("lsj", "lsj", new PlainPasswordProvider());
+            user.Name = "刘世娟";
+            user.Save(
+                (e) =>
+                {
+                    return false;
+                },
+                (e) =>
+                {
+                    userDao.Save(e);
+                });
+        }
+
+        [TestMethod]
         public void TestMethod1()
         {
             User user = new User("temp", "temp", new PlainPasswordProvider());

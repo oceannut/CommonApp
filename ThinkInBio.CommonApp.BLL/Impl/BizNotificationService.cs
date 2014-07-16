@@ -22,6 +22,18 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             BizNotificationDao.Save(bizNotification);
         }
 
+        public void SaveNotification(ICollection<BizNotification> col)
+        {
+            if (col == null)
+            {
+                throw new ArgumentNullException();
+            }
+            foreach (BizNotification item in col)
+            {
+                BizNotificationDao.Save(item);
+            }
+        }
+
         public void UpdateNotification(BizNotification bizNotification)
         {
             if (bizNotification == null)

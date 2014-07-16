@@ -27,6 +27,17 @@ namespace Test.ThinkInBio.CommonApp.MySQL
         {
             Category entity = new Category();
 
+            entity = new Category();
+            entity.Code = "normal";
+            entity.Name = "日常";
+            entity.Scope = "activity";
+            entity.Icon = "fa fa-tasks";
+            entity.Sequence = 0;
+            entity.Save(null, (e) =>
+            {
+                categoryDao.Save(e);
+            });
+
             entity.Code = "finance";
             entity.Name = "财务";
             entity.Scope = "activity";
@@ -38,22 +49,11 @@ namespace Test.ThinkInBio.CommonApp.MySQL
             });
 
             entity = new Category();
-            entity.Code = "truck";
-            entity.Name = "货运";
+            entity.Code = "transfer";
+            entity.Name = "物流";
             entity.Scope = "activity";
             entity.Icon = "fa fa-truck";
             entity.Sequence = 2;
-            entity.Save(null, (e) =>
-            {
-                categoryDao.Save(e);
-            });
-
-            entity = new Category();
-            entity.Code = "travel";
-            entity.Name = "差旅";
-            entity.Scope = "activity";
-            entity.Icon = "fa fa-plane";
-            entity.Sequence = 3;
             entity.Save(null, (e) =>
             {
                 categoryDao.Save(e);
@@ -64,6 +64,17 @@ namespace Test.ThinkInBio.CommonApp.MySQL
             entity.Name = "采购";
             entity.Scope = "activity";
             entity.Icon = "fa fa-shopping-cart";
+            entity.Sequence = 3;
+            entity.Save(null, (e) =>
+            {
+                categoryDao.Save(e);
+            });
+
+            entity = new Category();
+            entity.Code = "travel";
+            entity.Name = "差旅";
+            entity.Scope = "activity";
+            entity.Icon = "fa fa-plane";
             entity.Sequence = 4;
             entity.Save(null, (e) =>
             {
@@ -71,22 +82,11 @@ namespace Test.ThinkInBio.CommonApp.MySQL
             });
 
             entity = new Category();
-            entity.Code = "activity";
+            entity.Code = "exhib";
             entity.Name = "展会";
             entity.Scope = "activity";
             entity.Icon = "fa fa-institution";
             entity.Sequence = 5;
-            entity.Save(null, (e) =>
-            {
-                categoryDao.Save(e);
-            });
-
-            entity = new Category();
-            entity.Code = "task";
-            entity.Name = "其它";
-            entity.Scope = "activity";
-            entity.Icon = "fa fa-tasks";
-            entity.Sequence = 6;
             entity.Save(null, (e) =>
             {
                 categoryDao.Save(e);
