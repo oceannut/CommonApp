@@ -19,6 +19,8 @@ namespace ThinkInBio.CommonApp.BLL
 
         BizNotification GetNotification(long id);
 
+        IList<BizNotification> GetBizNotificationList(string resource, string resourceId);
+
         IList<BizNotification> GetUntreatedBizNotificationByReceiver(string receiver);
 
         IList<BizNotification> GetUntreatedBizNotificationByReceiver(string receiver, string resource);

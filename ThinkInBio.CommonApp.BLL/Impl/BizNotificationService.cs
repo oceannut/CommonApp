@@ -52,6 +52,11 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             return BizNotificationDao.Get(id);
         }
 
+        public IList<BizNotification> GetBizNotificationList(string resource, string resourceId)
+        {
+            return BizNotificationDao.GetList(null, null, false, null, null, resource, resourceId, false, 0, int.MaxValue);
+        }
+
         public IList<BizNotification> GetUntreatedBizNotificationByReceiver(string receiver)
         {
             return GetUntreatedBizNotificationByReceiver(receiver, null);
@@ -63,7 +68,7 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             {
                 throw new ArgumentNullException();
             }
-            return BizNotificationDao.GetList(null, null, false, null, receiver, resource, false, 0, int.MaxValue);
+            return BizNotificationDao.GetList(null, null, false, null, receiver, resource, null, false, 0, int.MaxValue);
         }
 
     }

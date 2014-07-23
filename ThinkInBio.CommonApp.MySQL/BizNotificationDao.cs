@@ -85,8 +85,8 @@ namespace ThinkInBio.CommonApp.MySQL
                 });
         }
 
-        public int GetCount(DateTime? startTime, DateTime? endTime, bool? isReceived, 
-            string sender, string receiver, string resource)
+        public int GetCount(DateTime? startTime, DateTime? endTime, bool? isReceived,
+            string sender, string receiver, string resource, string resourceId)
         {
             List<KeyValuePair<string, object>> parameters = new List<KeyValuePair<string, object>>();
             return DbTemplate.GetCount(dataSource,
@@ -94,14 +94,14 @@ namespace ThinkInBio.CommonApp.MySQL
                 {
                     StringBuilder sql = new StringBuilder();
                     sql.Append("select count(t.id) from cyBizNotification t ");
-                    BuildSql(sql, parameters, startTime, endTime, isReceived, sender, receiver, resource);
+                    BuildSql(sql, parameters, startTime, endTime, isReceived, sender, receiver, resource, resourceId);
                     command.CommandText = sql.ToString();
                 },
                 parameters);
         }
 
-        public IList<BizNotification> GetList(DateTime? startTime, DateTime? endTime, bool? isReceived, 
-            string sender, string receiver, string resource, 
+        public IList<BizNotification> GetList(DateTime? startTime, DateTime? endTime, bool? isReceived,
+            string sender, string receiver, string resource, string resourceId, 
             bool asc, int startRowIndex, int maxRowsCount)
         {
             List<KeyValuePair<string, object>> parameters = new List<KeyValuePair<string, object>>();
@@ -110,7 +110,7 @@ namespace ThinkInBio.CommonApp.MySQL
                 {
                     StringBuilder sql = new StringBuilder();
                     sql.Append("select t.id,t.sender,t.receiver,t.content,t.creation,t.review,t._resource,t.resourceId from cyBizNotification t ");
-                    BuildSql(sql, parameters, startTime, endTime, isReceived, sender, receiver, resource);
+                    BuildSql(sql, parameters, startTime, endTime, isReceived, sender, receiver, resource, resourceId);
                     sql.Append(" order by t.creation ");
                     if (!asc)
                     {
@@ -131,7 +131,7 @@ namespace ThinkInBio.CommonApp.MySQL
 
         private void BuildSql(StringBuilder sql, List<KeyValuePair<string, object>> parameters,
             DateTime? startTime, DateTime? endTime, bool? isReceived,
-            string sender, string receiver, string resource)
+            string sender, string receiver, string resource, string resourceId)
         {
             if (startTime.HasValue && startTime.Value != DateTime.MinValue
                     && endTime.HasValue && endTime.Value != DateTime.MinValue
@@ -154,10 +154,16 @@ namespace ThinkInBio.CommonApp.MySQL
                 sql.Append(" t.receiver=@receiver ");
                 parameters.Add(new KeyValuePair<string, object>("receiver", receiver));
             }
+            if (!string.IsNullOrWhiteSpace(resourceId))
+            {
+                SQLHelper.AppendOp(sql, parameters);
+                sql.Append(" t.resourceId=@resourceId ");
+                parameters.Add(new KeyValuePair<string, object>("resourceId", resourceId));
+            }
             if (!string.IsNullOrWhiteSpace(resource))
             {
                 SQLHelper.AppendOp(sql, parameters);
-                sql.Append(" t.resource=@resource ");
+                sql.Append(" t._resource=@resource ");
                 parameters.Add(new KeyValuePair<string, object>("resource", resource));
             }
             if (isReceived.HasValue)

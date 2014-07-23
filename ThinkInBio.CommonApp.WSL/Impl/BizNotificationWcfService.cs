@@ -100,5 +100,40 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 return null;
             }
         }
+
+        public BizNotification[] GetAllBizNotificationList(string user, string resource, string resourceId)
+        {
+            if (string.IsNullOrWhiteSpace(user))
+            {
+                throw new ArgumentNullException("user");
+            }
+            /*
+             * 验证用户的合法性逻辑暂省略。
+             * */
+            if (string.IsNullOrWhiteSpace(resource) || string.IsNullOrWhiteSpace(resourceId))
+            {
+                throw new ArgumentNullException();
+            }
+            string resourceLocal = resource;
+            if ("null" == resourceLocal)
+            {
+                resourceLocal = null;
+            }
+            string resourceIdLocal = resourceId;
+            if ("null" == resourceIdLocal || "0" == resourceIdLocal)
+            {
+                resourceIdLocal = null;
+            }
+            IList<BizNotification> list = BizNotificationService.GetBizNotificationList(resourceLocal, resourceIdLocal);
+            if (list != null)
+            {
+                return list.ToArray();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
     }
 }

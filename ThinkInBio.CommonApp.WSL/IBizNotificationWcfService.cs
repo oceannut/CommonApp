@@ -32,20 +32,25 @@ namespace ThinkInBio.CommonApp.WSL
             ResponseFormat = WebMessageFormat.Json)]
         BizNotification ReceiveBizNotification(string user, string notificationId);
 
-        [OperationContract]
-        [WebGet(UriTemplate = "/notification/biz/inbox/{user}/",
-            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        BizNotification[] GetBizNotificationList(string user);
+        //[OperationContract]
+        //[WebGet(UriTemplate = "/notification/biz/inbox/{user}/",
+        //    RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        //BizNotification[] GetBizNotificationList(string user);
 
-        [OperationContract(Name = "GetBizNotificationList4Resource")]
-        [WebGet(UriTemplate = "/notification/biz/inbox/{user}/resource/{resource}/",
-            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        BizNotification[] GetBizNotificationList(string user, string resource);
+        //[OperationContract(Name = "GetBizNotificationList4Resource")]
+        //[WebGet(UriTemplate = "/notification/biz/inbox/{user}/resource/{resource}/",
+        //    RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        //BizNotification[] GetBizNotificationList(string user, string resource);
 
         [OperationContract]
         [WebGet(UriTemplate = "/notification/biz/inbox/{user}/untreated/",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         BizNotification[] GetUntreatedBizNotificationList(string user);
+
+        [OperationContract(Name = "GetAllBizNotificationList4Resource")]
+        [WebGet(UriTemplate = "/notification/biz/both/{user}/resource/{resource}/resourceId/{resourceId}/",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        BizNotification[] GetAllBizNotificationList(string user, string resource, string resourceId);
 
     }
 
