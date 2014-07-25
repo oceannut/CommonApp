@@ -54,7 +54,7 @@ namespace ThinkInBio.CommonApp.BLL.Impl
 
         public IList<BizNotification> GetBizNotificationList(string resource, string resourceId)
         {
-            return BizNotificationDao.GetList(null, null, false, null, null, resource, resourceId, false, 0, int.MaxValue);
+            return BizNotificationDao.GetList(null, null, null, null, null, resource, resourceId, false, 0, int.MaxValue);
         }
 
         public IList<BizNotification> GetUntreatedBizNotificationByReceiver(string receiver)

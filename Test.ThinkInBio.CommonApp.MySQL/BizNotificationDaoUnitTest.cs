@@ -71,45 +71,57 @@ namespace Test.ThinkInBio.CommonApp.MySQL
                 bizNotificationDao.Save((BizNotification)e);
             });
 
-            int count = bizNotificationDao.GetCount(null, null, null, null, null, null);
+            int count = bizNotificationDao.GetCount(null, null, null, null, null, null, null);
             Assert.AreEqual(3, count);
-            IList<BizNotification> list = bizNotificationDao.GetList(null, null, null, null, null, null, true, 0, 2);
+            IList<BizNotification> list = bizNotificationDao.GetList(null, null, null, null, null, null, null, true, 0, 2);
             Assert.AreEqual(2, list.Count);
-            list = bizNotificationDao.GetList(null, null, null, null, null, null, true, 2, 2);
+            list = bizNotificationDao.GetList(null, null, null, null, null, null, null, true, 2, 2);
             Assert.AreEqual(1, list.Count);
 
-            count = bizNotificationDao.GetCount(null, null, null, "zsp", null, null);
+            count = bizNotificationDao.GetCount(null, null, null, "zsp", null, null, null);
             Assert.AreEqual(3, count);
-            list = bizNotificationDao.GetList(null, null, null, "zsp", null, null, true, 0, 2);
+            list = bizNotificationDao.GetList(null, null, null, "zsp", null, null, null, true, 0, 2);
             Assert.AreEqual(2, list.Count);
-            list = bizNotificationDao.GetList(null, null, null, "zsp", null, null, true, 2, 2);
+            list = bizNotificationDao.GetList(null, null, null, "zsp", null, null, null, true, 2, 2);
             Assert.AreEqual(1, list.Count);
 
-            count = bizNotificationDao.GetCount(null, null, null, "zsp", "lj", null);
+            count = bizNotificationDao.GetCount(null, null, null, "zsp", "lj", null, null);
             Assert.AreEqual(3, count);
-            list = bizNotificationDao.GetList(null, null, null, "zsp", "lj", null, true, 0, 2);
+            list = bizNotificationDao.GetList(null, null, null, "zsp", "lj", null, null, true, 0, 2);
             Assert.AreEqual(2, list.Count);
-            list = bizNotificationDao.GetList(null, null, null, "zsp", "lj", null, true, 2, 2);
+            list = bizNotificationDao.GetList(null, null, null, "zsp", "lj", null, null, true, 2, 2);
             Assert.AreEqual(1, list.Count);
 
-            count = bizNotificationDao.GetCount(null, null, null, "zsp", "ljj", null);
+            count = bizNotificationDao.GetCount(null, null, null, "zsp", "ljj", null, null);
             Assert.AreEqual(0, count);
-            list = bizNotificationDao.GetList(null, null, null, "zsp", "ljj", null, true, 0, 2);
+            list = bizNotificationDao.GetList(null, null, null, "zsp", "ljj", null, null, true, 0, 2);
             Assert.AreEqual(0, list.Count);
 
-            count = bizNotificationDao.GetCount(null, null, false, "zsp", "lj", null);
+            count = bizNotificationDao.GetCount(null, null, false, "zsp", "lj", null, null);
             Assert.AreEqual(3, count);
-            list = bizNotificationDao.GetList(null, null, false, "zsp", "lj", null, true, 0, 2);
+            list = bizNotificationDao.GetList(null, null, false, "zsp", "lj", null, null, true, 0, 2);
             Assert.AreEqual(2, list.Count);
 
-            count = bizNotificationDao.GetCount(null, null, true, "zsp", "lj", null);
+            count = bizNotificationDao.GetCount(null, null, true, "zsp", "lj", null, null);
             Assert.AreEqual(0, count);
-            list = bizNotificationDao.GetList(null, null, true, "zsp", "lj", null, true, 0, 2);
+            list = bizNotificationDao.GetList(null, null, true, "zsp", "lj", null, null, true, 0, 2);
             Assert.AreEqual(0, list.Count);
 
             bizNotificationDao.Delete(entity1);
             bizNotificationDao.Delete(entity2);
             bizNotificationDao.Delete(entity3);
+        }
+
+        [TestMethod]
+        public void TestMethod3()
+        {
+            int count = bizNotificationDao.GetCount(null, null, null, null, "zsp", null, null);
+            IList<BizNotification> list = bizNotificationDao.GetList(null, null, null, null, "zsp", null, null, false, 0, int.MaxValue);
+            Assert.AreEqual(count, list.Count);
+            foreach (BizNotification notification in list)
+            {
+                Console.WriteLine(notification.Content + " [" + notification.Creation + "] [" + notification.Review + "]");
+            }
         }
 
     }

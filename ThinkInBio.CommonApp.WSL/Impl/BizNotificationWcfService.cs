@@ -44,7 +44,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             return notification;
         }
 
-        public BizNotification ReceiveBizNotification(string user, string notificationId)
+        public BizNotification CheckBizNotification(string user, string notificationId)
         {
             if (string.IsNullOrWhiteSpace(user))
             {
@@ -71,16 +71,6 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             return notification;
         }
 
-        public BizNotification[] GetBizNotificationList(string user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public BizNotification[] GetBizNotificationList(string user, string resource)
-        {
-            throw new NotImplementedException();
-        }
-
         public BizNotification[] GetUntreatedBizNotificationList(string user)
         {
             if (string.IsNullOrWhiteSpace(user))
@@ -101,7 +91,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             }
         }
 
-        public BizNotification[] GetAllBizNotificationList(string user, string resource, string resourceId)
+        public BizNotification[] GetBizNotificationList(string user, string resource, string resourceId)
         {
             if (string.IsNullOrWhiteSpace(user))
             {
@@ -133,6 +123,16 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             {
                 return null;
             }
+        }
+
+        public int GetBizNotificationCount(string user, string box, string date, string span)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BizNotification[] GetBizNotificationList(string user, string box, string date, string span, string start, string count)
+        {
+            throw new NotImplementedException();
         }
 
     }
