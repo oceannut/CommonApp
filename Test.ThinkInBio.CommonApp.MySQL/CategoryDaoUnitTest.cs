@@ -23,9 +23,9 @@ namespace Test.ThinkInBio.CommonApp.MySQL
         }
 
         [TestMethod]
-        public void Demo()
+        public void Demo4Activity()
         {
-            Category entity = new Category();
+            Category entity = null;
 
             entity = new Category();
             entity.Code = "normal";
@@ -38,6 +38,7 @@ namespace Test.ThinkInBio.CommonApp.MySQL
                 categoryDao.Save(e);
             });
 
+            entity = new Category();
             entity.Code = "finance";
             entity.Name = "财务";
             entity.Scope = "activity";
@@ -86,6 +87,79 @@ namespace Test.ThinkInBio.CommonApp.MySQL
             entity.Name = "展会";
             entity.Scope = "activity";
             entity.Icon = "fa fa-institution";
+            entity.Sequence = 5;
+            entity.Save(null, (e) =>
+            {
+                categoryDao.Save(e);
+            });
+
+        }
+
+        [TestMethod]
+        public void Demo4Log()
+        {
+            Category entity = null;
+
+            entity = new Category();
+            entity.Code = "diary";
+            entity.Name = "日志";
+            entity.Scope = "log";
+            entity.Icon = "fa fa-sun-o";
+            entity.Sequence = 0;
+            entity.Save(null, (e) =>
+            {
+                categoryDao.Save(e);
+            });
+
+            entity = new Category();
+            entity.Code = "test";
+            entity.Name = "实验";
+            entity.Scope = "log";
+            entity.Icon = "fa fa-flask";
+            entity.Sequence = 1;
+            entity.Save(null, (e) =>
+            {
+                categoryDao.Save(e);
+            });
+
+            entity = new Category();
+            entity.Code = "production";
+            entity.Name = "生产";
+            entity.Scope = "log";
+            entity.Icon = "fa fa-gears";
+            entity.Sequence = 2;
+            entity.Save(null, (e) =>
+            {
+                categoryDao.Save(e);
+            });
+
+            entity = new Category();
+            entity.Code = "sale";
+            entity.Name = "销售";
+            entity.Scope = "log";
+            entity.Icon = "fa fa-rmb";
+            entity.Sequence = 3;
+            entity.Save(null, (e) =>
+            {
+                categoryDao.Save(e);
+            });
+
+            entity = new Category();
+            entity.Code = "meeting";
+            entity.Name = "会议";
+            entity.Scope = "log";
+            entity.Icon = "fa fa-coffee";
+            entity.Sequence = 4;
+            entity.Save(null, (e) =>
+            {
+                categoryDao.Save(e);
+            });
+
+            entity = new Category();
+            entity.Code = "memo";
+            entity.Name = "备忘录";
+            entity.Scope = "log";
+            entity.Icon = "fa fa-list-alt";
             entity.Sequence = 5;
             entity.Save(null, (e) =>
             {
