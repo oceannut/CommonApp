@@ -6,7 +6,7 @@ define(function (require) {
     require('./auth-controllers');
 
     angular.module('AuthApp', ['ngRoute', 'auth.controllers'])
-        .config(['$routeProvider', function ($routeProvider) {
+        .config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
 
             $routeProvider.
                 when('/signin/', {

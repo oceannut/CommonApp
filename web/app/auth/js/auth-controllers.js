@@ -3,12 +3,13 @@
 define(function (require) {
 
     require('angular');
+    require('cookies');
     require('../../../static/js/configs');
     require('./auth-services');
 
-    angular.module('auth.controllers', ['configs', 'auth.services'])
-        .controller('SignInCtrl', ['$scope', '$location', 'currentUser', 'SignInService',
-            function ($scope, $location, currentUser, SignInService) {
+    angular.module('auth.controllers', ['ngCookies', 'configs', 'auth.services'])
+        .controller('SignInCtrl', ['$scope', '$location', '$cookieStore', 'currentUser', 'SignInService',
+            function ($scope, $location, $cookieStore, currentUser, SignInService) {
 
                 console.log("signin");
 
@@ -19,9 +20,11 @@ define(function (require) {
                     })
                         .$promise
                             .then(function (result) {
-                                console.log(result);
                                 if (result.Code == 0) {
+                                    //$cookieStore.put('username', $scope.username);
+                                    //console.log("hello " + $cookieStore.get('username'));
                                     window.location.href = "../common/index.htm?username=" + $scope.username;
+                                    //window.location.href = "../common/index.htm";
                                 } else {
                                     alert(result.Message);
                                 }

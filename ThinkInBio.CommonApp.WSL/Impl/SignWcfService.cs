@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net;
+using System.ServiceModel.Web;
 
 using ThinkInBio.Common.Exceptions;
 using ThinkInBio.Common.ServiceModel;
@@ -19,37 +21,34 @@ namespace ThinkInBio.CommonApp.WSL.Impl
         internal IAuthProvider AuthProvider { get; set; }
         internal IPasswordProvider PasswordProvider { get; set; }
 
-        public ServiceResponse SignIn(string username, string pwd)
+        public void SignIn(string username, string pwd)
         {
             if (string.IsNullOrWhiteSpace(username)
                 || string.IsNullOrWhiteSpace(pwd))
             {
-                return ServiceResponse.Build(ServiceResponseCode.ArgumentNullException, R.EmptyUsernameOrPwd);
+                throw new WebFaultException<ServiceResponse>(ServiceResponse.Build(ServiceResponseCode.ArgumentNullException, R.EmptyUsernameOrPwd),
+                    HttpStatusCode.BadRequest);
             }
 
             User user = UserService.GetUser(username);
             if (user == null)
             {
-                return ServiceResponse.Build(ServiceResponseCode.ObjectNotFoundException, R.NotFoundUser);
+                throw new WebFaultException(HttpStatusCode.NotFound);
             }
 
-            bool valid = user.Authenticate(pwd, AuthProvider);
-            if (valid)
+            if (!user.Authenticate(pwd, AuthProvider))
             {
-                return ServiceResponse.BuildNormal();
-            }
-            else
-            {
-                return ServiceResponse.Build(ServiceResponseCode.AuthenticationFailure, R.WrongPwd);
+                throw new WebFaultException(HttpStatusCode.Forbidden);
             }
         }
 
-        public ServiceResponse SignUp(string username, string pwd, string name)
+        public void SignUp(string username, string pwd, string name)
         {
             if (string.IsNullOrWhiteSpace(username)
                 || string.IsNullOrWhiteSpace(pwd))
             {
-                return ServiceResponse.Build(ServiceResponseCode.ArgumentNullException, R.EmptyUsernameOrPwd);
+                throw new WebFaultException<ServiceResponse>(ServiceResponse.Build(ServiceResponseCode.ArgumentNullException, R.EmptyUsernameOrPwd),
+                    HttpStatusCode.BadRequest);
             }
 
             try
@@ -65,11 +64,10 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     {
                         UserService.SaveUser(e);
                     });
-                return ServiceResponse.BuildNormal();
             }
             catch (ObjectAlreadyExistedException)
             {
-                return ServiceResponse.Build(ServiceResponseCode.ObjectAlreadyExistedException, R.ExistedUser);
+                throw new WebFaultException(System.Net.HttpStatusCode.Forbidden);
             }
         }
     }

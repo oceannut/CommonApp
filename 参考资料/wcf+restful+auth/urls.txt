@@ -1,0 +1,54 @@
+
+Simple access_token Pattern in Angular JS
+http://sandipchitale.blogspot.com/2014/03/simple-accesstoken-pattern-in-angular-js.html
+
+Update Common AngularJS HTTP Headers at Runtime
+http://stackoverflow.com/questions/17527708/update-common-angularjs-http-headers-at-runtime
+
+
+OAuth2 with AngularJS to access Twitter
+http://beautifulbytes.wordpress.com/2013/06/18/oauth2-with-angularjs-to-access-twitter/
+
+
+Basic HTTP auth for an IIS hosted WCF 4 RESTful service
+http://ithoughthecamewithyou.com/post/Basic-HTTP-auth-for-an-IIS-hosted-WCF-4-RESTful-service.aspx
+
+
+patterns & practices Improving Web Services Security: Scenarios and Implementation Guidance for WCF
+http://wcfsecurityguide.codeplex.com/
+
+
+WCF, RESTful Web Services and custom authentication
+http://stackoverflow.com/questions/6021612/wcf-restful-web-services-and-custom-authentication
+
+
+DevDefined.OAuth
+https://github.com/bittercoder/DevDefined.OAuth
+
+
+OAuth Ñ§Ï°(1) ¡ª¡ª SinaÎ¢²© OAuthÊÚÈ¨
+http://blog.csdn.net/fangxing80/article/details/6629358
+
+
+WCF4.0 -- RESTful WCF Services ´íÎó´¦Àí (Error Handling)
+http://blog.csdn.net/fangxing80/article/details/6324642
+
+
+WCF4.0 ¨C- RESTful WCF Services (5) (»º´æ)
+http://blog.csdn.net/fangxing80/article/details/6540307
+
+
+ui-router
+https://github.com/angular-ui/ui-router
+
+
+UserApp AngularJS Module
+https://app.userapp.io/#/docs/libs/angularjs/
+
+
+userapp-angular
+https://github.com/userapp-io/userapp-angular/tree/master/example
+
+
+AngularJS Authentication + RESTful API
+http://stackoverflow.com/questions/18325324/angularjs-authentication-restful-api

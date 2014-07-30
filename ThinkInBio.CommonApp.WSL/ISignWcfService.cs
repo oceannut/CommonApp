@@ -5,7 +5,6 @@ using System.Text;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 
-using ThinkInBio.Common.ServiceModel;
 using ThinkInBio.CommonApp;
 using ThinkInBio.CommonApp.BLL;
 
@@ -22,7 +21,7 @@ namespace ThinkInBio.CommonApp.WSL
             UriTemplate = "/signin/{username}/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        ServiceResponse SignIn(string username, string pwd);
+        void SignIn(string username, string pwd);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -30,7 +29,7 @@ namespace ThinkInBio.CommonApp.WSL
             UriTemplate = "/signup/{username}/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        ServiceResponse SignUp(string username, string pwd, string name);
+        void SignUp(string username, string pwd, string name);
 
     }
 
