@@ -1,0 +1,17 @@
+﻿<div class="story container" ng-controller="CategoryOverviewCtrl" ng-init="init()">
+    <div class="page-header">
+        <span class="lead"><i class="fa fa-bookmark-o"></i>&nbsp;信息分类</span>
+        <ul class="list-inline pull-right">
+            <!--<li><a><i class="fa fa-level-up"></i>&nbsp;返回</a></li>-->
+        </ul>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3" ng-repeat="catalog in scopeCatalog">
+                <dt>{{catalog.name}}</dt>
+                <dd ng-repeat="scope in catalog.scopes">
+                    <a href="#/category-list/{{scope.code}}/">{{scope.name}}</a></dd>
+            </div>
+        </div>
+    </div>
+</div>

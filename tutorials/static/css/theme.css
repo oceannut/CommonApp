@@ -24,6 +24,24 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6
     }
 }
 
+.story
+{
+    background: #fff;
+    padding: 0px 24px 24px 24px;
+}
+@media (min-width: 1200px)
+{
+    .story
+    {
+        width: 960px;
+        margin-right: auto;
+        margin-left: auto;
+        border-right: 1px solid #aaa;
+        border-left: 1px solid #aaa;
+        border-bottom: 1px solid #aaa;
+    }
+}
+
 /* Padding for spacing */
 .inner
 {
