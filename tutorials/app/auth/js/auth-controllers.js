@@ -32,10 +32,16 @@ define(function (require) {
                         .then(function (result) {
                             currentUser.sign_in($scope.login.username);
                             $scope.$parent.makeNavbarVisible();
+                            $scope.$parent.loginUser.username = $scope.login.username;
                             userCache.getAsync($scope.login.username, function (e) {
-                                currentUser.setName(e.Name);
+                                if (e != null) {
+                                    currentUser.setName(e.Name);
+                                    $scope.$parent.loginUser.name = e.Name;
+                                } else {
+                                    $scope.$parent.loginUser.name = $scope.login.username;
+                                }
+                                $location.path('/category-overview/');
                             });
-                            $location.path('/category-overview/');
                         }, function (error) {
                             $scope.alertMessageVisible = 'show';
                             if (error.status == '400') {

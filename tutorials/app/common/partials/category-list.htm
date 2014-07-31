@@ -1,10 +1,17 @@
 ﻿<div class="story container" ng-controller="CategoryListCtrl" ng-init="init()">
     <div class="page-header">
-        <span class="lead"><i class="fa fa-bookmark-o"></i>&nbsp;信息分类列表</span>
+        <span class="lead"><i class="fa fa-leaf"></i>&nbsp;{{scopeName}}</span>
         <ul class="list-inline pull-right">
-            <li><a href="#/category-overview/"><i class="fa fa-level-up"></i>&nbsp;返回</a></li>
+            <li><a href="#/category-edit/"><i class="fa fa-plus"></i>&nbsp;添加{{scopeName}}</a></li>
+            <li><a href="#/category-overview/"><i class="fa fa-level-up"></i>&nbsp;信息分类</a></li>
         </ul>
     </div>
-    <div class="container">
-    </div>
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="item in categoryList"><a href="#/category-edit/{{item.Id}}/">
+            <i class="fa {{item.Icon}}"></i>&nbsp;&nbsp;{{item.Name}}({{item.Code}})</a> <i class="fa fa-trash-o pull-right">
+            </i>
+            <p class="list-group-item-text">
+                {{item.Description}}</p>
+        </li>
+    </ul>
 </div>

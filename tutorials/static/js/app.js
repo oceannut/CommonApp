@@ -7,11 +7,14 @@ define(function (require) {
     require('./configs');
     require('../../app/auth/js/auth-controllers');
     require('../../app/common/js/category-controllers');
+    require('../../app/common/js/user-controllers');
 
     angular.module('Tutorials', ['ngRoute',
-        'configs',
-        'auth.controllers',
-        'category.controllers'])
+            'configs',
+            'auth.controllers',
+            'category.controllers',
+            'user.controllers'
+        ])
         .config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
 
             $routeProvider.
@@ -36,7 +39,8 @@ define(function (require) {
                     controller: 'CategoryListCtrl'
                 }).
                 when('/user-role-overview/', {
-                    templateUrl: 'app/common/partials/user-role-overview.htm'
+                    templateUrl: 'app/common/partials/user-role-overview.htm',
+                    controller: 'UserRoleOverviewCtrl'
                 }).
                 otherwise({
                     redirectTo: '/sign-in/'
@@ -61,7 +65,9 @@ define(function (require) {
 
                     $scope.appName = appName;
                     $scope.makeNavbarVisible();
+                    $scope.loginUser = { "username": "", "name": "未登录" };
                     $scope.navList = [categoryNav, userRoleNav];
+
                 }
 
                 $scope.changeUrl = function (nav) {
