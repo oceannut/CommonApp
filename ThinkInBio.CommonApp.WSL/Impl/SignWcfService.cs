@@ -6,7 +6,7 @@ using System.Net;
 using System.ServiceModel.Web;
 
 using ThinkInBio.Common.Exceptions;
-using ThinkInBio.Common.ServiceModel;
+using ThinkInBio.Common.ExceptionHandling;
 using ThinkInBio.CommonApp;
 using ThinkInBio.CommonApp.BLL;
 using R = ThinkInBio.CommonApp.WSL.Properties.Resources;
@@ -20,25 +20,33 @@ namespace ThinkInBio.CommonApp.WSL.Impl
         internal IUserService UserService { get; set; }
         internal IAuthProvider AuthProvider { get; set; }
         internal IPasswordProvider PasswordProvider { get; set; }
+        internal IExceptionHandler ExceptionHandler { get; set; }
 
         public void SignIn(string username, string pwd)
         {
             if (string.IsNullOrWhiteSpace(username)
                 || string.IsNullOrWhiteSpace(pwd))
             {
-                throw new WebFaultException<ServiceResponse>(ServiceResponse.Build(ServiceResponseCode.ArgumentNullException, R.EmptyUsernameOrPwd),
-                    HttpStatusCode.BadRequest);
+                throw new WebFaultException<string>(R.EmptyUsernameOrPwd, HttpStatusCode.BadRequest);
             }
 
-            User user = UserService.GetUser(username);
-            if (user == null)
+            try
             {
-                throw new WebFaultException(HttpStatusCode.NotFound);
-            }
+                User user = UserService.GetUser(username);
+                if (user == null)
+                {
+                    throw new WebFaultException(HttpStatusCode.NotFound);
+                }
 
-            if (!user.Authenticate(pwd, AuthProvider))
+                if (!user.Authenticate(pwd, AuthProvider))
+                {
+                    throw new WebFaultException(HttpStatusCode.Forbidden);
+                }
+            }
+            catch (BusinessLayerException ex)
             {
-                throw new WebFaultException(HttpStatusCode.Forbidden);
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
             }
         }
 
@@ -47,8 +55,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             if (string.IsNullOrWhiteSpace(username)
                 || string.IsNullOrWhiteSpace(pwd))
             {
-                throw new WebFaultException<ServiceResponse>(ServiceResponse.Build(ServiceResponseCode.ArgumentNullException, R.EmptyUsernameOrPwd),
-                    HttpStatusCode.BadRequest);
+                throw new WebFaultException<string>(R.EmptyUsernameOrPwd, HttpStatusCode.BadRequest);
             }
 
             try

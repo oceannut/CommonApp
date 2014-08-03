@@ -1,0 +1,23 @@
+﻿<div class="story container" ng-init="init()">
+    <div class="page-header">
+        <span class="lead"><i class="fa fa-bookmark-o"></i>&nbsp;用户/角色</span>
+    </div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="active"><a href="#user" role="tab" data-toggle="tab">用户</a></li>
+        <li><a href="#role" role="tab" data-toggle="tab">角色</a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="user">
+            <br />
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="item in userList"><a href="#/user-edit/{{item.Username}}/">
+                    {{item.Name}}({{item.Username}})</a> <i class="fa fa-trash-o pull-right"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-pane" id="role">
+            role</div>
+    </div>
+</div>

@@ -61,6 +61,33 @@ namespace ThinkInBio.CommonApp.WSL.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The code is empty..
+        /// </summary>
+        internal static string EmptyCode {
+            get {
+                return ResourceManager.GetString("EmptyCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name is empty..
+        /// </summary>
+        internal static string EmptyName {
+            get {
+                return ResourceManager.GetString("EmptyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The scope is empty..
+        /// </summary>
+        internal static string EmptyScope {
+            get {
+                return ResourceManager.GetString("EmptyScope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The username or pwd is empty..
         /// </summary>
         internal static string EmptyUsernameOrPwd {
@@ -75,6 +102,24 @@ namespace ThinkInBio.CommonApp.WSL.Properties {
         internal static string ExistedUser {
             get {
                 return ResourceManager.GetString("ExistedUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The id should be the string of long number..
+        /// </summary>
+        internal static string InvalidId {
+            get {
+                return ResourceManager.GetString("InvalidId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The sequence should be the string of number..
+        /// </summary>
+        internal static string InvalidSequence {
+            get {
+                return ResourceManager.GetString("InvalidSequence", resourceCulture);
             }
         }
         

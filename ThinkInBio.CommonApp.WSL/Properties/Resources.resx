@@ -117,11 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EmptyCode" xml:space="preserve">
+    <value>The code is empty.</value>
+  </data>
+  <data name="EmptyName" xml:space="preserve">
+    <value>The name is empty.</value>
+  </data>
+  <data name="EmptyScope" xml:space="preserve">
+    <value>The scope is empty.</value>
+  </data>
   <data name="EmptyUsernameOrPwd" xml:space="preserve">
     <value>The username or pwd is empty.</value>
   </data>
   <data name="ExistedUser" xml:space="preserve">
     <value>The username is already existed. Please change another username and try it.</value>
+  </data>
+  <data name="InvalidId" xml:space="preserve">
+    <value>The id should be the string of long number.</value>
+  </data>
+  <data name="InvalidSequence" xml:space="preserve">
+    <value>The sequence should be the string of number.</value>
   </data>
   <data name="NotFoundUser" xml:space="preserve">
     <value>The username is not existed.</value>

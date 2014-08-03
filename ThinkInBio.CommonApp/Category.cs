@@ -126,6 +126,7 @@ namespace ThinkInBio.CommonApp
 
         public void ChangeSequence(int newSequence)
         {
+            this.Sequence = newSequence;
         }
 
         public override bool Equals(object obj)

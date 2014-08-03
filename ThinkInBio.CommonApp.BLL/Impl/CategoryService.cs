@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using ThinkInBio.Common.Exceptions;
 using ThinkInBio.CommonApp.DAL;
 
 namespace ThinkInBio.CommonApp.BLL.Impl
@@ -15,12 +16,55 @@ namespace ThinkInBio.CommonApp.BLL.Impl
 
         public void SaveCategory(Category category)
         {
-            throw new NotImplementedException();
+            if (category == null)
+            {
+                throw new ArgumentNullException();
+            }
+            CategoryDao.Save(category);
         }
 
-        public bool IsScopeExist(string scope)
+        public void UpdateCategory(Category category)
         {
-            throw new NotImplementedException();
+            if (category == null)
+            {
+                throw new ArgumentNullException();
+            }
+            CategoryDao.Update(category);
+        }
+
+        public void DeleteCategory(long id)
+        {
+            Category category = GetCategory(id);
+            if (category == null)
+            {
+                throw new ObjectNotFoundException(id);
+            }
+            CategoryDao.Delete(category);
+        }
+
+        public Category GetCategory(long id)
+        {
+            if (id < 1)
+            {
+                throw new ArgumentException();
+            }
+            return CategoryDao.Get(id);
+        }
+
+        public Category GetCategory(string scope, string code)
+        {
+            if (string.IsNullOrWhiteSpace(scope) || string.IsNullOrWhiteSpace(code))
+            {
+                throw new ArgumentNullException();
+            }
+
+            return CategoryDao.Get(scope, code);
+        }
+
+        public bool IsCodeExist(string scope, string code)
+        {
+            Category category = GetCategory(scope, code);
+            return (category != null);
         }
 
         public IList<Category> GetCategoryList(string scope)
@@ -52,6 +96,7 @@ namespace ThinkInBio.CommonApp.BLL.Impl
 
             return CategoryDao.GetList(scope, parentId, true);
         }
+
 
     }
 

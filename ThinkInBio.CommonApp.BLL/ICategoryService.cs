@@ -11,7 +11,15 @@ namespace ThinkInBio.CommonApp.BLL
 
         void SaveCategory(Category category);
 
-        bool IsScopeExist(string scope);
+        void UpdateCategory(Category category);
+
+        void DeleteCategory(long id);
+
+        Category GetCategory(long id);
+
+        Category GetCategory(string scope, string code);
+
+        bool IsCodeExist(string scope, string code);
 
         IList<Category> GetCategoryList(string scope);
 

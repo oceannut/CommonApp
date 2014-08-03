@@ -34,12 +34,12 @@ namespace ThinkInBio.CommonApp.MySQL
                     if (entity.ParentId > 0)
                     {
                         command.CommandText = @"insert into cyCategory (id,code,name,description,icon,parentId,sequence,scope) 
-                                                values (NULL,@code,@name,@description,@icon,@parentId,@sequence,@scope)";
+                                                    values (NULL,@code,@name,@description,@icon,@parentId,@sequence,@scope)";
                     }
                     else
                     {
                         command.CommandText = @"insert into cyCategory (id,code,name,description,icon,sequence,scope) 
-                                                values (NULL,@code,@name,@description,@icon,@sequence,@scope)";
+                                                    values (NULL,@code,@name,@description,@icon,@sequence,@scope)";
                     }
                     command.Parameters.Add(DbFactory.CreateParameter("code", entity.Code));
                     command.Parameters.Add(DbFactory.CreateParameter("name", entity.Name));
@@ -55,6 +55,36 @@ namespace ThinkInBio.CommonApp.MySQL
                 (id) =>
                 {
                     entity.Id = id;
+                });
+        }
+
+        public override bool Update(Category entity)
+        {
+            return DbTemplate.Save(dataSource,
+                (command) =>
+                {
+                    if (entity.ParentId > 0)
+                    {
+                        command.CommandText = @"update cyCategory 
+                                                set code=@code,name=@name,description=@description,icon=@icon,parentId=@parentId,sequence=@sequence
+                                                where id=@id";
+                    }
+                    else
+                    {
+                        command.CommandText = @"update cyCategory 
+                                                set code=@code,name=@name,description=@description,icon=@icon,parentId=null,sequence=@sequence
+                                                where id=@id";
+                    }
+                    command.Parameters.Add(DbFactory.CreateParameter("code", entity.Code));
+                    command.Parameters.Add(DbFactory.CreateParameter("name", entity.Name));
+                    command.Parameters.Add(DbFactory.CreateParameter("description", entity.Description));
+                    command.Parameters.Add(DbFactory.CreateParameter("icon", entity.Icon));
+                    if (entity.ParentId > 0)
+                    {
+                        command.Parameters.Add(DbFactory.CreateParameter("parentId", entity.ParentId));
+                    }
+                    command.Parameters.Add(DbFactory.CreateParameter("sequence", entity.Sequence));
+                    command.Parameters.Add(DbFactory.CreateParameter("id", entity.Id));
                 });
         }
 
