@@ -4,6 +4,7 @@ define(function (require) {
 
     require('ng');
     require('../../../static/js/configs');
+    require('../../../static/js/events');
     require('./auth-models');
     require('./auth-services');
     require('../../common/js/user-services');
@@ -11,9 +12,9 @@ define(function (require) {
 
     require('../../../static/css/sign.css');
 
-    angular.module('auth.controllers', ['configs', 'auth.models', 'auth.services', 'user.services', 'common.cache'])
-        .controller('SignInCtrl', ['$scope', '$location', '$log', 'currentUser', 'SignInService', 'userCache',
-            function ($scope, $location, $log, currentUser, SignInService, userCache) {
+    angular.module('auth.controllers', ['configs', 'events', 'auth.models', 'auth.services', 'user.services', 'common.cache'])
+        .controller('SignInCtrl', ['$scope', '$location', '$log', 'currentUser', 'eventbus', 'SignInService',
+            function ($scope, $location, $log, currentUser, eventbus, SignInService) {
 
                 $scope.init = function () {
                     $scope.alertMessageVisible = 'hidden';
@@ -31,17 +32,8 @@ define(function (require) {
                     .$promise
                         .then(function (result) {
                             currentUser.sign_in($scope.login.username);
-                            $scope.$parent.makeNavbarVisible();
-                            $scope.$parent.loginUser.username = $scope.login.username;
-                            userCache.getAsync($scope.login.username, function (e) {
-                                if (e != null) {
-                                    currentUser.setName(e.Name);
-                                    $scope.$parent.loginUser.name = e.Name;
-                                } else {
-                                    $scope.$parent.loginUser.name = $scope.login.username;
-                                }
-                                $location.path('/category-overview/');
-                            });
+                            eventbus.broadcast("userSignIn", $scope.login.username);
+                            $location.path('/category-overview/');
                         }, function (error) {
                             $scope.alertMessageVisible = 'show';
                             if (error.status == '400') {
@@ -74,12 +66,12 @@ define(function (require) {
                 }
 
             } ])
-        .controller('SignOutCtrl', ['$scope', 'currentUser',
-            function ($scope, currentUser) {
+        .controller('SignOutCtrl', ['$scope', 'currentUser', 'eventbus',
+            function ($scope, currentUser, eventbus) {
 
                 $scope.init = function () {
                     currentUser.sign_out();
-                    $scope.$parent.makeNavbarVisible();
+                    eventbus.broadcast("userSignOut", currentUser.username);
                 }
 
             } ]);

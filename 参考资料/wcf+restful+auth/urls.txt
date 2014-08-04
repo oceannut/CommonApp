@@ -52,3 +52,8 @@ https://github.com/userapp-io/userapp-angular/tree/master/example
 
 AngularJS Authentication + RESTful API
 http://stackoverflow.com/questions/18325324/angularjs-authentication-restful-api
+
+
+URL Route Authorization and Security in Angular
+http://jonsamwell.com/url-route-authorization-and-security-in-angular/
+https://github.com/jonsamwell/blog_examples/tree/master/angular-route-authorisation

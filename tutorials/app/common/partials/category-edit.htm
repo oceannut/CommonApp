@@ -5,7 +5,7 @@
             <li><a href="#/category-list/{{category.Scope}}/"><i class="fa fa-level-up"></i>&nbsp;返回列表</a></li>
         </ul>
     </div>
-    <form class="form-horizontal css-form" role="form" name="form">
+    <form class="form-horizontal css-form" role="form" name="form" ng-submit="save()">
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
@@ -37,7 +37,7 @@
                 <div class="form-group">
                     <button class="btn btn-default" ng-click="clear()">
                         清空</button>
-                    <button class="btn btn-primary" type="submit" ng-click="save()" ng-disabled="form.$invalid || isLoading"
+                    <button class="btn btn-primary" type="submit" ng-disabled="form.$invalid || isLoading"
                         ng-switch="isLoading">
                         <span ng-switch-when="true">正在保存中...</span> <span ng-switch-when="false">保存</span></button>
                 </div>
