@@ -10,13 +10,15 @@ namespace ThinkInBio.CommonApp.BLL
 
         void SaveUser(User user);
 
+        void UpdateUser(User user);
+
         User GetUser(string username);
 
         bool IsUserExist(string username);
 
         IList<User> GetUserList();
 
-        //string GetPwd(string username);
+        string GetPwd(string username);
 
     }
 }

@@ -13,6 +13,7 @@
 
   <object id="UserWcfService" type="ThinkInBio.CommonApp.WSL.Impl.UserWcfService, ThinkInBio.CommonApp.WSL" singleton="false">
     <property name="UserService" ref="UserService" />
+    <property name="ExceptionHandler" ref="LogOnlyExceptionHandler" />
   </object>
 
   <object id="CategoryWcfService" type="ThinkInBio.CommonApp.WSL.Impl.CategoryWcfService, ThinkInBio.CommonApp.WSL" singleton="false">

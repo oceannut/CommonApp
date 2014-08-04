@@ -16,6 +16,14 @@ namespace ThinkInBio.CommonApp.WSL
     {
 
         [OperationContract]
+        [WebInvoke(Method = "PUT",
+            BodyStyle = WebMessageBodyStyle.WrappedRequest,
+            UriTemplate = "/user/{username}/",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        User UpdateUser(string username, string name, string group, string[] roles);
+
+        [OperationContract]
         [WebGet(UriTemplate = "/user/{username}/",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         User GetUser(string username);

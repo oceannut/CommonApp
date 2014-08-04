@@ -123,11 +123,14 @@
   <data name="EmptyName" xml:space="preserve">
     <value>The name is empty.</value>
   </data>
+  <data name="EmptyPwd" xml:space="preserve">
+    <value>The pwd is empty.</value>
+  </data>
   <data name="EmptyScope" xml:space="preserve">
     <value>The scope is empty.</value>
   </data>
-  <data name="EmptyUsernameOrPwd" xml:space="preserve">
-    <value>The username or pwd is empty.</value>
+  <data name="EmptyUsername" xml:space="preserve">
+    <value>The username is empty.</value>
   </data>
   <data name="ExistedUser" xml:space="preserve">
     <value>The username is already existed. Please change another username and try it.</value>

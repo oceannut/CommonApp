@@ -53,16 +53,80 @@ define(function (require) {
                 }
 
             } ])
-        .controller('SignUpCtrl', ['$scope', '$location',
-            function ($scope, $location) {
+        .controller('SignUpCtrl', ['$scope', '$location', '$log', 'UserService', 'SignUpService',
+            function ($scope, $location, $log, UserService, SignUpService) {
+
+                var lastUsername;
 
                 $scope.init = function () {
-                    console.log("sign-up");
+                    $scope.alertMessageVisible = 'hidden';
+                    $scope.user = {};
+                    $scope.isUserExisted = undefined;
+                    lastUsername = $scope.user.username;
+                    $scope.isSamePwd = true;
+                    $scope.isBusy = false;
+                }
 
+                $scope.usernameChanged = function () {
+                    if (lastUsername != $scope.user.username && $scope.user.username != undefined && $scope.user.username != '') {
+                        lastUsername = $scope.user.username;
+                        $scope.usernameDisabled = true;
+                        $scope.usernameStatus = "";
+                        $scope.usernameFeedback = "fa-spin fa-spinner";
+                        $scope.usernameFeedbackText = "";
+
+                        UserService.get({ "username": $scope.user.username })
+                            .$promise
+                                .then(function (result) {
+                                    if (result.Username === undefined) {
+                                        $scope.usernameStatus = "has-success";
+                                        $scope.usernameFeedback = "fa-check";
+                                    } else {
+                                        $scope.usernameStatus = "has-error";
+                                        $scope.usernameFeedback = "fa-exclamation-triangle";
+                                        $scope.usernameFeedbackText = "此用户名已被使用，请换一个。";
+                                    }
+                                }, function (error) {
+                                    $log.error(error);
+                                })
+                                .then(function () {
+                                    $scope.usernameDisabled = false;
+                                });
+
+                    } else if ($scope.user.username == undefined || $scope.user.username == "") {
+                        $scope.usernameStatus = "";
+                        $scope.usernameFeedback = "";
+                        $scope.usernameFeedbackText = "";
+                    }
+                }
+
+                $scope.pwd2Changed = function () {
+                    $scope.isSamePwd = $scope.user.pwd != undefined & $scope.user.pwd2 != undefined
+                                        & $scope.user.pwd2 == $scope.user.pwd;
                 }
 
                 $scope.signup = function () {
-                    console.log($scope.username);
+                    $scope.alertMessageVisible = 'hidden';
+                    $scope.isBusy = true;
+                    SignUpService.save({
+                        'username': $scope.user.username,
+                        'pwd': $scope.user.pwd,
+                        'name': $scope.user.name
+                    })
+                    .$promise
+                        .then(function (result) {
+                            $scope.isSuccess = true;
+                            $scope.alertMessageVisible = 'show';
+                            $scope.alertMessage = "提示：注册成功";
+                        }, function (error) {
+                            $scope.isSuccess = false;
+                            $scope.alertMessageVisible = 'show';
+                            $scope.alertMessage = "提示：注册失败";
+                            $log.error(error);
+                        })
+                        .then(function () {
+                            $scope.isBusy = false;
+                        });
                 }
 
             } ])

@@ -23,6 +23,16 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             UserDao.Save(user);
         }
 
+        public void UpdateUser(User user)
+        {
+            if (user == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            UserDao.Update(user);
+        }
+
         public User GetUser(string username)
         {
             if (string.IsNullOrWhiteSpace(username))
@@ -48,15 +58,15 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             return UserDao.GetList();
         }
 
-        //public string GetPwd(string username)
-        //{
-        //    if (string.IsNullOrWhiteSpace(username))
-        //    {
-        //        throw new ArgumentNullException();
-        //    }
+        public string GetPwd(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                throw new ArgumentNullException();
+            }
 
-        //    return UserDao.GetPwd(username);
-        //}
+            return UserDao.GetPwd(username);
+        }
 
     }
 }

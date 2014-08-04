@@ -24,7 +24,7 @@ namespace ThinkInBio.CommonApp
         /// <summary>
         /// 验证码。
         /// </summary>
-        public string Pwd { get; private set; }
+        public string Pwd { get; set; }
 
         /// <summary>
         /// 角色。
@@ -56,16 +56,16 @@ namespace ThinkInBio.CommonApp
         #region constructors
 
         /// <summary>
-        /// 
+        /// 构建一个用户。
         /// </summary>
         public User() { }
 
         /// <summary>
-        /// 
+        /// 构建一个用户。
         /// </summary>
-        /// <param name="username"></param>
-        /// <param name="pwd"></param>
-        /// <param name="passwordProvider"></param>
+        /// <param name="username">用户名。</param>
+        /// <param name="pwd">验证码。</param>
+        /// <param name="passwordProvider">验证码验证服务。</param>
         public User(string username, string pwd, 
             IPasswordProvider passwordProvider)
         {
@@ -79,7 +79,7 @@ namespace ThinkInBio.CommonApp
         }
 
         /// <summary>
-        /// 
+        /// 构建一个用户。
         /// </summary>
         /// <param name="username"></param>
         /// <param name="name"></param>
@@ -88,8 +88,8 @@ namespace ThinkInBio.CommonApp
         /// <param name="modification"></param>
         public User(string username,
             string name, string group,
-            DateTime creation, DateTime modification,
-            string pwd)
+            DateTime creation, 
+            DateTime modification)
         {
             if (string.IsNullOrWhiteSpace(username)
                 || creation == DateTime.MinValue
@@ -102,16 +102,15 @@ namespace ThinkInBio.CommonApp
             this.Group = group;
             this.Creation = creation;
             this.Modification = modification;
-            this.Pwd = pwd;
         }
 
         #endregion
 
         /// <summary>
-        /// 
+        /// 保存用户。
         /// </summary>
-        /// <param name="isUserExisted"></param>
-        /// <param name="action"></param>
+        /// <param name="isUserExisted">判断用户是否存在的操作定义。</param>
+        /// <param name="action">保存操作定义。</param>
         public void Save(Func<string, bool> isUserExisted, 
             Action<User> action)
         {
@@ -133,9 +132,9 @@ namespace ThinkInBio.CommonApp
         }
 
         /// <summary>
-        /// 
+        /// 更新用户。
         /// </summary>
-        /// <param name="action"></param>
+        /// <param name="action">更新操作定义。</param>
         public void Update(Action<User> action)
         {
             if (string.IsNullOrWhiteSpace(this.Username))

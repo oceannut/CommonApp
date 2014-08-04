@@ -21,13 +21,17 @@ namespace ThinkInBio.CommonApp.WSL.Impl
         internal IAuthProvider AuthProvider { get; set; }
         internal IPasswordProvider PasswordProvider { get; set; }
         internal IExceptionHandler ExceptionHandler { get; set; }
+        internal IList<string> DefaultRoles { get; set; }
 
         public void SignIn(string username, string pwd)
         {
-            if (string.IsNullOrWhiteSpace(username)
-                || string.IsNullOrWhiteSpace(pwd))
+            if (string.IsNullOrWhiteSpace(username))
             {
-                throw new WebFaultException<string>(R.EmptyUsernameOrPwd, HttpStatusCode.BadRequest);
+                throw new WebFaultException<string>(R.EmptyUsername, HttpStatusCode.BadRequest);
+            }
+            if (string.IsNullOrWhiteSpace(pwd))
+            {
+                throw new WebFaultException<string>(R.EmptyPwd, HttpStatusCode.BadRequest);
             }
 
             try
@@ -37,6 +41,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 {
                     throw new WebFaultException(HttpStatusCode.NotFound);
                 }
+                user.Pwd = UserService.GetPwd(username);
 
                 if (!user.Authenticate(pwd, AuthProvider))
                 {
@@ -52,16 +57,20 @@ namespace ThinkInBio.CommonApp.WSL.Impl
 
         public void SignUp(string username, string pwd, string name)
         {
-            if (string.IsNullOrWhiteSpace(username)
-                || string.IsNullOrWhiteSpace(pwd))
+            if (string.IsNullOrWhiteSpace(username))
             {
-                throw new WebFaultException<string>(R.EmptyUsernameOrPwd, HttpStatusCode.BadRequest);
+                throw new WebFaultException<string>(R.EmptyUsername, HttpStatusCode.BadRequest);
+            }
+            if (string.IsNullOrWhiteSpace(pwd))
+            {
+                throw new WebFaultException<string>(R.EmptyPwd, HttpStatusCode.BadRequest);
             }
 
             try
             {
                 User user = new User(username, pwd, PasswordProvider);
                 user.Name = name;
+                user.Roles = DefaultRoles;
                 user.Save(
                     (e) =>
                     {
@@ -75,6 +84,11 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             catch (ObjectAlreadyExistedException)
             {
                 throw new WebFaultException(System.Net.HttpStatusCode.Forbidden);
+            }
+            catch (BusinessLayerException ex)
+            {
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
             }
         }
     }

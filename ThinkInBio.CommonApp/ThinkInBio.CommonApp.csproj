@@ -54,7 +54,6 @@
     <Compile Include="Auth\PlainPasswordProvider.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Role.cs" />
     <Compile Include="Trail.cs" />
     <Compile Include="Tree.cs" />
     <Compile Include="TreeNode.cs" />

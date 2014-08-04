@@ -79,6 +79,15 @@ namespace ThinkInBio.CommonApp.WSL.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The pwd is empty..
+        /// </summary>
+        internal static string EmptyPwd {
+            get {
+                return ResourceManager.GetString("EmptyPwd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The scope is empty..
         /// </summary>
         internal static string EmptyScope {
@@ -88,11 +97,11 @@ namespace ThinkInBio.CommonApp.WSL.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The username or pwd is empty..
+        ///   Looks up a localized string similar to The username is empty..
         /// </summary>
-        internal static string EmptyUsernameOrPwd {
+        internal static string EmptyUsername {
             get {
-                return ResourceManager.GetString("EmptyUsernameOrPwd", resourceCulture);
+                return ResourceManager.GetString("EmptyUsername", resourceCulture);
             }
         }
         

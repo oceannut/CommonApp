@@ -11,13 +11,20 @@ define(function (require) {
         .factory('UserService', ['$resource', 'wcfApp', 'userWcfService',
             function ($resource, wcfApp, userWcfService) {
                 return $resource(wcfApp + userWcfService + '/user/:username/', {}, {
-                    get: { method: 'GET', params: { 'username': '@username' }, isArray: false }
+                    update: { method: 'PUT', params: { 'username': '@username', 'name': '@name', 'group': '@group', 'roles': '@roles'} },
+                    get: { method: 'GET', params: { 'username': '@username' } }
                 });
             } ])
         .factory('UserListService', ['$resource', 'wcfApp', 'userWcfService',
             function ($resource, wcfApp, userWcfService) {
                 return $resource(wcfApp + userWcfService + '/user/', {}, {
                     query: { method: 'GET', params: { }, isArray: true }
+                });
+            } ])
+        .factory('RoleConfigService', ['$resource',
+            function ($resource) {
+                return $resource('config/roles.json/', {}, {
+                    query: { method: 'GET', params: {}, isArray: true }
                 });
             } ]);
 

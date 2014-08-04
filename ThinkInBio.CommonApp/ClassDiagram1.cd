@@ -9,21 +9,14 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="ThinkInBio.CommonApp.TreeNode&lt;T&gt;" Collapsed="true">
-    <Position X="5.5" Y="2.75" Width="1.5" />
+    <Position X="9" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAARAgAAEUAAAAAAAAIAAAQAgAABAAAA=</HashCode>
       <FileName>TreeNode.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ThinkInBio.CommonApp.Role" Collapsed="true">
-    <Position X="7.25" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACACAAAAAAAAAAAAAAAAQAAAAAAAAAgAAAAAAAAAA=</HashCode>
-      <FileName>Role.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="ThinkInBio.CommonApp.User" Collapsed="true">
-    <Position X="9" Y="2.75" Width="1.5" />
+    <Position X="7.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAMACAAAAAAAAAQAAAAYIAgAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>User.cs</FileName>
@@ -52,7 +45,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="ThinkInBio.CommonApp.TreeNodeCollection&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="7.25" Y="2.75" Width="1.5" />
+    <Position X="5.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAACAAAAAgBAAOAAABQQAAAAACABECAAAAAAAAAA=</HashCode>
       <FileName>TreeNodeCollection.cs</FileName>
@@ -62,21 +55,21 @@
   <Class Name="ThinkInBio.CommonApp.Notification" Collapsed="true">
     <Position X="3" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAACAAAAAAAAAAAAAAAAAAAEAAAAAACAAAAIAAA=</HashCode>
+      <HashCode>AAACAAACAgAAAAAAAEAAAAAAAAAEAAAQAACAAAAIAAA=</HashCode>
       <FileName>Notification.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ThinkInBio.CommonApp.BizNotification" Collapsed="true">
     <Position X="3" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAIAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAIAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>BizNotification.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ThinkInBio.CommonApp.Trail" Collapsed="true">
-    <Position X="9" Y="1.75" Width="1.5" />
+    <Position X="7.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAACIAAAgAAAAEAgAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAACIAAAgAAAAAAgAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>Trail.cs</FileName>
     </TypeIdentifier>
   </Class>

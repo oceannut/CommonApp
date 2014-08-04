@@ -18,6 +18,11 @@
             </ul>
         </div>
         <div class="tab-pane" id="role">
-            role</div>
+            <br />
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="item in roleList"><a href="#/role-edit/{{item.id}}/">
+                    {{item.name}}({{item.id}})</a> </li>
+            </ul>
+        </div>
     </div>
 </div>
