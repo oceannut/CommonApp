@@ -9,6 +9,11 @@
     <property name="AuthProvider" ref="PlainAuthProvider" />
     <property name="PasswordProvider" ref="PlainPasswordProvider" />
     <property name="ExceptionHandler" ref="LogOnlyExceptionHandler" />
+    <property name="DefaultRoles">
+      <list>
+        <value>user</value>
+      </list>
+    </property>
   </object>
 
   <object id="UserWcfService" type="ThinkInBio.CommonApp.WSL.Impl.UserWcfService, ThinkInBio.CommonApp.WSL" singleton="false">
@@ -24,6 +29,6 @@
   <object id="BizNotificationWcfService" type="ThinkInBio.CommonApp.WSL.Impl.BizNotificationWcfService, ThinkInBio.CommonApp.WSL" singleton="false">
     <property name="BizNotificationService" ref="BizNotificationService" />
   </object>
-  
+
 </objects>
 

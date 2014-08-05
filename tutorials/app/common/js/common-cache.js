@@ -3,6 +3,35 @@
 define(function (require) {
 
     angular.module('common.cache', [])
+        .factory('currentUserDetails', ['$log', 'UserService',
+            function ($log, UserService) {
+
+                var isSync = false;
+                var details;
+
+                return {
+                    getAsync: function (key, callback) {
+                        if (!isSync) {
+                            UserService.get({ 'username': key })
+                                .$promise
+                                    .then(function (result) {
+                                        details = result;
+                                        isSync = true;
+                                        (callback || angular.noop)(details);
+                                    }, function (error) {
+                                        $log.error(error);
+                                    });
+                        } else {
+                            (callback || angular.noop)(details);
+                        }
+                    },
+                    clear: function () {
+                        details = undefined;
+                        isSync = false;
+                    }
+                }
+
+            } ])
         .factory('userCache', ['$log', 'UserListService',
             function ($log, UserListService) {
 

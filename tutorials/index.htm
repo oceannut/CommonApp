@@ -30,7 +30,13 @@
                                         ng-click="changeUrl(item)">{{item.name}}</a></li>
                                 </ul>
                                 <ul class="nav navbar-nav navbar-right">
-                                    <li><a href="./{{loginUser.username}}/">{{loginUser.name}}</a></li>
+                                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">{{loginUser.name}}&nbsp;<span
+                                        class="caret"></span></a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                            <li><a href="#/user-setting/{{loginUser.username}}/">个人设置</a></li>
+                                            <li class="divider"></li>
+                                        </ul>
+                                    </li>
                                     <li><a href="#/sign-out/"><i class="fa fa-sign-out"></i>&nbsp;退出</a></li>
                                 </ul>
                             </div>

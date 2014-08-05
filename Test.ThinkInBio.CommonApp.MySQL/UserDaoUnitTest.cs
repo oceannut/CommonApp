@@ -66,6 +66,23 @@ namespace Test.ThinkInBio.CommonApp.MySQL
         }
 
         [TestMethod]
+        public void Demo2()
+        {
+            User user = new User("admin", "admin", new PlainPasswordProvider());
+            user.Name = "管理员";
+            user.Roles = new string[] { "user", "admin" };
+            user.Save(
+                (e) =>
+                {
+                    return false;
+                },
+                (e) =>
+                {
+                    userDao.Save(e);
+                });
+        }
+
+        [TestMethod]
         public void TestMethod1()
         {
             User user = new User("temp", "temp", new PlainPasswordProvider());

@@ -22,6 +22,7 @@ define(function (require) {
                 sign_out: function () {
                     username = '';
                     name = '';
+                    roles = undefined;
                     login = false;
                 },
                 getUsername: function () {

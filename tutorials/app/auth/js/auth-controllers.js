@@ -13,8 +13,8 @@ define(function (require) {
     require('../../../static/css/sign.css');
 
     angular.module('auth.controllers', ['configs', 'events', 'auth.models', 'auth.services', 'user.services', 'common.cache'])
-        .controller('SignInCtrl', ['$scope', '$location', '$log', 'currentUser', 'eventbus', 'SignInService',
-            function ($scope, $location, $log, currentUser, eventbus, SignInService) {
+        .controller('SignInCtrl', ['$scope', '$location', '$log', 'currentUser', 'eventbus', 'SignInService', 'currentUserDetails',
+            function ($scope, $location, $log, currentUser, eventbus, SignInService, currentUserDetails) {
 
                 $scope.init = function () {
                     $scope.alertMessageVisible = 'hidden';
@@ -32,8 +32,12 @@ define(function (require) {
                     .$promise
                         .then(function (result) {
                             currentUser.sign_in($scope.login.username);
-                            eventbus.broadcast("userSignIn", $scope.login.username);
-                            $location.path('/category-overview/');
+                            currentUserDetails.getAsync($scope.login.username, function (e) {
+                                currentUser.setName(e.Name);
+                                currentUser.setRoles(e.Roles);
+                                eventbus.broadcast("userSignIn", $scope.login.username);
+                                $location.path('/home/');
+                            });
                         }, function (error) {
                             $scope.alertMessageVisible = 'show';
                             if (error.status == '400') {
@@ -130,11 +134,12 @@ define(function (require) {
                 }
 
             } ])
-        .controller('SignOutCtrl', ['$scope', 'currentUser', 'eventbus',
-            function ($scope, currentUser, eventbus) {
+        .controller('SignOutCtrl', ['$scope', 'currentUser', 'eventbus', 'currentUserDetails',
+            function ($scope, currentUser, eventbus, currentUserDetails) {
 
                 $scope.init = function () {
                     currentUser.sign_out();
+                    currentUserDetails.clear();
                     eventbus.broadcast("userSignOut", currentUser.username);
                 }
 
