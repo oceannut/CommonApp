@@ -4,20 +4,19 @@ define(function (require) {
 
     require('ng-route');
 
-    require('./configs');
-    require('./events');
+    require('../../app/common/js/index-controllers');
     require('../../app/auth/js/auth-controllers');
     require('../../app/common/js/category-controllers');
     require('../../app/common/js/user-controllers');
 
     angular.module('Tutorials', ['ngRoute',
-            'configs',
-            'events',
+            'index.controllers',
             'auth.controllers',
             'category.controllers',
             'user.controllers'
         ])
-        .config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
+        .config(['$routeProvider', '$httpProvider', 
+            function ($routeProvider, $httpProvider) {
 
             $routeProvider.
                 when('/sign-in/', {
@@ -66,7 +65,7 @@ define(function (require) {
                         roles: ['admin']
                     }
                 }).
-                when('/user-role-overview/', {
+                when('/user-role-overview/:which/', {
                     templateUrl: 'app/common/partials/user-role-overview.htm',
                     controller: 'UserRoleOverviewCtrl',
                     access: {
@@ -74,8 +73,25 @@ define(function (require) {
                         roles: ['admin']
                     }
                 }).
+                when('/user-role-assign/:username/', {
+                    templateUrl: 'app/common/partials/user-role-assign.htm',
+                    controller: 'UserRoleAssignCtrl',
+                    access: {
+                        loginRequired: true,
+                        roles: ['admin']
+                    }
+                }).
+                when('/role-user-assign/:role/', {
+                    templateUrl: 'app/common/partials/role-user-assign.htm',
+                    controller: 'RoleUserAssignCtrl',
+                    access: {
+                        loginRequired: true,
+                        roles: ['admin']
+                    }
+                }).
                 when('/user-setting/:username/', {
                     templateUrl: 'app/common/partials/user-setting.htm',
+                    controller: 'UserSettingCtrl',
                     access: {
                         loginRequired: true
                     }
@@ -85,7 +101,8 @@ define(function (require) {
                 });
 
         } ])
-        .run(['$rootScope', '$location', 'authorizationType', 'authorization', function ($rootScope, $location, authorizationType, authorization) {
+        .run(['$rootScope', '$location', 'authorizationType', 'authorization', 
+            function ($rootScope, $location, authorizationType, authorization) {
             var routeChangeRequiredAfterLogin = false,
             loginRedirectUrl;
             $rootScope.$on('$routeChangeStart', function (event, next) {
@@ -105,65 +122,7 @@ define(function (require) {
                     }
                 }
             });
-        } ])
-        .controller('IndexCtrl', ['$scope', '$location', 'currentUser', 'eventbus', 'appName',
-            function ($scope, $location, currentUser, eventbus, appName) {
-
-                var homeNav = {
-                    "name": "首页",
-                    "url": "/home/",
-                    "active": ""
-                };
-                var categoryNav = {
-                    "name": "信息分类",
-                    "url": "/category-overview/",
-                    "active": ""
-                };
-                var userRoleNav = {
-                    "name": "用户/角色",
-                    "url": "/user-role-overview/",
-                    "active": ""
-                };
-
-                $scope.init = function () {
-
-                    $scope.appName = appName;
-                    $scope.makeNavbarVisible();
-                    $scope.navList = [homeNav, categoryNav, userRoleNav];
-
-                    eventbus.subscribe("userSignIn", function (e, data) {
-                        $scope.makeNavbarVisible();
-                        $scope.loginUser = {};
-                        $scope.loginUser.username = data;
-                        $scope.loginUser.name = currentUser.getName();
-                    });
-                    eventbus.subscribe("userSignOut", function (e, data) {
-                        $scope.makeNavbarVisible();
-                        $scope.loginUser = undefined;
-                    });
-                }
-
-                $scope.changeUrl = function (nav) {
-                    for (var i = 0; i < $scope.navList.length; i++) {
-                        var item = $scope.navList[i];
-                        if (item.name == nav.name) {
-                            item.active = "active";
-                            $location.path(item.url);
-                        } else {
-                            item.active = "";
-                        }
-                    }
-                }
-
-                $scope.makeNavbarVisible = function () {
-                    if (currentUser.isLogin()) {
-                        $scope.navbarVisible = '';
-                    } else {
-                        $scope.navbarVisible = 'none';
-                    }
-                }
-
-            } ]);
+        } ]);
 
     return {
         init: function () {

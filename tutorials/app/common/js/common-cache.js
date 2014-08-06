@@ -25,6 +25,12 @@ define(function (require) {
                             (callback || angular.noop)(details);
                         }
                     },
+                    set: function (e) {
+                        if (e != undefined && e != null) {
+                            details = e;
+                            isSync = true;
+                        }
+                    },
                     clear: function () {
                         details = undefined;
                         isSync = false;

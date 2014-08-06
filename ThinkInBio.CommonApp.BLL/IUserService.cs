@@ -12,6 +12,8 @@ namespace ThinkInBio.CommonApp.BLL
 
         void UpdateUser(User user);
 
+        void DeleteUser(string username);
+
         User GetUser(string username);
 
         bool IsUserExist(string username);
@@ -19,6 +21,10 @@ namespace ThinkInBio.CommonApp.BLL
         IList<User> GetUserList();
 
         string GetPwd(string username);
+
+        void SaveRole(string username, string role);
+
+        void DeleteRole(string username, string role);
 
     }
 }

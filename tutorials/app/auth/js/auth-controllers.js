@@ -33,10 +33,9 @@ define(function (require) {
                         .then(function (result) {
                             currentUser.sign_in($scope.login.username);
                             currentUserDetails.getAsync($scope.login.username, function (e) {
-                                currentUser.setName(e.Name);
-                                currentUser.setRoles(e.Roles);
+                                currentUser.setDetails({ "name": e.Name, "roles": e.Roles });
                                 eventbus.broadcast("userSignIn", $scope.login.username);
-                                $location.path('/home/');
+                                //$location.path('/home/');
                             });
                         }, function (error) {
                             $scope.alertMessageVisible = 'show';

@@ -7,23 +7,36 @@ define(function (require) {
             loginRequired: 1,
             notAuthorised: 2
         })
-        .factory("currentUser", function () {
+        .factory("currentUser", ['$log', function ($log) {
 
-            var username = '';
-            var name = '';
-            var roles;
+            var username, name, roles;
             var login = false;
 
             return {
                 sign_in: function (e) {
-                    username = e;
-                    login = true;
+                    if (e == undefined || e == '') {
+                        username = undefined;
+                        login = false;
+                        $log.error("Invalid user sign in");
+                    } else {
+                        username = e;
+                        login = true;
+                    }
                 },
                 sign_out: function () {
-                    username = '';
-                    name = '';
+                    username = undefined;
+                    name = undefined;
                     roles = undefined;
                     login = false;
+                },
+                setDetails: function (options) {
+                    options = options || {};
+                    if (options.name != undefined) {
+                        name = options.name;
+                    }
+                    if (options.roles != undefined) {
+                        roles = options.roles;
+                    }
                 },
                 getUsername: function () {
                     return username;
@@ -31,21 +44,15 @@ define(function (require) {
                 getName: function () {
                     return name;
                 },
-                setName: function (e) {
-                    name = e;
-                },
                 getRoles: function () {
                     return roles;
-                },
-                setRoles: function (e) {
-                    roles = e;
                 },
                 isLogin: function () {
                     return login;
                 }
             }
 
-        })
+        } ])
         .factory("authorization", ['authorizationType', 'currentUser', function (authorizationType, currentUser) {
 
             return {

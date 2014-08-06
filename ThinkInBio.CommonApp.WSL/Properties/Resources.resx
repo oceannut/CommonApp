@@ -126,6 +126,9 @@
   <data name="EmptyPwd" xml:space="preserve">
     <value>The pwd is empty.</value>
   </data>
+  <data name="EmptyRole" xml:space="preserve">
+    <value>The role is empty.</value>
+  </data>
   <data name="EmptyScope" xml:space="preserve">
     <value>The scope is empty.</value>
   </data>

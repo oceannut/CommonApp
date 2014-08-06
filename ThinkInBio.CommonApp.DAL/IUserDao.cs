@@ -13,7 +13,13 @@ namespace ThinkInBio.CommonApp.DAL
 
         string GetPwd(string username);
 
+        bool UpdateWithRoles(User entity);
+
         IList<User> GetList();
+
+        bool SaveRole(string username, string role);
+
+        bool DeleteRole(string username, string role);
 
     }
 

@@ -60,7 +60,7 @@ namespace ThinkInBio.CommonApp.MySQL
 
         public override bool Update(Category entity)
         {
-            return DbTemplate.Save(dataSource,
+            return DbTemplate.UpdateOrDelete(dataSource,
                 (command) =>
                 {
                     if (entity.ParentId > 0)

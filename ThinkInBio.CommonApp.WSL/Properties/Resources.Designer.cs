@@ -88,6 +88,15 @@ namespace ThinkInBio.CommonApp.WSL.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The role is empty..
+        /// </summary>
+        internal static string EmptyRole {
+            get {
+                return ResourceManager.GetString("EmptyRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The scope is empty..
         /// </summary>
         internal static string EmptyScope {

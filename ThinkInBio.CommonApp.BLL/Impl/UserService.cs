@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using ThinkInBio.Common.Exceptions;
 using ThinkInBio.CommonApp;
 using ThinkInBio.CommonApp.DAL;
 
@@ -31,6 +32,16 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             }
 
             UserDao.Update(user);
+        }
+
+        public void DeleteUser(string username)
+        {
+            User user = GetUser(username);
+            if (user == null)
+            {
+                throw new ObjectNotFoundException(username);
+            }
+            UserDao.Delete(user);
         }
 
         public User GetUser(string username)
@@ -67,6 +78,27 @@ namespace ThinkInBio.CommonApp.BLL.Impl
 
             return UserDao.GetPwd(username);
         }
+
+        public void SaveRole(string username, string role)
+        {
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(role))
+            {
+                throw new ArgumentNullException();
+            }
+
+            UserDao.SaveRole(username, role);
+        }
+
+        public void DeleteRole(string username, string role)
+        {
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(role))
+            {
+                throw new ArgumentNullException();
+            }
+
+            UserDao.DeleteRole(username, role);
+        }
+
 
     }
 }
