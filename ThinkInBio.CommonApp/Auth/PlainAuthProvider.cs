@@ -19,8 +19,9 @@ namespace ThinkInBio.CommonApp
                 throw new ArgumentNullException();
             }
 
-            string encryptPwd = PasswordProvider.Encrypt(pwd);
-            return encryptPwd == user.Pwd;
+            //string encryptPwd = PasswordProvider.Encrypt(pwd);
+            //return encryptPwd == user.Pwd;
+            return pwd == user.Pwd;
         }
 
     }

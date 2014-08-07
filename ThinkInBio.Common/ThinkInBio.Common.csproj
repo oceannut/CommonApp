@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\ICache.cs" />
     <Compile Include="Data\GenericDao.cs" />
     <Compile Include="Data\IDao.cs" />
     <Compile Include="Data\SQLHelper.cs" />
@@ -47,6 +48,7 @@
     <Compile Include="ExceptionHandling\IExceptionHandler.cs" />
     <Compile Include="Exceptions\AuthorizationException.cs" />
     <Compile Include="Exceptions\BusinessLayerException.cs" />
+    <Compile Include="Exceptions\CacheException.cs" />
     <Compile Include="Exceptions\ObjectNotFoundException.cs" />
     <Compile Include="Exceptions\CyclicInheritanceException.cs" />
     <Compile Include="Exceptions\ObjectAlreadyExistedException.cs" />

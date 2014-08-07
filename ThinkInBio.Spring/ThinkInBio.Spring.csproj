@@ -34,6 +34,10 @@
     <Reference Include="Spring.Aop">
       <HintPath>..\..\references\Spring.NET\2.0.0-M2\Spring.Aop.dll</HintPath>
     </Reference>
+    <Reference Include="Spring.Core, Version=2.0.0.40000, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\references\Spring.NET\2.0.0-M2\Spring.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Spring.Services">
       <HintPath>..\..\references\Spring.NET\2.0.0-M2\Spring.Services.dll</HintPath>
     </Reference>
@@ -52,6 +56,7 @@
     <Compile Include="Aop\ThrowsAdvice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceModel\SecureWebServiceHostFactory.cs" />
+    <Compile Include="ServiceModel\SessionServiceAuthorizationManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ThinkInBio.Common\ThinkInBio.Common.csproj">

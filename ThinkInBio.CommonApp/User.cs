@@ -51,6 +51,11 @@ namespace ThinkInBio.CommonApp
         /// </summary>
         public DateTime Modification { get; set; }
 
+        /// <summary>
+        /// 最近一次登录时间。
+        /// </summary>
+        public DateTime? LastLogin { get; set; }
+
         #endregion
 
         #region constructors

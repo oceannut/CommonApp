@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+using Microsoft.Practices.EnterpriseLibrary.Caching;
+using Microsoft.Practices.EnterpriseLibrary.Caching.Expirations;
+
+namespace ThinkInBio.Entlib.Caching
+{
+
+    //public class AutoRefreshAction : ICacheItemRefreshAction
+    //{
+
+    //    protected readonly ICacheManager cache;
+
+    //    public AutoRefreshAction(string cacheName)
+    //    {
+    //        if (cacheName == null)
+    //        {
+    //            throw new ArgumentNullException();
+    //        }
+    //        this.cache = CacheFactory.GetCacheManager(cacheName);
+    //    }
+
+    //    public void Refresh(string removedKey, object expiredValue, CacheItemRemovedReason removalReason)
+    //    {
+    //        if (removalReason == CacheItemRemovedReason.Expired)
+    //        {
+    //            cache.Add(removedKey, expiredValue);
+    //        }
+    //    }
+
+    //}
+
+}

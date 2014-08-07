@@ -22,6 +22,10 @@ WCF, RESTful Web Services and custom authentication
 http://stackoverflow.com/questions/6021612/wcf-restful-web-services-and-custom-authentication
 
 
+Flickr Authentication API
+https://www.flickr.com/services/api/auth.spec.html
+
+
 DevDefined.OAuth
 https://github.com/bittercoder/DevDefined.OAuth
 

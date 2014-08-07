@@ -8,13 +8,12 @@ define(function (require) {
     require('./auth-models');
     require('./auth-services');
     require('../../common/js/user-services');
-    require('../../common/js/common-cache');
 
     require('../../../static/css/sign.css');
 
-    angular.module('auth.controllers', ['configs', 'events', 'auth.models', 'auth.services', 'user.services', 'common.cache'])
-        .controller('SignInCtrl', ['$scope', '$location', '$log', 'currentUser', 'eventbus', 'SignInService', 'currentUserDetails',
-            function ($scope, $location, $log, currentUser, eventbus, SignInService, currentUserDetails) {
+    angular.module('auth.controllers', ['configs', 'events', 'auth.models', 'auth.services', 'user.services'])
+        .controller('SignInCtrl', ['$scope', '$location', '$log', 'currentUser', 'eventbus', 'SignInService',
+            function ($scope, $location, $log, currentUser, eventbus, SignInService) {
 
                 $scope.init = function () {
                     $scope.alertMessageVisible = 'hidden';
@@ -25,18 +24,24 @@ define(function (require) {
                 $scope.signin = function () {
                     $scope.alertMessageVisible = 'hidden';
                     $scope.isLoging = true;
+
+                    var hashObj = new jsSHA($scope.login.pwd, 'TEXT');
+                    var hashPwd = hashObj.getHash(
+					    'SHA-1',
+					    'B64',
+					    parseInt(1, 10)
+                    );
+
                     SignInService.save({
                         'username': $scope.login.username,
-                        'pwd': $scope.login.pwd
+                        'pwd': hashPwd
                     })
                     .$promise
                         .then(function (result) {
-                            currentUser.sign_in($scope.login.username);
-                            currentUserDetails.getAsync($scope.login.username, function (e) {
-                                currentUser.setDetails({ "name": e.Name, "roles": e.Roles });
-                                eventbus.broadcast("userSignIn", $scope.login.username);
-                                //$location.path('/home/');
-                            });
+                            currentUser.sign_in($scope.login.username, hashPwd);
+                            currentUser.setDetails({ "name": result.Name, "roles": result.Roles });
+                            eventbus.broadcast("userSignIn", $scope.login.username);
+                            $location.path('/home/');
                         }, function (error) {
                             $scope.alertMessageVisible = 'show';
                             if (error.status == '400') {
@@ -133,12 +138,11 @@ define(function (require) {
                 }
 
             } ])
-        .controller('SignOutCtrl', ['$scope', 'currentUser', 'eventbus', 'currentUserDetails',
-            function ($scope, currentUser, eventbus, currentUserDetails) {
+        .controller('SignOutCtrl', ['$scope', 'currentUser', 'eventbus',
+            function ($scope, currentUser, eventbus) {
 
                 $scope.init = function () {
                     currentUser.sign_out();
-                    currentUserDetails.clear();
                     eventbus.broadcast("userSignOut", currentUser.username);
                 }
 

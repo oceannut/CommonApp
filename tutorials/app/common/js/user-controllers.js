@@ -228,23 +228,17 @@ define(function (require) {
                 }
 
             } ])
-        .controller('UserSettingCtrl', ['$scope', '$routeParams', '$log', 'UserService', 'currentUser', 'currentUserDetails', 'eventbus',
-            function ($scope, $routeParams, $log, UserService, currentUser, currentUserDetails, eventbus) {
+        .controller('UserSettingCtrl', ['$scope', '$routeParams', '$log', 'UserService', 'currentUser', 'userCache', 'eventbus',
+            function ($scope, $routeParams, $log, UserService, currentUser, userCache, eventbus) {
 
                 $scope.init = function () {
                     $scope.alertMessageVisible = 'hidden';
                     $scope.user = {};
                     $scope.isBusy = false;
 
-                    UserService.get({ "username": $routeParams.username })
-                        .$promise
-                            .then(function (result) {
-                                $scope.user = result;
-                            }, function (error) {
-                                $scope.alertMessageVisible = 'show';
-                                $scope.alertMessage = "提示：加载用户失败";
-                                $log.error(error);
-                            });
+                    userCache.getAsync($routeParams.username, function (result) {
+                        $scope.user = result;
+                    });
                 }
 
                 $scope.save = function () {
@@ -258,7 +252,8 @@ define(function (require) {
                             $scope.isSuccess = true;
                             $scope.alertMessageVisible = 'show';
                             $scope.alertMessage = "提示：修改成功";
-                            currentUserDetails.set($scope.user);
+                            userCache.remove($scope.user.Name);
+                            userCache.add($scope.user);
                             currentUser.setDetails({ "name": $scope.user.Name, "roles": $scope.user.Roles });
                             eventbus.broadcast("userModified", $scope.user.Username);
                         }, function (error) {

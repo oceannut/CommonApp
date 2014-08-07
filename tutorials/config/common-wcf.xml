@@ -9,6 +9,7 @@
     <property name="AuthProvider" ref="PlainAuthProvider" />
     <property name="PasswordProvider" ref="PlainPasswordProvider" />
     <property name="ExceptionHandler" ref="LogOnlyExceptionHandler" />
+    <property name="Session" ref="SessionCache"/>
     <property name="DefaultRoles">
       <list>
         <value>user</value>

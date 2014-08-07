@@ -15,114 +15,134 @@ define(function (require) {
             'category.controllers',
             'user.controllers'
         ])
-        .config(['$routeProvider', '$httpProvider', 
+        .config(['$routeProvider', '$httpProvider',
             function ($routeProvider, $httpProvider) {
 
-            $routeProvider.
-                when('/sign-in/', {
-                    templateUrl: 'app/auth/partials/sign-in.htm',
-                    controller: 'SignInCtrl'
-                }).
-                when('/sign-up/', {
-                    templateUrl: 'app/auth/partials/sign-up.htm',
-                    controller: 'SignUpCtrl'
-                }).
-                when('/sign-out/', {
-                    templateUrl: 'app/auth/partials/sign-out.htm',
-                    controller: 'SignOutCtrl'
-                }).
-                when('/not-authorised/', {
-                    templateUrl: 'app/auth/partials/not-authorised.htm'
-                }).
-                when('/home/', {
-                    templateUrl: 'app/common/partials/home.htm',
-                    access: {
-                        loginRequired: true,
-                        roles: ['user', 'admin']
+                $routeProvider.
+                    when('/sign-in/', {
+                        templateUrl: 'app/auth/partials/sign-in.htm',
+                        controller: 'SignInCtrl'
+                    }).
+                    when('/sign-up/', {
+                        templateUrl: 'app/auth/partials/sign-up.htm',
+                        controller: 'SignUpCtrl'
+                    }).
+                    when('/sign-out/', {
+                        templateUrl: 'app/auth/partials/sign-out.htm',
+                        controller: 'SignOutCtrl'
+                    }).
+                    when('/not-authorised/', {
+                        templateUrl: 'app/auth/partials/not-authorised.htm'
+                    }).
+                    when('/home/', {
+                        templateUrl: 'app/common/partials/home.htm',
+                        access: {
+                            loginRequired: true
+                        }
+                    }).
+                    when('/category-overview/', {
+                        templateUrl: 'app/common/partials/category-overview.htm',
+                        controller: 'CategoryOverviewCtrl',
+                        access: {
+                            loginRequired: true,
+                            roles: ['admin']
+                        }
+                    }).
+                    when('/category-list/:scope/', {
+                        templateUrl: 'app/common/partials/category-list.htm',
+                        controller: 'CategoryListCtrl',
+                        access: {
+                            loginRequired: true,
+                            roles: ['admin']
+                        }
+                    }).
+                    when('/category-edit/:scope/:id/', {
+                        templateUrl: 'app/common/partials/category-edit.htm',
+                        controller: 'CategoryEditCtrl',
+                        access: {
+                            loginRequired: true,
+                            roles: ['admin']
+                        }
+                    }).
+                    when('/user-role-overview/:which/', {
+                        templateUrl: 'app/common/partials/user-role-overview.htm',
+                        controller: 'UserRoleOverviewCtrl',
+                        access: {
+                            loginRequired: true,
+                            roles: ['admin']
+                        }
+                    }).
+                    when('/user-role-assign/:username/', {
+                        templateUrl: 'app/common/partials/user-role-assign.htm',
+                        controller: 'UserRoleAssignCtrl',
+                        access: {
+                            loginRequired: true,
+                            roles: ['admin']
+                        }
+                    }).
+                    when('/role-user-assign/:role/', {
+                        templateUrl: 'app/common/partials/role-user-assign.htm',
+                        controller: 'RoleUserAssignCtrl',
+                        access: {
+                            loginRequired: true,
+                            roles: ['admin']
+                        }
+                    }).
+                    when('/user-setting/:username/', {
+                        templateUrl: 'app/common/partials/user-setting.htm',
+                        controller: 'UserSettingCtrl',
+                        access: {
+                            loginRequired: true
+                        }
+                    }).
+                    otherwise({
+                        redirectTo: '/sign-in/'
+                    });
+
+                $httpProvider.interceptors.push(['$q', '$location', function ($q, $location) {
+                    return {
+                        'responseError': function (rejection) {
+                            console.log('responseError');
+                            if (405 === rejection.status) {
+                                $location.path("/not-authorised/").replace();
+                            } else if (401 === rejection.status) {
+                                $location.path("/sign-in/");
+                            }
+                            return $q.reject(rejection);
+                        }
+                    };
+                } ]);
+
+            } ])
+        .run(['$http', '$rootScope', '$location', 'authorizationType', 'authorization', 'currentUser',
+            function ($http, $rootScope, $location, authorizationType, authorization, currentUser) {
+
+                var routeChangeRequiredAfterLogin = false, loginRedirectUrl;
+                $rootScope.$on('$routeChangeStart', function (event, next) {
+
+                    var authorised;
+                    if (routeChangeRequiredAfterLogin && next.originalPath !== "/sign-in/") {
+                        routeChangeRequiredAfterLogin = false;
+                        $location.path(loginRedirectUrl).replace();
+                    } else if (next.access !== undefined) {
+                        authorised = authorization.authorize(next.access.loginRequired,
+                                                     next.access.roles);
+                        if (authorised === authorizationType.loginRequired) {
+                            routeChangeRequiredAfterLogin = true;
+                            loginRedirectUrl = next.originalPath;
+                            $location.path("/sign-in/");
+                        } else if (authorised === authorizationType.notAuthorised) {
+                            $location.path("/not-authorised/").replace();
+                        }
+                        var userToken = currentUser.getUsername();
+                        if (userToken != undefined) {
+                            $http.defaults.headers.common.Authorization = 'Basic ' + userToken + ' ' + currentUser.getSignature();
+                        }
                     }
-                }).
-                when('/category-overview/', {
-                    templateUrl: 'app/common/partials/category-overview.htm',
-                    controller: 'CategoryOverviewCtrl',
-                    access: {
-                        loginRequired: true,
-                        roles: ['admin']
-                    }
-                }).
-                when('/category-list/:scope/', {
-                    templateUrl: 'app/common/partials/category-list.htm',
-                    controller: 'CategoryListCtrl',
-                    access: {
-                        loginRequired: true,
-                        roles: ['admin']
-                    }
-                }).
-                when('/category-edit/:scope/:id/', {
-                    templateUrl: 'app/common/partials/category-edit.htm',
-                    controller: 'CategoryEditCtrl',
-                    access: {
-                        loginRequired: true,
-                        roles: ['admin']
-                    }
-                }).
-                when('/user-role-overview/:which/', {
-                    templateUrl: 'app/common/partials/user-role-overview.htm',
-                    controller: 'UserRoleOverviewCtrl',
-                    access: {
-                        loginRequired: true,
-                        roles: ['admin']
-                    }
-                }).
-                when('/user-role-assign/:username/', {
-                    templateUrl: 'app/common/partials/user-role-assign.htm',
-                    controller: 'UserRoleAssignCtrl',
-                    access: {
-                        loginRequired: true,
-                        roles: ['admin']
-                    }
-                }).
-                when('/role-user-assign/:role/', {
-                    templateUrl: 'app/common/partials/role-user-assign.htm',
-                    controller: 'RoleUserAssignCtrl',
-                    access: {
-                        loginRequired: true,
-                        roles: ['admin']
-                    }
-                }).
-                when('/user-setting/:username/', {
-                    templateUrl: 'app/common/partials/user-setting.htm',
-                    controller: 'UserSettingCtrl',
-                    access: {
-                        loginRequired: true
-                    }
-                }).
-                otherwise({
-                    redirectTo: '/sign-in/'
+
                 });
 
-        } ])
-        .run(['$rootScope', '$location', 'authorizationType', 'authorization', 
-            function ($rootScope, $location, authorizationType, authorization) {
-            var routeChangeRequiredAfterLogin = false,
-            loginRedirectUrl;
-            $rootScope.$on('$routeChangeStart', function (event, next) {
-                var authorised;
-                if (routeChangeRequiredAfterLogin && next.originalPath !== "/sign-in/") {
-                    routeChangeRequiredAfterLogin = false;
-                    $location.path(loginRedirectUrl).replace();
-                } else if (next.access !== undefined) {
-                    authorised = authorization.authorize(next.access.loginRequired,
-                                                     next.access.roles);
-                    if (authorised === authorizationType.loginRequired) {
-                        routeChangeRequiredAfterLogin = true;
-                        loginRedirectUrl = next.originalPath;
-                        $location.path("/sign-in/");
-                    } else if (authorised === authorizationType.notAuthorised) {
-                        $location.path("/not-authorised/").replace();
-                    }
-                }
-            });
-        } ]);
+            } ]);
 
     return {
         init: function () {

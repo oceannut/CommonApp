@@ -7,6 +7,7 @@ using System.ServiceModel.Web;
 
 using ThinkInBio.Common.Exceptions;
 using ThinkInBio.Common.ExceptionHandling;
+using ThinkInBio.Common.Caching;
 using ThinkInBio.CommonApp;
 using ThinkInBio.CommonApp.BLL;
 using R = ThinkInBio.CommonApp.WSL.Properties.Resources;
@@ -21,9 +22,10 @@ namespace ThinkInBio.CommonApp.WSL.Impl
         internal IAuthProvider AuthProvider { get; set; }
         internal IPasswordProvider PasswordProvider { get; set; }
         internal IExceptionHandler ExceptionHandler { get; set; }
+        internal ICache Session { get; set; }
         internal IList<string> DefaultRoles { get; set; }
 
-        public void SignIn(string username, string pwd)
+        public User SignIn(string username, string pwd)
         {
             if (string.IsNullOrWhiteSpace(username))
             {
@@ -47,6 +49,10 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 {
                     throw new WebFaultException(HttpStatusCode.Forbidden);
                 }
+                user.LastLogin = DateTime.Now;
+                Session.Add(username, user.Pwd);
+
+                return user;
             }
             catch (BusinessLayerException ex)
             {

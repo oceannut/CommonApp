@@ -20,8 +20,20 @@
     <property name="InnerExceptionHandler" ref="FileLogExceptionHandler"/>
   </object>
 
+  <object id="LogRefreshAction" type="ThinkInBio.Entlib.Caching.LogRefreshAction, ThinkInBio.Entlib">
+  </object>
+  
+  <object id="SessionCache" type="ThinkInBio.Entlib.Caching.SlideTimingCache, ThinkInBio.Entlib">
+    <constructor-arg type="double" value="1"/>
+    <property name="CacheItemRefreshAction" ref="LogRefreshAction"/>
+  </object>
+
   <object id="ThrowsAdvice" type="ThinkInBio.Spring.Aop.ThrowsAdvice, ThinkInBio.Spring">
     <property name="ExceptionHandler" ref="WrapExceptionHandler"/>
+  </object>
+
+  <object id="SessionServiceAuthorizationManager" type="ThinkInBio.Spring.ServiceModel.SessionServiceAuthorizationManager, ThinkInBio.Spring">
+    <property name="Session" ref="SessionCache"/>
   </object>
 
   <object id="TxProxyConfigurationTemplate" abstract="true"

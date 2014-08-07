@@ -38,7 +38,6 @@ define(function (require) {
                         $scope.loginUser = {};
                         $scope.loginUser.username = data;
                         $scope.loginUser.name = currentUser.getName();
-                        $scope.changeUrl(homeNav);
                     });
                     eventbus.subscribe("userSignOut", function (e, data) {
                         $scope.makeNavbarVisible();

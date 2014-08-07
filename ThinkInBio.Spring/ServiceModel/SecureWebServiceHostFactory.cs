@@ -7,6 +7,8 @@ using System.ServiceModel.Web;
 using System.Net;
 
 using SSMA = Spring.ServiceModel.Activation;
+using SC = Spring.Context;
+using SCS = Spring.Context.Support;
 
 namespace ThinkInBio.Spring.ServiceModel
 {
@@ -21,35 +23,22 @@ namespace ThinkInBio.Spring.ServiceModel
     public class SecureWebServiceHostFactory : SSMA.WebServiceHostFactory
     {
 
+        private static SC.IApplicationContext context = SCS.ContextRegistry.GetContext();
+
         public override System.ServiceModel.ServiceHostBase CreateServiceHost(string reference, Uri[] baseAddresses)
         {
             var host = base.CreateServiceHost(reference, baseAddresses);
-            host.Authorization.ServiceAuthorizationManager = new MyServiceAuthorizationManager();
+            host.Authorization.ServiceAuthorizationManager = context.GetObject<ServiceAuthorizationManager>("SessionServiceAuthorizationManager");
             return host;  
         }
 
         protected override System.ServiceModel.ServiceHost CreateServiceHost(Type serviceType, Uri[] baseAddresses)
         {
             var host = base.CreateServiceHost(serviceType, baseAddresses);
-            host.Authorization.ServiceAuthorizationManager = new MyServiceAuthorizationManager();
+            host.Authorization.ServiceAuthorizationManager = context.GetObject<ServiceAuthorizationManager>("SessionServiceAuthorizationManager");
             return host;  
         }
 
-    }
-
-    public class MyServiceAuthorizationManager : ServiceAuthorizationManager
-    {
-        protected override bool CheckAccessCore(OperationContext operationContext)
-        {
-            var ctx = WebOperationContext.Current;
-            var auth = ctx.IncomingRequest.Headers[HttpRequestHeader.Authorization];
-            if (string.IsNullOrEmpty(auth) || auth != "fangxing/123")
-            {
-                ctx.OutgoingResponse.StatusCode = HttpStatusCode.MethodNotAllowed;
-                return false;
-            }
-            return true;
-        }
     }
 
 }

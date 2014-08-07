@@ -9,22 +9,25 @@ define(function (require) {
         })
         .factory("currentUser", ['$log', function ($log) {
 
-            var username, name, roles;
+            var username, pwd, name, roles;
             var login = false;
 
             return {
-                sign_in: function (e) {
-                    if (e == undefined || e == '') {
+                sign_in: function (userToken, signature) {
+                    if (userToken == undefined || userToken == '') {
                         username = undefined;
+                        pwd = undefined;
                         login = false;
                         $log.error("Invalid user sign in");
                     } else {
-                        username = e;
+                        username = userToken;
+                        pwd = signature;
                         login = true;
                     }
                 },
                 sign_out: function () {
                     username = undefined;
+                    pwd = undefined;
                     name = undefined;
                     roles = undefined;
                     login = false;
@@ -40,6 +43,9 @@ define(function (require) {
                 },
                 getUsername: function () {
                     return username;
+                },
+                getSignature: function () {
+                    return pwd;
                 },
                 getName: function () {
                     return name;

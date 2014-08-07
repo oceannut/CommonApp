@@ -21,7 +21,7 @@ namespace ThinkInBio.CommonApp.WSL
             UriTemplate = "/signin/{username}/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        void SignIn(string username, string pwd);
+        User SignIn(string username, string pwd);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
