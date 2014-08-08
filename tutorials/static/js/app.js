@@ -4,14 +4,14 @@ define(function (require) {
 
     require('ng-route');
 
-    require('../../app/common/js/index-controllers');
     require('../../app/auth/js/auth-controllers');
+    require('../../app/common/js/index-controllers');
     require('../../app/common/js/category-controllers');
     require('../../app/common/js/user-controllers');
 
     angular.module('Tutorials', ['ngRoute',
-            'index.controllers',
             'auth.controllers',
+            'index.controllers',
             'category.controllers',
             'user.controllers'
         ])
@@ -33,6 +33,14 @@ define(function (require) {
                     }).
                     when('/not-authorised/', {
                         templateUrl: 'app/auth/partials/not-authorised.htm'
+                    }).
+                    when('/not-authenticated/', {
+                        templateUrl: 'app/auth/partials/not-authenticated.htm',
+                        controller: 'NotAuthenticatedCtrl'
+                    }).
+                    when('/session-out/', {
+                        templateUrl: 'app/auth/partials/session-out.htm',
+                        controller: 'SessionOutCtrl'
                     }).
                     when('/home/', {
                         templateUrl: 'app/common/partials/home.htm',
@@ -102,11 +110,11 @@ define(function (require) {
                 $httpProvider.interceptors.push(['$q', '$location', function ($q, $location) {
                     return {
                         'responseError': function (rejection) {
-                            console.log('responseError');
+                            console.log(rejection);
                             if (405 === rejection.status) {
-                                $location.path("/not-authorised/").replace();
+                                $location.path("/not-authenticated/").replace();
                             } else if (401 === rejection.status) {
-                                $location.path("/sign-in/");
+                                $location.path("/session-out/");
                             }
                             return $q.reject(rejection);
                         }

@@ -4,21 +4,23 @@
         用户注册</h3>
     <div class="form-group has-feedback {{usernameStatus}}">
         <input type="text" class="form-control" placeholder="用户名" id="username" name="username"
-            ng-model="user.username" ng-maxlength="32" ng-blur="usernameChanged()" ng-disabled="usernameDisabled"
-            required autofocus>
+            ng-model="user.username" ng-maxlength="32" ng-pattern="/^([a-zA-Z0-9_\-])+$/"
+            ng-blur="usernameChanged()" ng-disabled="usernameDisabled" required autofocus>
         <label class="control-label" for="code">
             {{usernameFeedbackText}}</label>
         <p class="help-block">
             （<span class="text-info">文本长度限制在32个字符内</span>）</p>
         <span class="text-danger" ng-show="form.username.$error.maxlength">警告：用户名太长</span>
+        <span class="text-danger" ng-show="form.username.$error.pattern">警告：用户名只能是由字母和数字，或者是_和-的组合。</span>
         <span class="form-control-feedback fa {{usernameFeedback}}"></span>
     </div>
     <div class="form-group">
         <input type="password" class="form-control" placeholder="密码" name="pwd" ng-model="user.pwd"
-            ng-maxlength="32" required>
+            ng-maxlength="32" ng-pattern="/^([a-zA-Z0-9])+$/" required>
         <p class="help-block">
             （<span class="text-info">文本长度限制在32个字符内</span>）</p>
-        <span class="text-danger" ng-show="form.pwd.$error.maxlength">警告：密码太长</span>
+        <span class="text-danger" ng-show="form.pwd.$error.maxlength">警告：密码太长</span> <span
+            class="text-danger" ng-show="form.pwd.$error.pattern">警告：密码只能是由字母和数字的组合。</span>
     </div>
     <div class="form-group" ng-class="{'has-error':!isSamePwd, '':isSamePwd}">
         <input type="password" class="form-control" placeholder="验证密码" name="pwd2" ng-model="user.pwd2"

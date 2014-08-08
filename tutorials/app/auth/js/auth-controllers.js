@@ -7,11 +7,10 @@ define(function (require) {
     require('../../../static/js/events');
     require('./auth-models');
     require('./auth-services');
-    require('../../common/js/user-services');
 
     require('../../../static/css/sign.css');
 
-    angular.module('auth.controllers', ['configs', 'events', 'auth.models', 'auth.services', 'user.services'])
+    angular.module('auth.controllers', ['configs', 'events', 'auth.models', 'auth.services'])
         .controller('SignInCtrl', ['$scope', '$location', '$log', 'currentUser', 'eventbus', 'SignInService',
             function ($scope, $location, $log, currentUser, eventbus, SignInService) {
 
@@ -61,8 +60,8 @@ define(function (require) {
                 }
 
             } ])
-        .controller('SignUpCtrl', ['$scope', '$location', '$log', 'UserService', 'SignUpService',
-            function ($scope, $location, $log, UserService, SignUpService) {
+        .controller('SignUpCtrl', ['$scope', '$location', '$log', 'UserService', 'SignUpService', 'SignUpService2',
+            function ($scope, $location, $log, UserService, SignUpService, SignUpService2) {
 
                 var lastUsername;
 
@@ -83,24 +82,22 @@ define(function (require) {
                         $scope.usernameFeedback = "fa-spin fa-spinner";
                         $scope.usernameFeedbackText = "";
 
-                        UserService.get({ "username": $scope.user.username })
-                            .$promise
-                                .then(function (result) {
-                                    if (result.Username === undefined) {
-                                        $scope.usernameStatus = "has-success";
-                                        $scope.usernameFeedback = "fa-check";
-                                    } else {
-                                        $scope.usernameStatus = "has-error";
-                                        $scope.usernameFeedback = "fa-exclamation-triangle";
-                                        $scope.usernameFeedbackText = "此用户名已被使用，请换一个。";
-                                    }
-                                }, function (error) {
-                                    $log.error(error);
-                                })
-                                .then(function () {
-                                    $scope.usernameDisabled = false;
-                                });
-
+                        SignUpService2.isUsernameExist($scope.user.username,
+                            function (data, status) {
+                                $scope.usernameDisabled = false;
+                                if (data === 'false') {
+                                    $scope.usernameStatus = "has-success";
+                                    $scope.usernameFeedback = "fa-check";
+                                } else {
+                                    $scope.usernameStatus = "has-error";
+                                    $scope.usernameFeedback = "fa-exclamation-triangle";
+                                    $scope.usernameFeedbackText = "此用户名已被使用，请换一个。";
+                                }
+                            },
+                            function (data, status) {
+                                $scope.usernameDisabled = false;
+                                $log.error(error);
+                            });
                     } else if ($scope.user.username == undefined || $scope.user.username == "") {
                         $scope.usernameStatus = "";
                         $scope.usernameFeedback = "";
@@ -139,6 +136,24 @@ define(function (require) {
 
             } ])
         .controller('SignOutCtrl', ['$scope', 'currentUser', 'eventbus',
+            function ($scope, currentUser, eventbus) {
+
+                $scope.init = function () {
+                    currentUser.sign_out();
+                    eventbus.broadcast("userSignOut", currentUser.username);
+                }
+
+            } ])
+        .controller('SessionOutCtrl', ['$scope', '$location', 'currentUser', 'eventbus',
+            function ($scope, $location, currentUser, eventbus) {
+
+                $scope.init = function () {
+                    currentUser.sign_out();
+                    eventbus.broadcast("userSignOut", currentUser.username);
+                }
+
+            } ])
+        .controller('NotAuthenticatedCtrl', ['$scope', 'currentUser', 'eventbus',
             function ($scope, currentUser, eventbus) {
 
                 $scope.init = function () {

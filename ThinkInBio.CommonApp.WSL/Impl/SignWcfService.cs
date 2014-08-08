@@ -61,6 +61,23 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             }
         }
 
+        public bool IsUsernameExist(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                throw new WebFaultException<string>(R.EmptyUsername, HttpStatusCode.BadRequest);
+            }
+            try
+            {
+                return UserService.IsUserExist(username);
+            }
+            catch (BusinessLayerException ex)
+            {
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
+            }
+        }
+
         public void SignUp(string username, string pwd, string name)
         {
             if (string.IsNullOrWhiteSpace(username))

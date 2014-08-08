@@ -24,7 +24,7 @@
   </object>
   
   <object id="SessionCache" type="ThinkInBio.Entlib.Caching.SlideTimingCache, ThinkInBio.Entlib">
-    <constructor-arg type="double" value="1"/>
+    <constructor-arg type="double" value="30"/>
     <property name="CacheItemRefreshAction" ref="LogRefreshAction"/>
   </object>
 

@@ -24,6 +24,12 @@ namespace ThinkInBio.CommonApp.WSL
         User SignIn(string username, string pwd);
 
         [OperationContract]
+        [WebGet(UriTemplate = "/signup/{username}/",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool IsUsernameExist(string username);
+
+        [OperationContract]
         [WebInvoke(Method = "POST",
             BodyStyle = WebMessageBodyStyle.WrappedRequest,
             UriTemplate = "/signup/{username}/",
