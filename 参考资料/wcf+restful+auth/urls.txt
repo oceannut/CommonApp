@@ -61,3 +61,10 @@ http://stackoverflow.com/questions/18325324/angularjs-authentication-restful-api
 URL Route Authorization and Security in Angular
 http://jonsamwell.com/url-route-authorization-and-security-in-angular/
 https://github.com/jonsamwell/blog_examples/tree/master/angular-route-authorisation
+
+
+PrincipalPermissionMode Enumeration
+http://msdn.microsoft.com/en-us/library/system.servicemodel.description.principalpermissionmode.aspx
+
+WCF安全之基于自定义声明授权策略
+http://www.cnblogs.com/viter/archive/2009/07/05/1517162.html

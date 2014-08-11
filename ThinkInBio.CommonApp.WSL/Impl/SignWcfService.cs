@@ -18,12 +18,11 @@ namespace ThinkInBio.CommonApp.WSL.Impl
     public class SignWcfService : ISignWcfService
     {
 
-        internal IUserService UserService { get; set; }
-        internal IAuthProvider AuthProvider { get; set; }
         internal IPasswordProvider PasswordProvider { get; set; }
         internal IExceptionHandler ExceptionHandler { get; set; }
-        internal ICache Session { get; set; }
         internal IList<string> DefaultRoles { get; set; }
+        internal IUserService UserService { get; set; }
+        internal ISignService SignService { get; set; }
 
         public User SignIn(string username, string pwd)
         {
@@ -43,16 +42,15 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 {
                     throw new WebFaultException(HttpStatusCode.NotFound);
                 }
-                user.Pwd = UserService.GetPwd(username);
-
-                if (!user.Authenticate(pwd, AuthProvider))
+                bool authenticated = SignService.SignIn(user, pwd);
+                if (!authenticated)
                 {
                     throw new WebFaultException(HttpStatusCode.Forbidden);
                 }
-                user.LastLogin = DateTime.Now;
-                Session.Add(username, user.Pwd);
-
-                return user;
+                else
+                {
+                    return user;
+                }
             }
             catch (BusinessLayerException ex)
             {
@@ -61,15 +59,25 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             }
         }
 
-        public bool IsUsernameExist(string username)
+        public void SignOut(string username, string pwd)
         {
             if (string.IsNullOrWhiteSpace(username))
             {
                 throw new WebFaultException<string>(R.EmptyUsername, HttpStatusCode.BadRequest);
             }
+
             try
             {
-                return UserService.IsUserExist(username);
+                User user = UserService.GetUser(username);
+                if (user == null)
+                {
+                    throw new WebFaultException(HttpStatusCode.NotFound);
+                }
+                bool authenticated = SignService.SignOut(user, pwd);
+                if (!authenticated)
+                {
+                    throw new WebFaultException(HttpStatusCode.Forbidden);
+                }
             }
             catch (BusinessLayerException ex)
             {
@@ -114,6 +122,24 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
             }
         }
+
+        public bool IsUsernameExist(string username)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                throw new WebFaultException<string>(R.EmptyUsername, HttpStatusCode.BadRequest);
+            }
+            try
+            {
+                return UserService.IsUserExist(username);
+            }
+            catch (BusinessLayerException ex)
+            {
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
+            }
+        }
+
     }
 
 }

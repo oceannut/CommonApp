@@ -30,7 +30,7 @@ namespace ThinkInBio.CommonApp
         /// <summary>
         /// 操作。
         /// </summary>
-        public string Method { get; set; }
+        public ThinkInBio.Common.Audit.TrailMethodType Method { get; set; }
 
         /// <summary>
         /// 备注。

@@ -101,7 +101,7 @@ namespace Test.ThinkInBio.CommonApp.MySQL
             Category entity = null;
 
             entity = new Category();
-            entity.Code = "diary";
+            entity.Code = "dairy";
             entity.Name = "日志";
             entity.Scope = "log";
             entity.Icon = "fa fa-sun-o";
@@ -214,7 +214,7 @@ namespace Test.ThinkInBio.CommonApp.MySQL
             Assert.AreEqual("test2", entityGet.Code);
             Assert.IsTrue(entity2.Equals(entityGet));
 
-            IList<Category> list = categoryDao.GetList("test", null, null);
+            IList<Category> list = categoryDao.GetList("test", null, null, null);
             Assert.IsNotNull(list);
             Assert.AreEqual(2, list.Count);
 
@@ -246,16 +246,16 @@ namespace Test.ThinkInBio.CommonApp.MySQL
             });
             Assert.IsTrue(entity2.Id > 0);
 
-            IList<Category> list = categoryDao.GetList("test", null, null);
+            IList<Category> list = categoryDao.GetList("test", null, null, null);
             Assert.IsNotNull(list);
             Assert.AreEqual(2, list.Count);
 
-            list = categoryDao.GetList("test", 0, null);
+            list = categoryDao.GetList("test", 0, null, null);
             Assert.IsNotNull(list);
             Assert.AreEqual(1, list.Count);
             Assert.AreEqual(entity, list[0]);
 
-            list = categoryDao.GetList("test", entity.Id, null);
+            list = categoryDao.GetList("test", entity.Id, null, null);
             Assert.IsNotNull(list);
             Assert.AreEqual(1, list.Count);
             Assert.AreEqual(entity2, list[0]);

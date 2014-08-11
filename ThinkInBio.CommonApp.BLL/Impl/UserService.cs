@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using ThinkInBio.Common.Audit;
 using ThinkInBio.Common.Exceptions;
 using ThinkInBio.CommonApp;
 using ThinkInBio.CommonApp.DAL;
@@ -24,6 +25,7 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             UserDao.Save(user);
         }
 
+        [Trail("User", TrailMethodType.Update)]
         public void UpdateUser(User user)
         {
             if (user == null)
@@ -79,6 +81,7 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             return UserDao.GetPwd(username);
         }
 
+        [Trail("Role", TrailMethodType.Create)]
         public void SaveRole(string username, string role)
         {
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(role))
@@ -89,6 +92,7 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             UserDao.SaveRole(username, role);
         }
 
+        [Trail("Role", TrailMethodType.Delete)]
         public void DeleteRole(string username, string role)
         {
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(role))

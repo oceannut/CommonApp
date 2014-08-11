@@ -76,7 +76,7 @@ namespace ThinkInBio.CommonApp.MySQL
             User user = DbTemplate.Get<User>(dataSource,
                 (command) =>
                 {
-                    command.CommandText = @"select username,name,_group,creation,modification from cyUser 
+                    command.CommandText = @"select username,name,_group,disused,creation,modification from cyUser 
                                                 where username=@username";
                     command.Parameters.Add(DbFactory.CreateParameter("username", id));
                 },
@@ -113,7 +113,7 @@ namespace ThinkInBio.CommonApp.MySQL
                 connection.Open();
                 using (IDbCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = "select u.username,u.name,u._group,u.creation,u.modification,r._role from cyUser u left join cyUserRole r on u.username=r.username";
+                    command.CommandText = "select u.username,u.name,u._group,u.disused,u.creation,u.modification,r._role from cyUser u left join cyUserRole r on u.username=r.username";
                     using (IDataReader reader = command.ExecuteReader())
                     {
                         string temp = string.Empty;
@@ -127,8 +127,9 @@ namespace ThinkInBio.CommonApp.MySQL
                                 entity = new User(username,
                                     reader.IsDBNull(1) ? null : reader.GetString(1),
                                     reader.IsDBNull(2) ? null : reader.GetString(2),
-                                    reader.GetDateTime(3),
-                                    reader.GetDateTime(4));
+                                    reader.GetBoolean(3),
+                                    reader.GetDateTime(4),
+                                    reader.GetDateTime(5));
                                 list.Add(entity);
                             }
                             string role = reader.IsDBNull(5) ? string.Empty : reader.GetString(5);
@@ -190,10 +191,11 @@ namespace ThinkInBio.CommonApp.MySQL
                 (command) =>
                 {
                     command.CommandText = @"update cyUser
-                                                set name=@name,_group=@group,modification=@modification
+                                                set name=@name,_group=@group,disused=@disused,modification=@modification
                                                 where username=@username";
                     command.Parameters.Add(DbFactory.CreateParameter("name", entity.Name));
                     command.Parameters.Add(DbFactory.CreateParameter("group", entity.Group));
+                    command.Parameters.Add(DbFactory.CreateParameter("disused", entity.Disused));
                     command.Parameters.Add(DbFactory.CreateParameter("modification", entity.Modification));
                     command.Parameters.Add(DbFactory.CreateParameter("username", entity.Username));
                 });
@@ -260,8 +262,9 @@ namespace ThinkInBio.CommonApp.MySQL
             User entity = new User(reader.GetString(0),
                 reader.IsDBNull(1) ? null : reader.GetString(1),
                 reader.IsDBNull(2) ? null : reader.GetString(2),
-                reader.GetDateTime(3),
-                reader.GetDateTime(4));
+                reader.GetBoolean(3),
+                reader.GetDateTime(4),
+                reader.GetDateTime(5));
 
             return entity;
         }

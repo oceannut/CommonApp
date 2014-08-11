@@ -1,51 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="ThinkInBio.CommonApp.Category" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="7.25" Y="0.75" Width="1.5" />
+    <Position X="5.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAIABAAAgACAAgAAgAAQAAAAABMAAAgAAAAEAAAA=</HashCode>
+      <HashCode>AAACAIABAAAgACAAgAAgAAQAIAAEBMIAAgAAAAEAAAA=</HashCode>
       <FileName>Category.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="ThinkInBio.CommonApp.TreeNode&lt;T&gt;" Collapsed="true">
-    <Position X="9" Y="1.75" Width="1.5" />
+    <Position X="5.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAARAgAAEUAAAAAAAAIAAAQAgAABAAAA=</HashCode>
       <FileName>TreeNode.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ThinkInBio.CommonApp.User" Collapsed="true">
-    <Position X="7.25" Y="2.75" Width="1.5" />
+  <Class Name="ThinkInBio.CommonApp.User" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAMACAAAAAAAAAQAAAAYIAgAAAAAAAIAAAAAAAAA=</HashCode>
+      <HashCode>AAQAAMACAAACAAAAAQAAAAYIIgAEAAIAAIAAAAAAAAA=</HashCode>
       <FileName>User.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="ThinkInBio.CommonApp.AppContext" Collapsed="true">
-    <Position X="5.5" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAQAAAAEA=</HashCode>
-      <FileName>AppContext.cs</FileName>
-    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="ThinkInBio.CommonApp.CategoryTree" Collapsed="true">
-    <Position X="9" Y="0.75" Width="1.5" />
+    <Position X="7.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAAAAAABAAAAAAAAABAAAAAAAAEAAA=</HashCode>
       <FileName>CategoryTree.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ThinkInBio.CommonApp.GenericGuid" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="5.5" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>GenericGuid.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
   <Class Name="ThinkInBio.CommonApp.TreeNodeCollection&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="5.5" Y="2.75" Width="1.5" />
+    <Position X="7.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAACAAAAAgBAAOAAABQQAAAAACABECAAAAAAAAAA=</HashCode>
       <FileName>TreeNodeCollection.cs</FileName>
@@ -67,24 +53,24 @@
     </TypeIdentifier>
   </Class>
   <Class Name="ThinkInBio.CommonApp.Trail" Collapsed="true">
-    <Position X="7.25" Y="1.75" Width="1.5" />
+    <Position X="9" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAACIAAAgAAAAAAgAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>Trail.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="ThinkInBio.CommonApp.ICategoryable" Collapsed="true">
-    <Position X="5.5" Y="4" Width="1.5" />
+    <Position X="5.5" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAEAAAA=</HashCode>
       <FileName>ICategoryable.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="ThinkInBio.CommonApp.IGuid" Collapsed="true">
-    <Position X="7.25" Y="4" Width="1.5" />
+  <Interface Name="ThinkInBio.CommonApp.IDisuseable&lt;T&gt;" Collapsed="true">
+    <Position X="7.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IGuid.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAEAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>IDisuseable.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Microsoft YaHei" Size="9" />

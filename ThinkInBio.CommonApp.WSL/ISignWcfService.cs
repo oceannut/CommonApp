@@ -24,10 +24,12 @@ namespace ThinkInBio.CommonApp.WSL
         User SignIn(string username, string pwd);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/signup/{username}/",
+        [WebInvoke(Method = "POST",
+            BodyStyle = WebMessageBodyStyle.WrappedRequest,
+            UriTemplate = "/signout/{username}/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        bool IsUsernameExist(string username);
+        void SignOut(string username, string pwd);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -36,6 +38,12 @@ namespace ThinkInBio.CommonApp.WSL
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         void SignUp(string username, string pwd, string name);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/signup/{username}/",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        bool IsUsernameExist(string username);
 
     }
 

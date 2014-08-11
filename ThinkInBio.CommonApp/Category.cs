@@ -11,7 +11,7 @@ namespace ThinkInBio.CommonApp
     /// <summary>
     /// 分类信息。
     /// </summary>
-    public class Category : ICategoryable
+    public class Category : ICategoryable, IDisuseable<Category>
     {
 
         #region properties
@@ -52,6 +52,11 @@ namespace ThinkInBio.CommonApp
         public int Sequence { get; set; }
 
         /// <summary>
+        /// 指示是否被废弃；true表示废弃，不再使用；false表示未废弃，仍在使用。
+        /// </summary>
+        public bool Disused { get; set; }
+
+        /// <summary>
         /// 应用范围。
         /// </summary>
         public string Scope { get; set; }
@@ -61,14 +66,14 @@ namespace ThinkInBio.CommonApp
         #region constructors
 
         /// <summary>
-        /// 
+        /// 构建一个分类。
         /// </summary>
         public Category() { }
 
         /// <summary>
-        /// 
+        /// 构建一个分类。
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">编号。</param>
         public Category(long id)
         {
             this.Id = id;
@@ -78,6 +83,31 @@ namespace ThinkInBio.CommonApp
 
         #region
 
+        public void Disuse(Action<Category> action)
+        {
+            this.Disused = true;
+
+            if (action != null)
+            {
+                action(this);
+            }
+        }
+
+        public void Use(Action<Category> action)
+        {
+            this.Disused = false;
+
+            if (action != null)
+            {
+                action(this);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="categoryTree"></param>
+        /// <param name="action"></param>
         public void Save(CategoryTree categoryTree, 
             Action<Category> action)
         {
@@ -95,6 +125,12 @@ namespace ThinkInBio.CommonApp
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newParentId"></param>
+        /// <param name="categoryTree"></param>
+        /// <param name="action"></param>
         public void ChangeParent(long newParentId, 
             CategoryTree categoryTree, 
             Action<Category> action)
@@ -124,6 +160,10 @@ namespace ThinkInBio.CommonApp
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="newSequence"></param>
         public void ChangeSequence(int newSequence)
         {
             this.Sequence = newSequence;

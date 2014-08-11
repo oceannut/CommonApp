@@ -11,7 +11,7 @@ namespace ThinkInBio.CommonApp
     /// <summary>
     /// 定义了用户信息及相关操作。
     /// </summary>
-    public class User
+    public class User : IDisuseable<User>
     {
 
         #region properties
@@ -42,6 +42,11 @@ namespace ThinkInBio.CommonApp
         public string Group { get; set; }
 
         /// <summary>
+        /// 指示是否被废弃；true表示废弃，不再使用；false表示未废弃，仍在使用。
+        /// </summary>
+        public bool Disused { get; set; }
+
+        /// <summary>
         /// 创建时间。
         /// </summary>
         public DateTime Creation { get; set; }
@@ -50,11 +55,6 @@ namespace ThinkInBio.CommonApp
         /// 修改时间。
         /// </summary>
         public DateTime Modification { get; set; }
-
-        /// <summary>
-        /// 最近一次登录时间。
-        /// </summary>
-        public DateTime? LastLogin { get; set; }
 
         #endregion
 
@@ -89,10 +89,12 @@ namespace ThinkInBio.CommonApp
         /// <param name="username"></param>
         /// <param name="name"></param>
         /// <param name="group"></param>
+        /// <param name="disused"></param>
         /// <param name="creation"></param>
         /// <param name="modification"></param>
         public User(string username,
             string name, string group,
+            bool disused,
             DateTime creation, 
             DateTime modification)
         {
@@ -105,11 +107,34 @@ namespace ThinkInBio.CommonApp
             this.Username = username;
             this.Name = name;
             this.Group = group;
+            this.Disused = disused;
             this.Creation = creation;
             this.Modification = modification;
         }
 
         #endregion
+
+        public void Disuse(Action<User> action)
+        {
+            this.Disused = true;
+            this.Modification = DateTime.Now;
+
+            if (action != null)
+            {
+                action(this);
+            }
+        }
+
+        public void Use(Action<User> action)
+        {
+            this.Disused = false;
+            this.Modification = DateTime.Now;
+
+            if (action != null)
+            {
+                action(this);
+            }
+        }
 
         /// <summary>
         /// 保存用户。

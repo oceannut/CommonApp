@@ -32,6 +32,14 @@ namespace ThinkInBio.CommonApp.WSL
         Category UpdateCategory(string scope, string id, string parentId, string name, string code, string description, string icon, string sequence);
 
         [OperationContract]
+        [WebInvoke(Method = "PUT",
+            BodyStyle = WebMessageBodyStyle.WrappedRequest,
+            UriTemplate = "/category/{scope}/{id}/disused/{disused}/",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        Category UpdateCategoryDisused(string scope, string id, string disused);
+
+        [OperationContract]
         [WebInvoke(Method = "DELETE",
             UriTemplate = "/category/{scope}/{id}/",
             RequestFormat = WebMessageFormat.Json)]
@@ -51,6 +59,11 @@ namespace ThinkInBio.CommonApp.WSL
         [WebGet(UriTemplate = "/category/{scope}/",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         Category[] GetCategoryList(string scope);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/category/{scope}/used/",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        Category[] GetUsedCategoryList(string scope);
 
     }
 

@@ -69,32 +69,42 @@ namespace ThinkInBio.CommonApp.BLL.Impl
 
         public IList<Category> GetCategoryList(string scope)
         {
-            return GetCategoryList(scope, null);
+            return GetCategoryList(scope, null, null);
         }
 
         public IList<Category> GetCategoryList(string scope, long? parentId)
         {
+            return GetCategoryList(scope, parentId, null);
+        }
+
+        public IList<Category> GetCategoryList(string scope, long? parentId, bool? isDisused)
+        {
             if (string.IsNullOrWhiteSpace(scope))
             {
                 throw new ArgumentNullException();
             }
 
-            return CategoryDao.GetList(scope, parentId, null);
+            return CategoryDao.GetList(scope, parentId, isDisused, null);
         }
 
         public IList<Category> GetOrderedCategoryList(string scope)
         {
-            return GetOrderedCategoryList(scope, null);
+            return GetOrderedCategoryList(scope, null, null);
         }
 
         public IList<Category> GetOrderedCategoryList(string scope, long? parentId)
+        {
+            return GetOrderedCategoryList(scope, parentId, null);
+        }
+
+        public IList<Category> GetOrderedCategoryList(string scope, long? parentId, bool? isDisused)
         {
             if (string.IsNullOrWhiteSpace(scope))
             {
                 throw new ArgumentNullException();
             }
 
-            return CategoryDao.GetList(scope, parentId, true);
+            return CategoryDao.GetList(scope, parentId, isDisused, true);
         }
 
 

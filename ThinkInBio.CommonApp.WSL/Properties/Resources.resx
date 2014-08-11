@@ -138,6 +138,9 @@
   <data name="ExistedUser" xml:space="preserve">
     <value>The username is already existed. Please change another username and try it.</value>
   </data>
+  <data name="InvalidDisused" xml:space="preserve">
+    <value>The disused should be the string of between false and true.</value>
+  </data>
   <data name="InvalidId" xml:space="preserve">
     <value>The id should be the string of long number.</value>
   </data>

@@ -124,6 +124,15 @@ namespace ThinkInBio.CommonApp.WSL.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The disused should be the string of between false and true..
+        /// </summary>
+        internal static string InvalidDisused {
+            get {
+                return ResourceManager.GetString("InvalidDisused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The id should be the string of long number..
         /// </summary>
         internal static string InvalidId {

@@ -66,13 +66,13 @@ namespace ThinkInBio.CommonApp.MySQL
                     if (entity.ParentId > 0)
                     {
                         command.CommandText = @"update cyCategory 
-                                                set code=@code,name=@name,description=@description,icon=@icon,parentId=@parentId,sequence=@sequence
+                                                set code=@code,name=@name,description=@description,icon=@icon,parentId=@parentId,sequence=@sequence,disused=@disused
                                                 where id=@id";
                     }
                     else
                     {
                         command.CommandText = @"update cyCategory 
-                                                set code=@code,name=@name,description=@description,icon=@icon,parentId=null,sequence=@sequence
+                                                set code=@code,name=@name,description=@description,icon=@icon,parentId=null,sequence=@sequence,disused=@disused
                                                 where id=@id";
                     }
                     command.Parameters.Add(DbFactory.CreateParameter("code", entity.Code));
@@ -84,6 +84,7 @@ namespace ThinkInBio.CommonApp.MySQL
                         command.Parameters.Add(DbFactory.CreateParameter("parentId", entity.ParentId));
                     }
                     command.Parameters.Add(DbFactory.CreateParameter("sequence", entity.Sequence));
+                    command.Parameters.Add(DbFactory.CreateParameter("disused", entity.Disused));
                     command.Parameters.Add(DbFactory.CreateParameter("id", entity.Id));
                 });
         }
@@ -104,7 +105,7 @@ namespace ThinkInBio.CommonApp.MySQL
             return DbTemplate.Get<Category>(dataSource,
                 (command) =>
                 {
-                    command.CommandText = @"select id,code,name,description,icon,parentId,sequence,scope from cyCategory 
+                    command.CommandText = @"select id,code,name,description,icon,parentId,sequence,disused,scope from cyCategory 
                                                 where id=@id";
                     command.Parameters.Add(DbFactory.CreateParameter("id", id));
                 },
@@ -122,8 +123,8 @@ namespace ThinkInBio.CommonApp.MySQL
                 (command) =>
                 {
                     StringBuilder sql = new StringBuilder();
-                    sql.Append("select id,code,name,description,icon,parentId,sequence,scope from cyCategory ");
-                    BuildSql(sql, parameters, scope, code, 0);
+                    sql.Append("select id,code,name,description,icon,parentId,sequence,disused,scope from cyCategory ");
+                    BuildSql(sql, parameters, scope, code, null, null);
                     command.CommandText = sql.ToString();
                 },
                 parameters,
@@ -141,15 +142,15 @@ namespace ThinkInBio.CommonApp.MySQL
             }
         }
 
-        public IList<Category> GetList(string scope, long? parentId, bool? asc)
+        public IList<Category> GetList(string scope, long? parentId, bool? isDisused, bool? asc)
         {
             List<KeyValuePair<string, object>> parameters = new List<KeyValuePair<string, object>>();
             return DbTemplate.GetList<Category>(dataSource,
                 (command) =>
                 {
                     StringBuilder sql = new StringBuilder();
-                    sql.Append("select id,code,name,description,icon,parentId,sequence,scope from cyCategory ");
-                    BuildSql(sql, parameters, scope, null, parentId);
+                    sql.Append("select id,code,name,description,icon,parentId,sequence,disused,scope from cyCategory ");
+                    BuildSql(sql, parameters, scope, null, parentId, isDisused);
 
                     if (asc.HasValue)
                     {
@@ -173,7 +174,7 @@ namespace ThinkInBio.CommonApp.MySQL
         }
 
         private void BuildSql(StringBuilder sql, List<KeyValuePair<string, object>> parameters,
-            string scope, string code, long? parentId)
+            string scope, string code, long? parentId, bool? isDisused)
         {
             if (!string.IsNullOrWhiteSpace(scope))
             {
@@ -186,6 +187,12 @@ namespace ThinkInBio.CommonApp.MySQL
                 SQLHelper.AppendOp(sql, parameters);
                 sql.Append(" code=@code ");
                 parameters.Add(new KeyValuePair<string, object>("code", code));
+            }
+            if (isDisused.HasValue)
+            {
+                SQLHelper.AppendOp(sql, parameters);
+                sql.Append(" disused=@disused ");
+                parameters.Add(new KeyValuePair<string, object>("disused", (isDisused.Value ? 1 : 0)));
             }
             if (parentId.HasValue)
             {
@@ -213,7 +220,8 @@ namespace ThinkInBio.CommonApp.MySQL
             entity.Icon = reader.IsDBNull(4) ? null : reader.GetString(4);
             entity.ParentId = reader.IsDBNull(5) ? 0 : reader.GetInt64(5);
             entity.Sequence = reader.GetInt32(6);
-            entity.Scope = reader.GetString(7);
+            entity.Disused = reader.GetBoolean(7);
+            entity.Scope = reader.GetString(8);
 
             return entity;
         }

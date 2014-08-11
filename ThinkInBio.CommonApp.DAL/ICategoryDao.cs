@@ -14,7 +14,7 @@ namespace ThinkInBio.CommonApp.DAL
 
         Category Get(string scope, string code);
 
-        IList<Category> GetList(string scope, long? parentId, bool? asc);
+        IList<Category> GetList(string scope, long? parentId, bool? isDisused, bool? asc);
 
     }
 

@@ -40,15 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppContext.cs" />
+    <None Include="AppContext.cs_" />
     <Compile Include="BizNotification.cs" />
     <Compile Include="Category.cs" />
-    <Compile Include="GenericGuid.cs" />
+    <None Include="GenericGuid.cs_" />
     <Compile Include="Auth\IAuthProvider.cs" />
     <Compile Include="ICategoryable.cs" />
     <Compile Include="CategoryTree.cs" />
     <Compile Include="IDisuseable.cs" />
-    <Compile Include="IGuid.cs" />
+    <None Include="IGuid.cs_" />
     <Compile Include="Auth\PlainAuthProvider.cs" />
     <Compile Include="Auth\IPasswordProvider.cs" />
     <Compile Include="Auth\PlainPasswordProvider.cs" />

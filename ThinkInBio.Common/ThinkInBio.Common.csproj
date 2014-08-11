@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audit\TrailAttribute.cs" />
+    <Compile Include="Audit\TrailMethodType.cs" />
     <Compile Include="Caching\ICache.cs" />
     <Compile Include="Data\GenericDao.cs" />
     <Compile Include="Data\IDao.cs" />

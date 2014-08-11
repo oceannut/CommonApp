@@ -25,9 +25,13 @@ namespace ThinkInBio.CommonApp.BLL
 
         IList<Category> GetCategoryList(string scope, long? parentId);
 
+        IList<Category> GetCategoryList(string scope, long? parentId, bool? isDisused);
+
         IList<Category> GetOrderedCategoryList(string scope);
 
         IList<Category> GetOrderedCategoryList(string scope, long? parentId);
+
+        IList<Category> GetOrderedCategoryList(string scope, long? parentId, bool? isDisused);
 
     }
 

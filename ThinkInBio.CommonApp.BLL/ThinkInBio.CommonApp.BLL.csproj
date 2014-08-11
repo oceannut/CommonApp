@@ -44,7 +44,9 @@
     <Compile Include="ICategoryService.cs" />
     <Compile Include="Impl\BizNotificationService.cs" />
     <Compile Include="Impl\CategoryService.cs" />
+    <Compile Include="Impl\SignService.cs" />
     <Compile Include="Impl\UserService.cs" />
+    <Compile Include="ISignService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

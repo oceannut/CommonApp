@@ -6,11 +6,11 @@ using System.Text;
 namespace ThinkInBio.CommonApp
 {
 
-    public interface IGuid
-    {
+    //public interface IGuid
+    //{
 
-        object Next();
+    //    object Next();
 
-    }
+    //}
 
 }

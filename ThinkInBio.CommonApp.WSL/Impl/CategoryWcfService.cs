@@ -156,6 +156,63 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             }
         }
 
+        public Category UpdateCategoryDisused(string scope, string id, string disused)
+        {
+            if (string.IsNullOrWhiteSpace(scope))
+            {
+                throw new WebFaultException<string>(R.EmptyScope, HttpStatusCode.BadRequest);
+            }
+
+            int idLong = 0;
+            try
+            {
+                idLong = Convert.ToInt32(id);
+            }
+            catch
+            {
+                throw new WebFaultException<string>(R.InvalidId, HttpStatusCode.BadRequest);
+            }
+            bool boolDisused = false;
+            try
+            {
+                boolDisused = Convert.ToBoolean(disused);
+            }
+            catch
+            {
+                throw new WebFaultException<string>(R.InvalidDisused, HttpStatusCode.BadRequest);
+            }
+
+            try
+            {
+                Category category = CategoryService.GetCategory(idLong);
+                if (category == null)
+                {
+                    throw new WebFaultException(HttpStatusCode.NotFound);
+                }
+                if (boolDisused)
+                {
+                    category.Disuse((e) =>
+                        {
+                            CategoryService.UpdateCategory(e);
+                        });
+                }
+                else
+                {
+                    category.Use((e) =>
+                    {
+                        CategoryService.UpdateCategory(e);
+                    });
+                }
+
+                return category;
+            }
+            catch (BusinessLayerException ex)
+            {
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
+            }
+        }
+
         public void DeleteCategory(string scope, string id)
         {
             if (string.IsNullOrWhiteSpace(scope))
@@ -261,6 +318,31 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             }
         }
 
+        public Category[] GetUsedCategoryList(string scope)
+        {
+            if (string.IsNullOrWhiteSpace(scope))
+            {
+                throw new WebFaultException<string>(R.EmptyScope, HttpStatusCode.BadRequest);
+            }
+
+            try
+            {
+                IList<Category> list = CategoryService.GetCategoryList(scope, null, false);
+                if (list != null)
+                {
+                    return list.ToArray();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (BusinessLayerException ex)
+            {
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
+            }
+        }
     }
 
 }
