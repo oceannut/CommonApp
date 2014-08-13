@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net;
+using System.ServiceModel.Web;
 
 using ThinkInBio.Common.Exceptions;
+using ThinkInBio.Common.ExceptionHandling;
 using ThinkInBio.CommonApp.BLL;
+using R = ThinkInBio.CommonApp.WSL.Properties.Resources;
 
 namespace ThinkInBio.CommonApp.WSL.Impl
 {
@@ -14,80 +18,112 @@ namespace ThinkInBio.CommonApp.WSL.Impl
     {
 
         internal IBizNotificationService BizNotificationService { get; set; }
+        internal IExceptionHandler ExceptionHandler { get; set; }
 
         public BizNotification SendBizNotification(string user, string to,
             string content, string resource, string resourceId)
         {
             if (string.IsNullOrWhiteSpace(user))
             {
-                throw new ArgumentNullException("user");
+                throw new WebFaultException<string>(R.EmptyUser, HttpStatusCode.BadRequest);
             }
-            /*
-             * 验证用户的合法性逻辑暂省略。
-             * */
-            if (string.IsNullOrWhiteSpace(to) 
-                || string.IsNullOrWhiteSpace(resource) 
-                || string.IsNullOrWhiteSpace(resourceId))
+            if (string.IsNullOrWhiteSpace(to))
             {
-                throw new ArgumentNullException();
+                throw new WebFaultException<string>(R.EmptyTo, HttpStatusCode.BadRequest);
+            }
+            if (string.IsNullOrWhiteSpace(resource))
+            {
+                throw new WebFaultException<string>(R.EmptyResource, HttpStatusCode.BadRequest);
+            }
+            if (string.IsNullOrWhiteSpace(resourceId))
+            {
+                throw new WebFaultException<string>(R.EmptyResourceId, HttpStatusCode.BadRequest);
             }
 
             BizNotification notification = new BizNotification(user, to);
             notification.Content = content;
             notification.Resource = resource;
             notification.ResourceId = resourceId;
-            notification.Send(
-                (e) =>
-                {
-                    BizNotificationService.SaveNotification((BizNotification)e);
-                });
-            return notification;
+            try
+            {
+                notification.Send(
+                    (e) =>
+                    {
+                        BizNotificationService.SaveNotification((BizNotification)e);
+                    });
+                return notification;
+            }
+            catch (BusinessLayerException ex)
+            {
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
+            }
         }
 
         public BizNotification CheckBizNotification(string user, string notificationId)
         {
             if (string.IsNullOrWhiteSpace(user))
             {
-                throw new ArgumentNullException("user");
+                throw new WebFaultException<string>(R.EmptyUser, HttpStatusCode.BadRequest);
             }
-            /*
-             * 验证用户的合法性逻辑暂省略。
-             * */
             if (string.IsNullOrWhiteSpace(notificationId))
             {
-                throw new ArgumentNullException("notificationId");
+                throw new WebFaultException<string>(R.EmptyNotificationId, HttpStatusCode.BadRequest);
+            }
+            long idLong = 0;
+            try
+            {
+                idLong = Convert.ToInt64(notificationId);
+            }
+            catch
+            {
+                throw new WebFaultException<string>(R.InvalidId, HttpStatusCode.BadRequest);
             }
 
-            BizNotification notification = BizNotificationService.GetNotification(Convert.ToInt64(notificationId));
-            if (notification == null)
+            try
             {
-                throw new ObjectNotFoundException(notificationId);
-            }
-            notification.Receive(user,
-                (e) =>
+                BizNotification notification = BizNotificationService.GetNotification(idLong);
+                if (notification == null)
                 {
-                    BizNotificationService.UpdateNotification((BizNotification)e);
-                });
-            return notification;
+                    throw new WebFaultException(HttpStatusCode.NotFound);
+                }
+                notification.Receive(user,
+                    (e) =>
+                    {
+                        BizNotificationService.UpdateNotification((BizNotification)e);
+                    });
+                return notification;
+            }
+            catch (BusinessLayerException ex)
+            {
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
+            }
         }
 
         public BizNotification[] GetUntreatedBizNotificationList(string user)
         {
             if (string.IsNullOrWhiteSpace(user))
             {
-                throw new ArgumentNullException("user");
+                throw new WebFaultException<string>(R.EmptyUser, HttpStatusCode.BadRequest);
             }
-            /*
-             * 验证用户的合法性逻辑暂省略。
-             * */
-            IList<BizNotification> list = BizNotificationService.GetUntreatedBizNotificationByReceiver(user);
-            if (list != null)
+
+            try
             {
-                return list.ToArray();
+                IList<BizNotification> list = BizNotificationService.GetUntreatedBizNotificationByReceiver(user);
+                if (list != null)
+                {
+                    return list.ToArray();
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch (BusinessLayerException ex)
             {
-                return null;
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
             }
         }
 
@@ -95,15 +131,17 @@ namespace ThinkInBio.CommonApp.WSL.Impl
         {
             if (string.IsNullOrWhiteSpace(user))
             {
-                throw new ArgumentNullException("user");
+                throw new WebFaultException<string>(R.EmptyUser, HttpStatusCode.BadRequest);
             }
-            /*
-             * 验证用户的合法性逻辑暂省略。
-             * */
-            if (string.IsNullOrWhiteSpace(resource) || string.IsNullOrWhiteSpace(resourceId))
+            if (string.IsNullOrWhiteSpace(resource))
             {
-                throw new ArgumentNullException();
+                throw new WebFaultException<string>(R.EmptyResource, HttpStatusCode.BadRequest);
             }
+            if (string.IsNullOrWhiteSpace(resourceId))
+            {
+                throw new WebFaultException<string>(R.EmptyResourceId, HttpStatusCode.BadRequest);
+            }
+
             string resourceLocal = resource;
             if ("null" == resourceLocal)
             {
@@ -114,23 +152,31 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             {
                 resourceIdLocal = null;
             }
-            IList<BizNotification> list = BizNotificationService.GetBizNotificationList(resourceLocal, resourceIdLocal);
-            if (list != null)
+            try
             {
-                return list.ToArray();
+                IList<BizNotification> list = BizNotificationService.GetBizNotificationList(resourceLocal, resourceIdLocal);
+                if (list != null)
+                {
+                    return list.ToArray();
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch (BusinessLayerException ex)
             {
-                return null;
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
             }
         }
 
-        public int GetBizNotificationCount(string user, string box, string date, string span)
+        public int GetBizNotificationCount(string box, string user, string date, string span)
         {
             throw new NotImplementedException();
         }
 
-        public BizNotification[] GetBizNotificationList(string user, string box, string date, string span, string start, string count)
+        public BizNotification[] GetBizNotificationList(string box, string user, string date, string span, string start, string count)
         {
             throw new NotImplementedException();
         }

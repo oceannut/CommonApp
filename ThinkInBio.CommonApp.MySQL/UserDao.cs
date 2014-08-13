@@ -132,7 +132,7 @@ namespace ThinkInBio.CommonApp.MySQL
                                     reader.GetDateTime(5));
                                 list.Add(entity);
                             }
-                            string role = reader.IsDBNull(5) ? string.Empty : reader.GetString(5);
+                            string role = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
                             if (!string.IsNullOrWhiteSpace(role))
                             {
                                 if (entity.Roles == null)

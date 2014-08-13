@@ -123,14 +123,29 @@
   <data name="EmptyName" xml:space="preserve">
     <value>The name is empty.</value>
   </data>
+  <data name="EmptyNotificationId" xml:space="preserve">
+    <value>The id of notification is empty.</value>
+  </data>
   <data name="EmptyPwd" xml:space="preserve">
     <value>The pwd is empty.</value>
+  </data>
+  <data name="EmptyResource" xml:space="preserve">
+    <value>The resource is empty.</value>
+  </data>
+  <data name="EmptyResourceId" xml:space="preserve">
+    <value>The id of resource is empty.</value>
   </data>
   <data name="EmptyRole" xml:space="preserve">
     <value>The role is empty.</value>
   </data>
   <data name="EmptyScope" xml:space="preserve">
     <value>The scope is empty.</value>
+  </data>
+  <data name="EmptyTo" xml:space="preserve">
+    <value>The to is empty.</value>
+  </data>
+  <data name="EmptyUser" xml:space="preserve">
+    <value>The user is empty.</value>
   </data>
   <data name="EmptyUsername" xml:space="preserve">
     <value>The username is empty.</value>

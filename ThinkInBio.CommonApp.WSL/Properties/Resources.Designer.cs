@@ -79,11 +79,38 @@ namespace ThinkInBio.CommonApp.WSL.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The id of notification is empty..
+        /// </summary>
+        internal static string EmptyNotificationId {
+            get {
+                return ResourceManager.GetString("EmptyNotificationId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The pwd is empty..
         /// </summary>
         internal static string EmptyPwd {
             get {
                 return ResourceManager.GetString("EmptyPwd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The resource is empty..
+        /// </summary>
+        internal static string EmptyResource {
+            get {
+                return ResourceManager.GetString("EmptyResource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The id of resource is empty..
+        /// </summary>
+        internal static string EmptyResourceId {
+            get {
+                return ResourceManager.GetString("EmptyResourceId", resourceCulture);
             }
         }
         
@@ -102,6 +129,24 @@ namespace ThinkInBio.CommonApp.WSL.Properties {
         internal static string EmptyScope {
             get {
                 return ResourceManager.GetString("EmptyScope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The to is empty..
+        /// </summary>
+        internal static string EmptyTo {
+            get {
+                return ResourceManager.GetString("EmptyTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user is empty..
+        /// </summary>
+        internal static string EmptyUser {
+            get {
+                return ResourceManager.GetString("EmptyUser", resourceCulture);
             }
         }
         
