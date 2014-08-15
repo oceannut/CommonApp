@@ -47,6 +47,11 @@ namespace ThinkInBio.CommonApp
         public bool Disused { get; set; }
 
         /// <summary>
+        /// 头像。
+        /// </summary>
+        public string Avatar { get; set; }
+
+        /// <summary>
         /// 创建时间。
         /// </summary>
         public DateTime Creation { get; set; }

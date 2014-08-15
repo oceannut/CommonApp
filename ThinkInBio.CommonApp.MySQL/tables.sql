@@ -12,6 +12,7 @@ create table cyUser
 	name					VARCHAR(32),
 	_group					VARCHAR(32),
 	disused					TINYINT(1)		NOT NULL default 0,
+	avatar					VARCHAR(255),
 	creation				DATETIME		NOT NULL,
 	modification			DATETIME		NOT NULL,
 	PRIMARY KEY (username)
