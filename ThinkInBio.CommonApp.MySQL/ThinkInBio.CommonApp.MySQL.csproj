@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="BizNotificationDao.cs" />
     <Compile Include="CategoryDao.cs" />
+    <Compile Include="NoticeDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserDao.cs" />
   </ItemGroup>

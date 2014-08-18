@@ -46,6 +46,35 @@ namespace ThinkInBio.CommonApp.MySQL
                 });
         }
 
+        public override void Save(ICollection<BizNotification> col)
+        {
+            DbTemplate.Save(dataSource,
+                (command) =>
+                {
+                    StringBuilder buffer = new StringBuilder();
+                    buffer.Append("insert into cyBizNotification (id,sender,receiver,content,creation,_resource,resourceId) values ");
+                    for (int i = 0; i < col.Count; i++)
+                    {
+                        BizNotification notification = col.ElementAt(i);
+                        buffer.Append("(NULL,")
+                            .Append("@sender").Append(i).Append(",")
+                            .Append("@receiver").Append(i).Append(",")
+                            .Append("@content").Append(i).Append(",")
+                            .Append("@creation").Append(i).Append(",")
+                            .Append("@resource").Append(i).Append(",")
+                            .Append("@resourceId").Append(i).Append("),");
+                        command.Parameters.Add(DbFactory.CreateParameter(string.Format("sender{0}", i), notification.Sender));
+                        command.Parameters.Add(DbFactory.CreateParameter(string.Format("receiver{0}", i), notification.Receiver));
+                        command.Parameters.Add(DbFactory.CreateParameter(string.Format("content{0}", i), notification.Content));
+                        command.Parameters.Add(DbFactory.CreateParameter(string.Format("creation{0}", i), notification.Creation));
+                        command.Parameters.Add(DbFactory.CreateParameter(string.Format("resource{0}", i), notification.Resource));
+                        command.Parameters.Add(DbFactory.CreateParameter(string.Format("resourceId{0}", i), notification.ResourceId));
+                    }
+                    buffer.Length = buffer.Length - 1;
+                    command.CommandText = buffer.ToString();
+                });
+        }
+
         public override bool Update(BizNotification entity)
         {
             return DbTemplate.UpdateOrDelete(dataSource,

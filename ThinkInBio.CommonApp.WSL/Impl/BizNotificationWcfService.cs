@@ -101,6 +101,24 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             }
         }
 
+        public int GetUntreatedBizNotificationCount(string user)
+        {
+            if (string.IsNullOrWhiteSpace(user))
+            {
+                throw new WebFaultException<string>(R.EmptyUser, HttpStatusCode.BadRequest);
+            }
+
+            try
+            {
+                return BizNotificationService.GetUntreatedBizNotificationCountByReceiver(user);
+            }
+            catch (BusinessLayerException ex)
+            {
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
+            }
+        }
+
         public BizNotification[] GetUntreatedBizNotificationList(string user)
         {
             if (string.IsNullOrWhiteSpace(user))
@@ -110,7 +128,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
 
             try
             {
-                IList<BizNotification> list = BizNotificationService.GetUntreatedBizNotificationByReceiver(user);
+                IList<BizNotification> list = BizNotificationService.GetUntreatedBizNotificationListByReceiver(user);
                 if (list != null)
                 {
                     return list.ToArray();

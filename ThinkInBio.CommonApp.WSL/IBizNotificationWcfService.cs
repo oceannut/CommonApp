@@ -56,7 +56,17 @@ namespace ThinkInBio.CommonApp.WSL
         /// <param name="user">签收方（接收方）。</param>
         /// <returns>返回未签收的通知集合。</returns>
         [OperationContract]
-        [WebGet(UriTemplate = "/notification/biz/inbox/{user}/untreated/all/",
+        [WebGet(UriTemplate = "/notification/biz/inbox/{user}/untreated/count/",
+            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        int GetUntreatedBizNotificationCount(string user);
+
+        /// <summary>
+        /// 获取未签收的所有通知。
+        /// </summary>
+        /// <param name="user">签收方（接收方）。</param>
+        /// <returns>返回未签收的通知集合。</returns>
+        [OperationContract]
+        [WebGet(UriTemplate = "/notification/biz/inbox/{user}/untreated/list/",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         BizNotification[] GetUntreatedBizNotificationList(string user);
 

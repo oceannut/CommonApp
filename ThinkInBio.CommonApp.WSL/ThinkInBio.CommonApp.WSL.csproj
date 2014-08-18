@@ -48,8 +48,10 @@
     <Compile Include="Impl\BizNotificationWcfService.cs" />
     <Compile Include="Impl\CategoryWcfService.cs" />
     <Compile Include="Impl\DemoWcfService.cs" />
+    <Compile Include="Impl\NoticeWcfService.cs" />
     <Compile Include="Impl\SignWcfService.cs" />
     <Compile Include="Impl\UserWcfService.cs" />
+    <Compile Include="INoticeWcfService.cs" />
     <Compile Include="ISignWcfService.cs" />
     <Compile Include="IUserWcfService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

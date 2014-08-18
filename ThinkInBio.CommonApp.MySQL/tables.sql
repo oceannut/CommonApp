@@ -2,6 +2,7 @@
 drop table cyUser;
 drop table cyUserRole;
 drop table cyCategory;
+drop table cyNotice;
 drop table cyBizNotification;
 
 
@@ -40,6 +41,17 @@ create table cyCategory
 );
 ALTER TABLE cyCategory ADD INDEX scope_code_index  (scope,code);
 
+create table cyNotice
+(
+	id						BIGINT	unsigned	NOT NULL AUTO_INCREMENT,
+	title					VARCHAR(255)		NOT NULL,
+	content					VARCHAR(10240),
+	creator					VARCHAR(32)			NOT NULL,
+	creation				DATETIME			NOT NULL,
+	modification			DATETIME			NOT NULL,
+	PRIMARY KEY (id)
+);
+ALTER TABLE cyNotice ADD INDEX modification_index  (modification);
 
 create table cyBizNotification
 (

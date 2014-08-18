@@ -31,7 +31,7 @@ namespace Test.ThinkInBio.CommonApp.MySQL
             entity.Code = "normal";
             entity.Name = "日常";
             entity.Scope = "activity";
-            entity.Icon = "fa fa-tasks";
+            entity.Icon = "fa fa-bug";
             entity.Sequence = 0;
             entity.Save(null, (e) =>
             {
@@ -161,6 +161,17 @@ namespace Test.ThinkInBio.CommonApp.MySQL
             entity.Scope = "log";
             entity.Icon = "fa fa-list-alt";
             entity.Sequence = 5;
+            entity.Save(null, (e) =>
+            {
+                categoryDao.Save(e);
+            });
+
+            entity = new Category();
+            entity.Code = "ref";
+            entity.Name = "引用";
+            entity.Scope = "log";
+            entity.Icon = "fa fa-quote-left";
+            entity.Sequence = 6;
             entity.Save(null, (e) =>
             {
                 categoryDao.Save(e);
