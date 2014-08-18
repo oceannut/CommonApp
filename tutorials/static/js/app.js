@@ -8,12 +8,14 @@ define(function (require) {
     require('../../app/common/js/index-controllers');
     require('../../app/common/js/category-controllers');
     require('../../app/common/js/user-controllers');
+    require('../../app/common/js/notice-controllers');
 
     angular.module('Tutorials', ['ngRoute',
             'auth.controllers',
             'index.controllers',
             'category.controllers',
-            'user.controllers'
+            'user.controllers',
+            'notice.controllers'
         ])
         .config(['$routeProvider', '$httpProvider',
             function ($routeProvider, $httpProvider) {
@@ -102,8 +104,24 @@ define(function (require) {
                         access: {
                             loginRequired: true
                         }
-                    }).
-                    otherwise({
+                    })
+                    .when('/notice-list/', {
+                        templateUrl: 'app/common/partials/notice-list.htm',
+                        controller: 'NoticeListCtrl',
+                        access: {
+                            loginRequired: true,
+                            roles: ['admin']
+                        }
+                    })
+                    .when('/notice-edit/:id/', {
+                        templateUrl: 'app/common/partials/notice-edit.htm',
+                        controller: 'NoticeEditCtrl',
+                        access: {
+                            loginRequired: true,
+                            roles: ['admin']
+                        }
+                    })
+                    .otherwise({
                         redirectTo: '/sign-in/'
                     });
 

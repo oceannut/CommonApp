@@ -83,7 +83,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 notice.Content = content;
                 notice.Update((e) =>
                 {
-                    NoticeService.SaveNotice(e);
+                    NoticeService.UpdateNotice(e);
                 });
                 return notice;
             }

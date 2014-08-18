@@ -110,6 +110,9 @@ define(function (require) {
 
                     $scope.category = {}
 
+                    $scope.alertMessageVisible = 'hidden';
+                    $scope.isLoading = false;
+
                     var scope = scopes.get($routeParams.scope);
                     $scope.scopeName = scope == null ? $routeParams.scope : scope.name;
                     $scope.category.Scope = $routeParams.scope;
@@ -139,8 +142,6 @@ define(function (require) {
                         }
                     }
 
-                    $scope.alertMessageVisible = 'hidden';
-                    $scope.isLoading = false;
                     lastCode = $scope.category.Code;
                     $scope.codeDisabled = false;
 

@@ -26,6 +26,11 @@ define(function (require) {
                     "url": "/user-role-overview/user/",
                     "active": ""
                 };
+                var noticeNav = {
+                    "name": "公告管理",
+                    "url": "/notice-list/",
+                    "active": ""
+                };
 
                 $scope.init = function () {
 
@@ -45,7 +50,7 @@ define(function (require) {
 
                     $scope.appName = appName;
                     $scope.makeNavbarVisible();
-                    $scope.navList = [homeNav, categoryNav, userRoleNav];
+                    $scope.navList = [homeNav, categoryNav, userRoleNav, noticeNav];
 
                 }
 

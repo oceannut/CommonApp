@@ -11,13 +11,14 @@ using ThinkInBio.CommonApp.BLL;
 namespace ThinkInBio.CommonApp.WSL
 {
 
+    [ServiceContract]
     public interface INoticeWcfService
     {
 
         [OperationContract]
         [WebInvoke(Method = "POST",
             BodyStyle = WebMessageBodyStyle.WrappedRequest,
-            UriTemplate = "/notice/",
+            UriTemplate = "/notice/0/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         Notice SaveNotice(string title, string content, string creator);
@@ -25,7 +26,7 @@ namespace ThinkInBio.CommonApp.WSL
         [OperationContract]
         [WebInvoke(Method = "PUT",
             BodyStyle = WebMessageBodyStyle.WrappedRequest,
-            UriTemplate = "/notice/",
+            UriTemplate = "/notice/{id}/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         Notice UpdateNotice(string id, string title, string content, string creator);
@@ -33,13 +34,13 @@ namespace ThinkInBio.CommonApp.WSL
         [OperationContract]
         [WebInvoke(Method = "DELETE",
             BodyStyle = WebMessageBodyStyle.WrappedRequest,
-            UriTemplate = "/notice/",
+            UriTemplate = "/notice/{id}/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
         void DeleteNotice(string id, string creator);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/notice/",
+        [WebGet(UriTemplate = "/notice/{id}/",
             RequestFormat = WebMessageFormat.Json, 
             ResponseFormat = WebMessageFormat.Json)]
         Notice GetNotice(string id);
