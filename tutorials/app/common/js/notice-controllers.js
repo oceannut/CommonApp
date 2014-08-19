@@ -130,6 +130,27 @@ define(function (require) {
 
                 }
 
+            } ])
+        .controller('NoticeDetailsCtrl', ['$scope', '$location', '$log', '$routeParams', 'currentUser', 'NoticeService',
+            function ($scope, $location, $log, $routeParams, currentUser, NoticeService) {
+
+                $scope.init = function () {
+
+                    $scope.alertMessageVisible = 'hidden';
+
+                    NoticeService.get({ "id": $routeParams.id })
+                        .$promise
+                            .then(function (result) {
+                                $scope.notice = result;
+                            }, function (error) {
+                                $scope.alertMessageVisible = 'show';
+                                $scope.alertMessageColor = 'alert-danger';
+                                $scope.alertMessage = "提示：获取公告失败";
+                                $log.error(error);
+                            });
+
+                }
+
             } ]);
 
 });

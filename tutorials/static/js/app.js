@@ -6,6 +6,7 @@ define(function (require) {
 
     require('../../app/auth/js/auth-controllers');
     require('../../app/common/js/index-controllers');
+    require('../../app/common/js/home-controllers');
     require('../../app/common/js/category-controllers');
     require('../../app/common/js/user-controllers');
     require('../../app/common/js/notice-controllers');
@@ -13,6 +14,7 @@ define(function (require) {
     angular.module('Tutorials', ['ngRoute',
             'auth.controllers',
             'index.controllers',
+            'home.controllers',
             'category.controllers',
             'user.controllers',
             'notice.controllers'
@@ -46,6 +48,7 @@ define(function (require) {
                     }).
                     when('/home/', {
                         templateUrl: 'app/common/partials/home.htm',
+                        controller: 'HomeCtrl',
                         access: {
                             loginRequired: true
                         }
