@@ -37,7 +37,7 @@ namespace ThinkInBio.CommonApp.WSL
             UriTemplate = "/notice/{id}/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        void DeleteNotice(string id, string creator);
+        void DeleteNotice(string id);
 
         [OperationContract]
         [WebGet(UriTemplate = "/notice/{id}/",

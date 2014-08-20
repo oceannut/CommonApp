@@ -101,6 +101,17 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             }
         }
 
+        public void CheckBizNotificationCol(string user, string[] notificationIds)
+        {
+            if (notificationIds != null && notificationIds.Length > 0)
+            {
+                foreach (var id in notificationIds)
+                {
+                    CheckBizNotification(user, id);
+                }
+            }
+        }
+
         public int GetUntreatedBizNotificationCount(string user)
         {
             if (string.IsNullOrWhiteSpace(user))

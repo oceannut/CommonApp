@@ -51,6 +51,20 @@ namespace ThinkInBio.CommonApp.WSL
         BizNotification CheckBizNotification(string user, string notificationId);
 
         /// <summary>
+        /// 签收通知。
+        /// </summary>
+        /// <param name="user">签收方（接收方）。</param>
+        /// <param name="notificationId">通知的标识。</param>
+        /// <returns>返回通知。</returns>
+        [OperationContract]
+        [WebInvoke(Method = "PUT",
+            BodyStyle = WebMessageBodyStyle.WrappedRequest,
+            UriTemplate = "/notification/biz/inbox/{user}/untreated/n/",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        void CheckBizNotificationCol(string user, string[] notificationIds);
+
+        /// <summary>
         /// 获取未签收的所有通知。
         /// </summary>
         /// <param name="user">签收方（接收方）。</param>

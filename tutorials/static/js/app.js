@@ -124,6 +124,13 @@ define(function (require) {
                             roles: ['admin']
                         }
                     })
+                    .when('/notice-details/:id/', {
+                        templateUrl: 'app/common/partials/notice-details.htm',
+                        controller: 'NoticeDetailsCtrl',
+                        access: {
+                            loginRequired: true
+                        }
+                    })
                     .otherwise({
                         redirectTo: '/sign-in/'
                     });

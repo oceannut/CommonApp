@@ -94,12 +94,8 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             }
         }
 
-        public void DeleteNotice(string id, string creator)
+        public void DeleteNotice(string id)
         {
-            if (string.IsNullOrWhiteSpace(creator))
-            {
-                throw new WebFaultException<string>(R.EmptyUser, HttpStatusCode.BadRequest);
-            }
             long idLong = 0;
             try
             {
@@ -116,10 +112,6 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 if (notice == null)
                 {
                     throw new WebFaultException(HttpStatusCode.NotFound);
-                }
-                if (creator != notice.Creator)
-                {
-                    throw new WebFaultException(HttpStatusCode.Forbidden);
                 }
                 NoticeService.DeleteNotice(notice);
             }
@@ -201,16 +193,20 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 throw new WebFaultException<string>("count", HttpStatusCode.BadRequest);
             }
 
-            DateTime startTime, endTime;
-            if (spanInt < 0)
+            DateTime? startTime = null;
+            DateTime? endTime = null;
+            if ("null" != date && "null" != span)
             {
-                startTime = d.AddDays(spanInt + 1);
-                endTime = new DateTime(d.Year, d.Month, d.Day, 23, 59, 59);
-            }
-            else
-            {
-                startTime = new DateTime(d.Year, d.Month, d.Day);
-                endTime = d.AddDays(spanInt).AddSeconds(-1);
+                if (spanInt < 0)
+                {
+                    startTime = d.AddDays(spanInt + 1);
+                    endTime = new DateTime(d.Year, d.Month, d.Day, 23, 59, 59);
+                }
+                else
+                {
+                    startTime = new DateTime(d.Year, d.Month, d.Day);
+                    endTime = d.AddDays(spanInt).AddSeconds(-1);
+                }
             }
 
             try

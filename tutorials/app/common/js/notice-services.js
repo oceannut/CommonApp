@@ -13,7 +13,7 @@ define(function (require) {
                 return $resource(wcfApp + noticeWcfService + '/notice/:id/', {}, {
                     save: { method: 'POST', params: { 'id': '0', 'title': '@title', 'content': '@content', 'creator': '@creator'} },
                     update: { method: 'PUT', params: { 'id': '@id', 'title': '@title', 'content': '@content', 'creator': '@creator'} },
-                    remove: { method: 'DELETE', params: { 'id': '@id', 'creator': '@creator'} },
+                    remove: { method: 'DELETE', params: { 'id': '@id'} },
                     get: { method: 'GET', params: { 'id': '@id'} }
                 });
             } ])
