@@ -3,30 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Q = Quartz;
+using Quartz;
 
 namespace ThinkInBio.Scheduling.Quartz
 {
 
+    /// <summary>
+    /// 基于Quartz实现的工作计划。
+    /// </summary>
     public class QuartzSchedule : ISchedule
     {
 
-        private Q.IScheduler scheduler;
+        #region fields
+
+        private IScheduler scheduler;
+        private IJob job;
+
+        #endregion
+
+        #region properties
 
         /// <summary>
         /// Job开始执行的时间
         /// </summary>
-        public DateTime JobStartTime { get; set; }
+        public DateTime? StartTime { get; private set; }
 
         /// <summary>
-        /// 重复间隔时间（秒）。
+        /// 重复执行工作的间隔秒数。
         /// </summary>
-        public int RepeatInterval { get; set; }
+        public int RepeatSeconds { get; private set; }
 
         /// <summary>
-        /// 重复次数。
+        /// 重复执行工作的次数；如果是0的话，表示无限重复执行。
         /// </summary>
-        public int RepeatCount { get; set; }
+        public int RepeatCount { get; private set; }
 
         /// <summary>
         /// Cron表达式是一个由7个子表达式组成的字符串。每个子表达式都描述了一个单独的日程细节。这些子表达式用空格分隔，分别表示
@@ -47,39 +57,143 @@ namespace ThinkInBio.Scheduling.Quartz
         /// 'W' 字符用来指定距离给定日最接近的周几（在day-of-week域中指定）。例如：如果你为day-of-month域指定为"15W",则表示“距离月中15号最近的周几”。
         /// '#'表示表示月中的第几个周几。例如：day-of-week域中的"6#3" 或者 "FRI#3"表示“月中第三个周五”。
         /// </summary>
-        public string CronExpression { get; set; }
+        public string Expression { get; private set; }
 
-        public QuartzSchedule(Q.ISchedulerFactory schedulerFactory)
+        #endregion
+
+        #region constructors
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="schedulerFactory"></param>
+        /// <param name="job"></param>
+        public QuartzSchedule(ISchedulerFactory schedulerFactory, IJob job)
         {
             if (schedulerFactory == null)
             {
                 throw new ArgumentNullException();
             }
-            scheduler = schedulerFactory.GetScheduler();
-
-            DateTimeOffset runTime = Q.DateBuilder.EvenMinuteDate(DateTimeOffset.UtcNow);
-
-            Q.IJobDetail job = Q.JobBuilder.Create<QuartzJob>()
-                .WithIdentity("job1", "group1")
-                .Build();
-
-            Q.ITrigger trigger = Q.TriggerBuilder.Create()
-                .WithIdentity("trigger1", "group1")
-                .StartAt(runTime)
-                .Build();
-
-            scheduler.ScheduleJob(job, trigger);
+            this.scheduler = schedulerFactory.GetScheduler();
+            this.job = job;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="schedulerFactory"></param>
+        /// <param name="job"></param>
+        /// <param name="interval"></param>
+        public QuartzSchedule(ISchedulerFactory schedulerFactory, IJob job, int interval)
+            : this(schedulerFactory, job)
+        {
+            if (interval < 1)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            this.RepeatSeconds = interval;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="schedulerFactory"></param>
+        /// <param name="job"></param>
+        /// <param name="interval"></param>
+        /// <param name="count"></param>
+        public QuartzSchedule(ISchedulerFactory schedulerFactory, IJob job, int interval, int count)
+            : this(schedulerFactory, job, interval)
+        {
+            if (count < 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            this.RepeatCount = count;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="schedulerFactory"></param>
+        /// <param name="job"></param>
+        /// <param name="cronExpression"></param>
+        public QuartzSchedule(ISchedulerFactory schedulerFactory, IJob job, string cronExpression)
+            : this(schedulerFactory, job)
+        {
+            if (string.IsNullOrWhiteSpace(cronExpression))
+            {
+                throw new ArgumentNullException();
+            }
+            this.Expression = cronExpression;
+        }
+
+        #endregion
+
+        #region methods
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void Start()
         {
+            IJobDetail jobDetail = JobBuilder.Create<QuartzJob>()
+                .WithIdentity("job1")
+                .Build();
+            jobDetail.JobDataMap.Add("job", this.job);
+
+            if (string.IsNullOrWhiteSpace(Expression))
+            {
+                //DateTimeOffset runTime = DateBuilder.EvenMinuteDate(DateTimeOffset.UtcNow);
+                ITrigger trigger = null;
+                if (RepeatSeconds == 0)
+                {
+                    trigger = TriggerBuilder.Create()
+                        .WithIdentity("trigger1")
+                        //.StartAt(runTime)
+                        .Build();
+                }
+                else
+                {
+                    if (RepeatCount == 0)
+                    {
+                        trigger = TriggerBuilder.Create()
+                             .WithIdentity("trigger1")
+                            //.StartAt(runTime)
+                             .WithSimpleSchedule(x => x.WithIntervalInSeconds(RepeatSeconds).RepeatForever())
+                             .Build();
+                    }
+                    else
+                    {
+                        trigger = TriggerBuilder.Create()
+                             .WithIdentity("trigger1")
+                            //.StartAt(runTime)
+                             .WithSimpleSchedule(x => x.WithIntervalInSeconds(RepeatSeconds).WithRepeatCount(RepeatCount))
+                             .Build();
+                    }
+                }
+                scheduler.ScheduleJob(jobDetail, trigger);
+            }
+            else
+            {
+                ICronTrigger trigger = (ICronTrigger)TriggerBuilder.Create()
+                    .WithIdentity("trigger1")
+                    .WithCronSchedule(Expression)
+                    .Build();
+                scheduler.ScheduleJob(jobDetail, trigger);
+            }
+
             scheduler.Start();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Stop()
         {
             scheduler.Shutdown(true);
         }
+
+        #endregion
 
     }
 

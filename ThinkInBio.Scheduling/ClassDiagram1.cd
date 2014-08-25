@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ThinkInBio.Scheduling.ScheduleManager" Collapsed="true">
+    <Position X="6.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ScheduleManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThinkInBio.Scheduling.Scheduler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAiCAgAAAACAAAAAYAAEgCAABEJAAABAIAACA=</HashCode>
+      <FileName>Scheduler.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Schedule" />
+      <Property Name="Job" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ThinkInBio.Scheduling.GenericJob" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQYAAAAAAAAAAAAAAAAIAAAAAAAAAAI=</HashCode>
+      <FileName>GenericJob.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="ThinkInBio.Scheduling.ISchedule" Collapsed="true">
+    <Position X="2" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>ISchedule.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ThinkInBio.Scheduling.IJob" Collapsed="true">
+    <Position X="2" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQIAAAAAAAAAAAAAAAAIAAAAAAAAAAI=</HashCode>
+      <FileName>IJob.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="ThinkInBio.Scheduling.SchedulerState" Collapsed="true">
+    <Position X="4.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAQAAAAAAAAAAAAAAAAAoAAAAAAAAAAA=</HashCode>
+      <FileName>Scheduler.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Microsoft YaHei" Size="9" />
+</ClassDiagram>

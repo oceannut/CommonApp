@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenericJob.cs" />
     <Compile Include="IJob.cs" />
     <Compile Include="ISchedule.cs" />
     <Compile Include="Quartz\QuartzSchedule.cs" />
@@ -50,6 +51,9 @@
     <Compile Include="ScheduleManager.cs" />
     <Compile Include="Scheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
