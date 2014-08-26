@@ -49,9 +49,11 @@
     <Compile Include="Impl\CategoryWcfService.cs" />
     <Compile Include="Impl\DemoWcfService.cs" />
     <Compile Include="Impl\NoticeWcfService.cs" />
+    <Compile Include="Impl\ScheduleWcfService.cs" />
     <Compile Include="Impl\SignWcfService.cs" />
     <Compile Include="Impl\UserWcfService.cs" />
     <Compile Include="INoticeWcfService.cs" />
+    <Compile Include="IScheduleWcfService.cs" />
     <Compile Include="ISignWcfService.cs" />
     <Compile Include="IUserWcfService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +75,10 @@
     <ProjectReference Include="..\ThinkInBio.Common\ThinkInBio.Common.csproj">
       <Project>{375D399D-647F-4C17-A152-1A8F54EED356}</Project>
       <Name>ThinkInBio.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ThinkInBio.Scheduling\ThinkInBio.Scheduling.csproj">
+      <Project>{BDD23A46-E9AB-470F-89CD-B6058D29EF36}</Project>
+      <Name>ThinkInBio.Scheduling</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

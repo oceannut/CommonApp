@@ -37,7 +37,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "web", "web\", "{CD0E9CAF-040D-4024-AEF4-2413D398BE89}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		ProjectReferences = "{375D399D-647F-4C17-A152-1A8F54EED356}|ThinkInBio.Common.dll;{5F6BF361-0265-433F-990E-351BBFA9EA1D}|ThinkInBio.CommonApp.dll;{21CE46DC-33F9-4C44-8B69-D3A61B3F643B}|ThinkInBio.CommonApp.BLL.dll;{888295FD-FDF2-4571-86A5-96C8CDB4C8C1}|ThinkInBio.CommonApp.DAL.dll;{A6B809D1-3FDF-493D-B445-92C272447C18}|ThinkInBio.CommonApp.MySQL.dll;{9B7A6DFA-ACB1-4CE6-A7D8-02323AFD83E4}|ThinkInBio.MySQL.dll;{45177FFE-52D9-48AB-84D0-15D8D44B6505}|ThinkInBio.CommonApp.WSL.dll;{D58874CF-D4A7-4E40-93D7-0C6B30471B73}|ThinkInBio.Spring.dll;"
+		ProjectReferences = "{375D399D-647F-4C17-A152-1A8F54EED356}|ThinkInBio.Common.dll;{5F6BF361-0265-433F-990E-351BBFA9EA1D}|ThinkInBio.CommonApp.dll;{21CE46DC-33F9-4C44-8B69-D3A61B3F643B}|ThinkInBio.CommonApp.BLL.dll;{888295FD-FDF2-4571-86A5-96C8CDB4C8C1}|ThinkInBio.CommonApp.DAL.dll;{A6B809D1-3FDF-493D-B445-92C272447C18}|ThinkInBio.CommonApp.MySQL.dll;{9B7A6DFA-ACB1-4CE6-A7D8-02323AFD83E4}|ThinkInBio.MySQL.dll;{45177FFE-52D9-48AB-84D0-15D8D44B6505}|ThinkInBio.CommonApp.WSL.dll;{D58874CF-D4A7-4E40-93D7-0C6B30471B73}|ThinkInBio.Spring.dll;{BDD23A46-E9AB-470F-89CD-B6058D29EF36}|ThinkInBio.Scheduling.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/web"
 		Debug.AspNetCompiler.PhysicalPath = "web\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\web\"
@@ -60,10 +60,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ThinkInBio.CommonApp.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ThinkInBio.Common", "Test.ThinkInBio.Common\Test.ThinkInBio.Common.csproj", "{3B19837F-CF92-4ACD-ABE9-95F437CFEE78}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "tutorials", "tutorials\", "{46F485F3-E90A-4443-88CA-45AB3482678B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThinkInBio.Entlib", "ThinkInBio.Entlib\ThinkInBio.Entlib.csproj", "{79D59BCC-0939-41B2-908B-86C31944D1B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThinkInBio.Scheduling", "ThinkInBio.Scheduling\ThinkInBio.Scheduling.csproj", "{BDD23A46-E9AB-470F-89CD-B6058D29EF36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ThinkInBio.Scheduling", "Test.ThinkInBio.Scheduling\Test.ThinkInBio.Scheduling.csproj", "{D6921EE2-9E79-471F-9D3E-20F80FFE1CAC}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "tutorials", "tutorials\", "{D73B9B3F-CD7A-449D-B264-B41AA9705EFA}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		ProjectReferences = "{375D399D-647F-4C17-A152-1A8F54EED356}|ThinkInBio.Common.dll;{5F6BF361-0265-433F-990E-351BBFA9EA1D}|ThinkInBio.CommonApp.dll;{21CE46DC-33F9-4C44-8B69-D3A61B3F643B}|ThinkInBio.CommonApp.BLL.dll;{888295FD-FDF2-4571-86A5-96C8CDB4C8C1}|ThinkInBio.CommonApp.DAL.dll;{45177FFE-52D9-48AB-84D0-15D8D44B6505}|ThinkInBio.CommonApp.WSL.dll;{9B7A6DFA-ACB1-4CE6-A7D8-02323AFD83E4}|ThinkInBio.MySQL.dll;{A6B809D1-3FDF-493D-B445-92C272447C18}|ThinkInBio.CommonApp.MySQL.dll;{D58874CF-D4A7-4E40-93D7-0C6B30471B73}|ThinkInBio.Spring.dll;{79D59BCC-0939-41B2-908B-86C31944D1B0}|ThinkInBio.Entlib.dll;"
+		ProjectReferences = "{375D399D-647F-4C17-A152-1A8F54EED356}|ThinkInBio.Common.dll;{5F6BF361-0265-433F-990E-351BBFA9EA1D}|ThinkInBio.CommonApp.dll;{21CE46DC-33F9-4C44-8B69-D3A61B3F643B}|ThinkInBio.CommonApp.BLL.dll;{888295FD-FDF2-4571-86A5-96C8CDB4C8C1}|ThinkInBio.CommonApp.DAL.dll;{45177FFE-52D9-48AB-84D0-15D8D44B6505}|ThinkInBio.CommonApp.WSL.dll;{9B7A6DFA-ACB1-4CE6-A7D8-02323AFD83E4}|ThinkInBio.MySQL.dll;{A6B809D1-3FDF-493D-B445-92C272447C18}|ThinkInBio.CommonApp.MySQL.dll;{D58874CF-D4A7-4E40-93D7-0C6B30471B73}|ThinkInBio.Spring.dll;{79D59BCC-0939-41B2-908B-86C31944D1B0}|ThinkInBio.Entlib.dll;{BDD23A46-E9AB-470F-89CD-B6058D29EF36}|ThinkInBio.Scheduling.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/tutorials"
 		Debug.AspNetCompiler.PhysicalPath = "tutorials\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\tutorials\"
@@ -81,12 +87,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "tutorials", "tutorials\", "
 		VWDPort = "2539"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThinkInBio.Entlib", "ThinkInBio.Entlib\ThinkInBio.Entlib.csproj", "{79D59BCC-0939-41B2-908B-86C31944D1B0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThinkInBio.Scheduling", "ThinkInBio.Scheduling\ThinkInBio.Scheduling.csproj", "{BDD23A46-E9AB-470F-89CD-B6058D29EF36}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.ThinkInBio.Scheduling", "Test.ThinkInBio.Scheduling\Test.ThinkInBio.Scheduling.csproj", "{D6921EE2-9E79-471F-9D3E-20F80FFE1CAC}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -145,10 +145,6 @@ Global
 		{3B19837F-CF92-4ACD-ABE9-95F437CFEE78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B19837F-CF92-4ACD-ABE9-95F437CFEE78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B19837F-CF92-4ACD-ABE9-95F437CFEE78}.Release|Any CPU.Build.0 = Release|Any CPU
-		{46F485F3-E90A-4443-88CA-45AB3482678B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{46F485F3-E90A-4443-88CA-45AB3482678B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{46F485F3-E90A-4443-88CA-45AB3482678B}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{46F485F3-E90A-4443-88CA-45AB3482678B}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{79D59BCC-0939-41B2-908B-86C31944D1B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{79D59BCC-0939-41B2-908B-86C31944D1B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79D59BCC-0939-41B2-908B-86C31944D1B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -161,6 +157,10 @@ Global
 		{D6921EE2-9E79-471F-9D3E-20F80FFE1CAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6921EE2-9E79-471F-9D3E-20F80FFE1CAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6921EE2-9E79-471F-9D3E-20F80FFE1CAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D73B9B3F-CD7A-449D-B264-B41AA9705EFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73B9B3F-CD7A-449D-B264-B41AA9705EFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73B9B3F-CD7A-449D-B264-B41AA9705EFA}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73B9B3F-CD7A-449D-B264-B41AA9705EFA}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -182,6 +182,6 @@ Global
 		{3B19837F-CF92-4ACD-ABE9-95F437CFEE78} = {CDE83F8D-DE71-4590-AF58-383A9E143EC8}
 		{D6921EE2-9E79-471F-9D3E-20F80FFE1CAC} = {CDE83F8D-DE71-4590-AF58-383A9E143EC8}
 		{CD0E9CAF-040D-4024-AEF4-2413D398BE89} = {2AC53515-016C-46B3-A375-F4A4B976763A}
-		{46F485F3-E90A-4443-88CA-45AB3482678B} = {2AC53515-016C-46B3-A375-F4A4B976763A}
+		{D73B9B3F-CD7A-449D-B264-B41AA9705EFA} = {2AC53515-016C-46B3-A375-F4A4B976763A}
 	EndGlobalSection
 EndGlobal

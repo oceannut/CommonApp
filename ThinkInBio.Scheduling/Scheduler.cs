@@ -177,7 +177,7 @@ namespace ThinkInBio.Scheduling
                     this.LastStartTime = DateTime.Now;
                     this.LastStopTime = null;
                     this.State = SchedulerState.Active;
-                    this.schedule.Start();
+                    this.schedule.Start(this.job);
                 }
             }
         }

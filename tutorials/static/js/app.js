@@ -10,6 +10,7 @@ define(function (require) {
     require('../../app/common/js/category-controllers');
     require('../../app/common/js/user-controllers');
     require('../../app/common/js/notice-controllers');
+    require('../../app/common/js/schedule-controllers');
 
     angular.module('Tutorials', ['ngRoute',
             'auth.controllers',
@@ -17,7 +18,8 @@ define(function (require) {
             'home.controllers',
             'category.controllers',
             'user.controllers',
-            'notice.controllers'
+            'notice.controllers',
+            'schedule.controllers'
         ])
         .config(['$routeProvider', '$httpProvider',
             function ($routeProvider, $httpProvider) {
@@ -129,6 +131,14 @@ define(function (require) {
                         controller: 'NoticeDetailsCtrl',
                         access: {
                             loginRequired: true
+                        }
+                    })
+                    .when('/schedule-list/', {
+                        templateUrl: 'app/common/partials/schedule-list.htm',
+                        controller: 'ScheduleListCtrl',
+                        access: {
+                            loginRequired: true,
+                            roles: ['admin']
                         }
                     })
                     .otherwise({

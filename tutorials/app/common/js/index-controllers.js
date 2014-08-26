@@ -31,6 +31,11 @@ define(function (require) {
                     "url": "/notice-list/",
                     "active": ""
                 };
+                var scheduleNav = {
+                    "name": "工作调度",
+                    "url": "/schedule-list/",
+                    "active": ""
+                };
 
                 $scope.init = function () {
 
@@ -50,7 +55,7 @@ define(function (require) {
 
                     $scope.appName = appName;
                     $scope.makeNavbarVisible();
-                    $scope.navList = [homeNav, categoryNav, userRoleNav, noticeNav];
+                    $scope.navList = [homeNav, categoryNav, userRoleNav, noticeNav, scheduleNav];
 
                 }
 

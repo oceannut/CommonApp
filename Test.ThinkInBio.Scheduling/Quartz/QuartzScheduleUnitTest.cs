@@ -22,7 +22,8 @@ namespace Test.ThinkInBio.Scheduling.Quartz
             ISchedulerFactory schedulerFactory = new StdSchedulerFactory();
 
             SimpleJob job = new SimpleJob();
-            QuartzSchedule schedule = new QuartzSchedule(schedulerFactory, job);
+
+            QuartzSchedule schedule = new QuartzSchedule(schedulerFactory);
             Assert.AreEqual(0, schedule.RepeatSeconds);
             Assert.AreEqual(0, schedule.RepeatCount);
             Assert.AreEqual(null, schedule.Expression);
@@ -31,7 +32,7 @@ namespace Test.ThinkInBio.Scheduling.Quartz
 
             Task.Factory.StartNew(() =>
             {
-                schedule.Start();
+                schedule.Start(job);
             });
             Thread.Sleep(5000);
             schedule.Stop();
@@ -47,7 +48,8 @@ namespace Test.ThinkInBio.Scheduling.Quartz
             ISchedulerFactory schedulerFactory = new StdSchedulerFactory();
 
             SimpleJob job = new SimpleJob();
-            QuartzSchedule schedule = new QuartzSchedule(schedulerFactory, job, 1);
+
+            QuartzSchedule schedule = new QuartzSchedule(schedulerFactory, 1);
             Assert.AreEqual(1, schedule.RepeatSeconds);
             Assert.AreEqual(0, schedule.RepeatCount);
             Assert.AreEqual(null, schedule.Expression);
@@ -56,7 +58,7 @@ namespace Test.ThinkInBio.Scheduling.Quartz
 
             Task.Factory.StartNew(() =>
             {
-                schedule.Start();
+                schedule.Start(job);
             });
             Thread.Sleep(5000);
             schedule.Stop();
@@ -72,7 +74,8 @@ namespace Test.ThinkInBio.Scheduling.Quartz
             ISchedulerFactory schedulerFactory = new StdSchedulerFactory();
 
             SimpleJob job = new SimpleJob();
-            QuartzSchedule schedule = new QuartzSchedule(schedulerFactory, job, 1, 2);
+
+            QuartzSchedule schedule = new QuartzSchedule(schedulerFactory, 1, 2);
             Assert.AreEqual(1, schedule.RepeatSeconds);
             Assert.AreEqual(2, schedule.RepeatCount);
             Assert.AreEqual(null, schedule.Expression);
@@ -81,7 +84,7 @@ namespace Test.ThinkInBio.Scheduling.Quartz
 
             Task.Factory.StartNew(() =>
             {
-                schedule.Start();
+                schedule.Start(job);
             });
             Thread.Sleep(5000);
             schedule.Stop();
@@ -97,7 +100,8 @@ namespace Test.ThinkInBio.Scheduling.Quartz
             ISchedulerFactory schedulerFactory = new StdSchedulerFactory();
 
             SimpleJob job = new SimpleJob();
-            QuartzSchedule schedule = new QuartzSchedule(schedulerFactory, job, "0/2 * * * * ?");
+
+            QuartzSchedule schedule = new QuartzSchedule(schedulerFactory, "0/2 * * * * ?");
             Assert.AreEqual(0, schedule.RepeatSeconds);
             Assert.AreEqual(0, schedule.RepeatCount);
             Assert.AreEqual("0/2 * * * * ?", schedule.Expression);
@@ -106,7 +110,7 @@ namespace Test.ThinkInBio.Scheduling.Quartz
 
             Task.Factory.StartNew(() =>
             {
-                schedule.Start();
+                schedule.Start(job);
             });
             Thread.Sleep(5000);
             schedule.Stop();
@@ -130,7 +134,8 @@ namespace Test.ThinkInBio.Scheduling.Quartz
             {
                 Console.WriteLine("after job run");
             };
-            QuartzSchedule schedule = new QuartzSchedule(schedulerFactory, job, "0/2 * * * * ?");
+
+            QuartzSchedule schedule = new QuartzSchedule(schedulerFactory, "0/2 * * * * ?");
             Assert.AreEqual(0, schedule.RepeatSeconds);
             Assert.AreEqual(0, schedule.RepeatCount);
             Assert.AreEqual("0/2 * * * * ?", schedule.Expression);
@@ -139,7 +144,7 @@ namespace Test.ThinkInBio.Scheduling.Quartz
 
             Task.Factory.StartNew(() =>
             {
-                schedule.Start();
+                schedule.Start(job);
             });
             Thread.Sleep(10000);
             schedule.Stop();

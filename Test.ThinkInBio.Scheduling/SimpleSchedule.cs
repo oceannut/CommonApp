@@ -35,18 +35,18 @@ namespace Test.ThinkInBio.Scheduling
             get { throw new NotImplementedException(); }
         }
 
-        public SimpleSchedule(int repeatSeconds, S.IJob job)
+        public SimpleSchedule(int repeatSeconds)
         {
             this.repeatSeconds = repeatSeconds;
             this.timer = new Timer(repeatSeconds * 1000);
+        }
+
+        public void Start(S.IJob job)
+        {
             this.timer.Elapsed += (o, e) =>
             {
                 job.Run();
             };
-        }
-
-        public void Start()
-        {
             this.timer.Start();
         }
 

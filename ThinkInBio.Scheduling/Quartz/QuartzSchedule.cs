@@ -17,7 +17,6 @@ namespace ThinkInBio.Scheduling.Quartz
         #region fields
 
         private IScheduler scheduler;
-        private IJob job;
 
         #endregion
 
@@ -67,15 +66,13 @@ namespace ThinkInBio.Scheduling.Quartz
         /// 
         /// </summary>
         /// <param name="schedulerFactory"></param>
-        /// <param name="job"></param>
-        public QuartzSchedule(ISchedulerFactory schedulerFactory, IJob job)
+        public QuartzSchedule(ISchedulerFactory schedulerFactory)
         {
             if (schedulerFactory == null)
             {
                 throw new ArgumentNullException();
             }
             this.scheduler = schedulerFactory.GetScheduler();
-            this.job = job;
         }
 
         /// <summary>
@@ -84,8 +81,8 @@ namespace ThinkInBio.Scheduling.Quartz
         /// <param name="schedulerFactory"></param>
         /// <param name="job"></param>
         /// <param name="interval"></param>
-        public QuartzSchedule(ISchedulerFactory schedulerFactory, IJob job, int interval)
-            : this(schedulerFactory, job)
+        public QuartzSchedule(ISchedulerFactory schedulerFactory, int interval)
+            : this(schedulerFactory)
         {
             if (interval < 1)
             {
@@ -101,8 +98,8 @@ namespace ThinkInBio.Scheduling.Quartz
         /// <param name="job"></param>
         /// <param name="interval"></param>
         /// <param name="count"></param>
-        public QuartzSchedule(ISchedulerFactory schedulerFactory, IJob job, int interval, int count)
-            : this(schedulerFactory, job, interval)
+        public QuartzSchedule(ISchedulerFactory schedulerFactory, int interval, int count)
+            : this(schedulerFactory, interval)
         {
             if (count < 0)
             {
@@ -117,8 +114,8 @@ namespace ThinkInBio.Scheduling.Quartz
         /// <param name="schedulerFactory"></param>
         /// <param name="job"></param>
         /// <param name="cronExpression"></param>
-        public QuartzSchedule(ISchedulerFactory schedulerFactory, IJob job, string cronExpression)
-            : this(schedulerFactory, job)
+        public QuartzSchedule(ISchedulerFactory schedulerFactory, string cronExpression)
+            : this(schedulerFactory)
         {
             if (string.IsNullOrWhiteSpace(cronExpression))
             {
@@ -134,12 +131,14 @@ namespace ThinkInBio.Scheduling.Quartz
         /// <summary>
         /// 
         /// </summary>
-        public void Start()
+        public void Start(IJob job)
         {
+            string id = Guid.NewGuid().ToString();
+
             IJobDetail jobDetail = JobBuilder.Create<QuartzJob>()
-                .WithIdentity("job1")
+                .WithIdentity(id)
                 .Build();
-            jobDetail.JobDataMap.Add("job", this.job);
+            jobDetail.JobDataMap.Add("job", job);
 
             if (string.IsNullOrWhiteSpace(Expression))
             {
@@ -148,7 +147,7 @@ namespace ThinkInBio.Scheduling.Quartz
                 if (RepeatSeconds == 0)
                 {
                     trigger = TriggerBuilder.Create()
-                        .WithIdentity("trigger1")
+                        .WithIdentity(id)
                         //.StartAt(runTime)
                         .Build();
                 }
@@ -157,7 +156,7 @@ namespace ThinkInBio.Scheduling.Quartz
                     if (RepeatCount == 0)
                     {
                         trigger = TriggerBuilder.Create()
-                             .WithIdentity("trigger1")
+                             .WithIdentity(id)
                             //.StartAt(runTime)
                              .WithSimpleSchedule(x => x.WithIntervalInSeconds(RepeatSeconds).RepeatForever())
                              .Build();
@@ -165,7 +164,7 @@ namespace ThinkInBio.Scheduling.Quartz
                     else
                     {
                         trigger = TriggerBuilder.Create()
-                             .WithIdentity("trigger1")
+                             .WithIdentity(id)
                             //.StartAt(runTime)
                              .WithSimpleSchedule(x => x.WithIntervalInSeconds(RepeatSeconds).WithRepeatCount(RepeatCount))
                              .Build();
@@ -176,7 +175,7 @@ namespace ThinkInBio.Scheduling.Quartz
             else
             {
                 ICronTrigger trigger = (ICronTrigger)TriggerBuilder.Create()
-                    .WithIdentity("trigger1")
+                    .WithIdentity(id)
                     .WithCronSchedule(Expression)
                     .Build();
                 scheduler.ScheduleJob(jobDetail, trigger);

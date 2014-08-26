@@ -9,19 +9,13 @@ namespace ThinkInBio.Scheduling
     public class ScheduleManager
     {
 
-        private static ScheduleManager sole = new ScheduleManager();
-        private Dictionary<string, Scheduler> map = new Dictionary<string, Scheduler>();
-
-        public static ScheduleManager SoleInstance
-        {
-            get { return sole; }
-        }
+        internal Dictionary<string, Scheduler> Map { get; set; }
 
         public IEnumerable<Scheduler> SchedulerList
         {
             get
             {
-                List<Scheduler> list = new List<Scheduler>(map.Values);
+                List<Scheduler> list = new List<Scheduler>(Map.Values);
                 list.Sort(new Comparison<Scheduler>(
                     (e1, e2) =>
                     {
@@ -31,7 +25,10 @@ namespace ThinkInBio.Scheduling
             }
         }
 
-        private ScheduleManager() { }
+        internal ScheduleManager()
+        {
+            Map = new Dictionary<string, Scheduler>();
+        }
 
         public void Add(Scheduler scheduler)
         {
@@ -43,9 +40,9 @@ namespace ThinkInBio.Scheduling
             {
                 scheduler.Name = new Guid().ToString();
             }
-            if (!map.ContainsKey(scheduler.Name))
+            if (!Map.ContainsKey(scheduler.Name))
             {
-                map.Add(scheduler.Name, scheduler);
+                Map.Add(scheduler.Name, scheduler);
             }
         }
 
@@ -64,9 +61,25 @@ namespace ThinkInBio.Scheduling
             {
                 throw new ArgumentNullException();
             }
-            if (map.ContainsKey(name))
+            if (Map.ContainsKey(name))
             {
-                map.Remove(name);
+                Map.Remove(name);
+            }
+        }
+
+        public void Init()
+        {
+            foreach (Scheduler item in Map.Values)
+            {
+                item.Start();
+            }
+        }
+
+        public void Destroy()
+        {
+            foreach (Scheduler item in Map.Values)
+            {
+                item.Stop();
             }
         }
 

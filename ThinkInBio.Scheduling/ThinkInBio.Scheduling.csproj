@@ -46,6 +46,7 @@
     <Compile Include="GenericJob.cs" />
     <Compile Include="IJob.cs" />
     <Compile Include="ISchedule.cs" />
+    <Compile Include="MockJob.cs" />
     <Compile Include="Quartz\QuartzSchedule.cs" />
     <Compile Include="Quartz\QuartzJob.cs" />
     <Compile Include="ScheduleManager.cs" />
@@ -54,6 +55,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ThinkInBio.Common\ThinkInBio.Common.csproj">
+      <Project>{375D399D-647F-4C17-A152-1A8F54EED356}</Project>
+      <Name>ThinkInBio.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

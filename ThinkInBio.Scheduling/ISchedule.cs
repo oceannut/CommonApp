@@ -35,7 +35,8 @@ namespace ThinkInBio.Scheduling
         /// <summary>
         /// 启动调度。
         /// </summary>
-        void Start();
+        /// <param name="job">计划要调度的工作。</param>
+        void Start(IJob job);
 
         /// <summary>
         /// 停止调度。
