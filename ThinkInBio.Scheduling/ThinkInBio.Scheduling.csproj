@@ -49,8 +49,9 @@
     <Compile Include="MockJob.cs" />
     <Compile Include="Quartz\QuartzSchedule.cs" />
     <Compile Include="Quartz\QuartzJob.cs" />
+    <Compile Include="ScheduleException.cs" />
     <Compile Include="ScheduleManager.cs" />
-    <Compile Include="Scheduler.cs" />
+    <Compile Include="ScheduleScheme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

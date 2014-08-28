@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using ThinkInBio.Common.ExceptionHandling;
+
 namespace ThinkInBio.Scheduling
 {
 
@@ -16,7 +18,7 @@ namespace ThinkInBio.Scheduling
     /// Running -> Error (exception occured when job is running);
     /// Error -> Active (resume scheduling).
     /// </summary>
-    public enum SchedulerState
+    public enum ScheduleState
     {
         /// <summary>
         /// 调度已启动。
@@ -37,16 +39,16 @@ namespace ThinkInBio.Scheduling
     }
 
     /// <summary>
-    /// 工作计划调度，负责记录调度的进度状态。
+    /// 工作计划调度方案，安排工作的计划调度策略。
     /// </summary>
-    public class Scheduler : IDisposable
+    public class ScheduleScheme : IDisposable
     {
 
         #region fields
 
         private ISchedule schedule;
         private IJob job;
-        private SchedulerState state;
+        private ScheduleState state;
         private object lockObj = new object();
 
         #endregion
@@ -56,11 +58,13 @@ namespace ThinkInBio.Scheduling
         /// <summary>
         /// 工作计划调度的进度状态变化引发的事件。
         /// </summary>
-        public event Action<SchedulerState> StateChanged;
+        public event Action<ScheduleState> StateChanged;
 
         #endregion
 
         #region properties
+
+        internal IExceptionHandler ExceptionHandler { get; set; }
 
         /// <summary>
         /// 名称，标识当前的工作计划调度。
@@ -91,7 +95,7 @@ namespace ThinkInBio.Scheduling
         /// <summary>
         /// 工作计划调度的进度状态。
         /// </summary>
-        public SchedulerState State
+        public ScheduleState State
         {
             get { return state; }
             private set
@@ -108,6 +112,11 @@ namespace ThinkInBio.Scheduling
         }
 
         /// <summary>
+        /// 是否自动启动。
+        /// </summary>
+        public bool IsAutoStart { get; set; }
+
+        /// <summary>
         /// 最近一次调度启动时间。
         /// </summary>
         public DateTime? LastStartTime { get; private set; }
@@ -122,11 +131,11 @@ namespace ThinkInBio.Scheduling
         #region constructors
 
         /// <summary>
-        /// 构建一个工作计划调度。
+        /// 构建一个工作计划调度方案。
         /// </summary>
         /// <param name="schedule">为调度配置的工作计划。</param>
         /// <param name="job">要调度的工作。</param>
-        public Scheduler(ISchedule schedule, IJob job)
+        public ScheduleScheme(ISchedule schedule, IJob job)
         {
             if (schedule == null)
             {
@@ -138,7 +147,7 @@ namespace ThinkInBio.Scheduling
             }
             this.schedule = schedule;
             this.job = job;
-            this.state = SchedulerState.Inactive;
+            this.state = ScheduleState.Inactive;
 
             this.job.Running += new Action(job_Running);
             this.job.Completed += new Action(job_Completed);
@@ -146,12 +155,12 @@ namespace ThinkInBio.Scheduling
         }
 
         /// <summary>
-        /// 构建一个工作计划调度。
+        /// 构建一个工作计划调度方案。
         /// </summary>
         /// <param name="name">调度的名称。</param>
         /// <param name="schedule">为调度配置的工作计划。</param>
         /// <param name="job">要调度的工作。</param>
-        public Scheduler(string name, ISchedule schedule, IJob job)
+        public ScheduleScheme(string name, ISchedule schedule, IJob job)
             : this(schedule, job)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -172,11 +181,11 @@ namespace ThinkInBio.Scheduling
         {
             lock (lockObj)
             {
-                if (SchedulerState.Inactive == this.State || SchedulerState.Error == this.State)
+                if (ScheduleState.Inactive == this.State || ScheduleState.Error == this.State)
                 {
                     this.LastStartTime = DateTime.Now;
                     this.LastStopTime = null;
-                    this.State = SchedulerState.Active;
+                    this.State = ScheduleState.Active;
                     this.schedule.Start(this.job);
                 }
             }
@@ -189,10 +198,10 @@ namespace ThinkInBio.Scheduling
         {
             lock (lockObj)
             {
-                if (SchedulerState.Active == this.State || SchedulerState.Running == this.State)
+                if (ScheduleState.Active == this.State || ScheduleState.Running == this.State)
                 {
                     this.LastStopTime = DateTime.Now;
-                    this.State = SchedulerState.Inactive;
+                    this.State = ScheduleState.Inactive;
                     this.schedule.Stop();
                 }
             }
@@ -210,17 +219,21 @@ namespace ThinkInBio.Scheduling
 
         void job_Running()
         {
-            this.State = SchedulerState.Running;
+            this.State = ScheduleState.Running;
         }
 
         void job_Completed()
         {
-            this.State = SchedulerState.Active;
+            this.State = ScheduleState.Active;
         }
 
-        void job_Error(Exception obj)
+        void job_Error(Exception ex)
         {
-            this.State = SchedulerState.Error;
+            this.State = ScheduleState.Error;
+            if (ExceptionHandler != null)
+            {
+                ExceptionHandler.HandleException(ex);
+            }
         }
 
         #endregion

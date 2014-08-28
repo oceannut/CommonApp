@@ -8,10 +8,16 @@ define(function (require) {
 
     angular.module('schedule.services', ['ngResource', 'configs'])
         .constant("scheduleWcfService", "/wcf/ScheduleWcfService.svc")
-        .factory('ScheduleService', ['$resource', 'wcfApp', 'scheduleWcfService',
+        .factory('ScheduleListService', ['$resource', 'wcfApp', 'scheduleWcfService',
             function ($resource, wcfApp, scheduleWcfService) {
                 return $resource(wcfApp + scheduleWcfService + '/schedule/', {}, {
                     query: { method: 'GET', params: {}, isArray: true }
+                });
+            } ])
+        .factory('ScheduleService', ['$resource', 'wcfApp', 'scheduleWcfService',
+            function ($resource, wcfApp, scheduleWcfService) {
+                return $resource(wcfApp + scheduleWcfService + '/schedule/:name/:state/', {}, {
+                    update: { method: 'POST', params: { 'name': '@name', 'state': '@state' } }
                 });
             } ]);
 

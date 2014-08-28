@@ -13,9 +13,9 @@ namespace ThinkInBio.Scheduling
     {
 
         /// <summary>
-        /// 工作开始调度的启动时间；如果不设置，一般根据当前时间即时启动调度。
+        /// 工作调度延迟开始的秒数；如果不设置，一般根据当前时间即时启动调度。
         /// </summary>
-        DateTime? StartTime { get; }
+        int DelayedSeconds { get; }
 
         /// <summary>
         /// 重复执行工作的间隔秒数。

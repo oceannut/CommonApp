@@ -11,21 +11,24 @@ namespace ThinkInBio.Scheduling.Quartz
     /// <summary>
     /// 基于Quartz实现的工作计划。
     /// </summary>
-    public class QuartzSchedule : ISchedule
+    public class QuartzSchedule : ISchedule, IDisposable
     {
 
         #region fields
 
+        private string identity;
         private IScheduler scheduler;
+        private IJobDetail jobDetail;
+        private ITrigger trigger;
 
         #endregion
 
         #region properties
 
         /// <summary>
-        /// Job开始执行的时间
+        /// 工作调度延迟开始的秒数；如果不设置，一般根据当前时间即时启动调度。
         /// </summary>
-        public DateTime? StartTime { get; private set; }
+        public int DelayedSeconds { get; private set; }
 
         /// <summary>
         /// 重复执行工作的间隔秒数。
@@ -73,6 +76,7 @@ namespace ThinkInBio.Scheduling.Quartz
                 throw new ArgumentNullException();
             }
             this.scheduler = schedulerFactory.GetScheduler();
+            this.identity = Guid.NewGuid().ToString();
         }
 
         /// <summary>
@@ -133,55 +137,67 @@ namespace ThinkInBio.Scheduling.Quartz
         /// </summary>
         public void Start(IJob job)
         {
-            string id = Guid.NewGuid().ToString();
-
-            IJobDetail jobDetail = JobBuilder.Create<QuartzJob>()
-                .WithIdentity(id)
-                .Build();
-            jobDetail.JobDataMap.Add("job", job);
-
-            if (string.IsNullOrWhiteSpace(Expression))
+            if (job == null)
             {
-                //DateTimeOffset runTime = DateBuilder.EvenMinuteDate(DateTimeOffset.UtcNow);
-                ITrigger trigger = null;
-                if (RepeatSeconds == 0)
+                throw new ArgumentNullException();
+            }
+
+            if (this.jobDetail == null)
+            {
+                this.jobDetail = JobBuilder.Create<QuartzJob>()
+                    .WithIdentity(this.identity)
+                    .Build();
+                this.jobDetail.JobDataMap.Add("job", job);
+            }
+            if (this.trigger == null)
+            {
+                if (string.IsNullOrWhiteSpace(Expression))
                 {
-                    trigger = TriggerBuilder.Create()
-                        .WithIdentity(id)
-                        //.StartAt(runTime)
-                        .Build();
-                }
-                else
-                {
-                    if (RepeatCount == 0)
+                    //DateTimeOffset runTime = DateBuilder.NextGivenSecondDate(null, DelayedSeconds);
+                    DateTimeOffset runTime = DateTimeOffset.Now;
+                    if (DelayedSeconds > 0)
                     {
-                        trigger = TriggerBuilder.Create()
-                             .WithIdentity(id)
-                            //.StartAt(runTime)
-                             .WithSimpleSchedule(x => x.WithIntervalInSeconds(RepeatSeconds).RepeatForever())
-                             .Build();
+                        runTime = runTime.AddSeconds(DelayedSeconds);
+                    }
+                    if (RepeatSeconds == 0)
+                    {
+                        this.trigger = TriggerBuilder.Create()
+                            .WithIdentity(this.identity)
+                            .StartAt(runTime)
+                            .Build();
                     }
                     else
                     {
-                        trigger = TriggerBuilder.Create()
-                             .WithIdentity(id)
-                            //.StartAt(runTime)
-                             .WithSimpleSchedule(x => x.WithIntervalInSeconds(RepeatSeconds).WithRepeatCount(RepeatCount))
-                             .Build();
+                        if (RepeatCount == 0)
+                        {
+                            this.trigger = TriggerBuilder.Create()
+                                 .WithIdentity(this.identity)
+                                 .StartAt(runTime)
+                                 .WithSimpleSchedule(x => x.WithIntervalInSeconds(RepeatSeconds).RepeatForever())
+                                 .Build();
+                        }
+                        else
+                        {
+                            this.trigger = TriggerBuilder.Create()
+                                 .WithIdentity(this.identity)
+                                 .StartAt(runTime)
+                                 .WithSimpleSchedule(x => x.WithIntervalInSeconds(RepeatSeconds).WithRepeatCount(RepeatCount))
+                                 .Build();
+                        }
                     }
                 }
-                scheduler.ScheduleJob(jobDetail, trigger);
-            }
-            else
-            {
-                ICronTrigger trigger = (ICronTrigger)TriggerBuilder.Create()
-                    .WithIdentity(id)
-                    .WithCronSchedule(Expression)
-                    .Build();
-                scheduler.ScheduleJob(jobDetail, trigger);
-            }
+                else
+                {
+                    this.trigger = (ICronTrigger)TriggerBuilder.Create()
+                        .WithIdentity(this.identity)
+                        .WithCronSchedule(Expression)
+                        .Build();
 
-            scheduler.Start();
+                }
+            }
+            this.scheduler.ScheduleJob(this.jobDetail, this.trigger);
+
+            this.scheduler.Start();
         }
 
         /// <summary>
@@ -189,7 +205,12 @@ namespace ThinkInBio.Scheduling.Quartz
         /// </summary>
         public void Stop()
         {
-            scheduler.Shutdown(true);
+            this.scheduler.UnscheduleJob(new TriggerKey(this.identity));
+        }
+
+        public void Dispose()
+        {
+            this.scheduler.Shutdown(true);
         }
 
         #endregion

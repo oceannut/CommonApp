@@ -26,7 +26,7 @@ namespace Test.ThinkInBio.Scheduling
             {
                 Console.WriteLine("after job run");
             };
-            S.Scheduler scheduler = new S.Scheduler(new SimpleSchedule(1), job);
+            S.ScheduleScheme scheduler = new S.ScheduleScheme(new SimpleSchedule(1), job);
             scheduler.StateChanged += (e) =>
             {
                 Console.WriteLine("current schedule state: " + e);

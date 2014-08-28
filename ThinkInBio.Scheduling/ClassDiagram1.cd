@@ -1,17 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="ThinkInBio.Scheduling.ScheduleManager" Collapsed="true">
-    <Position X="6.25" Y="1.25" Width="1.5" />
+    <Position X="6" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAAAAABAAAABAAAAABAAAIABAAAAAAAACAAAAAAA=</HashCode>
       <FileName>ScheduleManager.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="SchemeList" />
+    </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="ThinkInBio.Scheduling.Scheduler" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2" Y="3.25" Width="1.5" />
+  <Class Name="ThinkInBio.Scheduling.ScheduleScheme" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6" Y="3.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAAAiCAgAAAACAAAAAYAAEgCAABEJAAABAIAACA=</HashCode>
-      <FileName>Scheduler.cs</FileName>
+      <FileName>ScheduleScheme.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Schedule" />
@@ -20,32 +26,55 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="ThinkInBio.Scheduling.GenericJob" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="4.5" Y="1.25" Width="1.5" />
+    <Position X="2" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQYAAAAAAAAAAAAAAAAIAAAAAAAAAAI=</HashCode>
       <FileName>GenericJob.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="ThinkInBio.Scheduling.ISchedule" Collapsed="true">
-    <Position X="2" Y="5.25" Width="1.5" />
+  <Class Name="ThinkInBio.Scheduling.MockJob" Collapsed="true">
+    <Position X="2" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAIAAAQABAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MockJob.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThinkInBio.Scheduling.Quartz.QuartzJob" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Quartz\QuartzJob.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ThinkInBio.Scheduling.Quartz.QuartzSchedule" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAECAAAAAAAAAAAAAAIAAAAAJQIAAAAQBAAAA=</HashCode>
+      <FileName>Quartz\QuartzSchedule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="ThinkInBio.Scheduling.ISchedule" Collapsed="true">
+    <Position X="9" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAACAAAAAAAAAAAAAAIAAAAAIQIAAAAAAAAAA=</HashCode>
       <FileName>ISchedule.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="ThinkInBio.Scheduling.IJob" Collapsed="true">
-    <Position X="2" Y="1.25" Width="1.5" />
+    <Position X="6" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQIAAAAAAAAAAAAAAAAIAAAAAAAAAAI=</HashCode>
       <FileName>IJob.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Enum Name="ThinkInBio.Scheduling.SchedulerState" Collapsed="true">
-    <Position X="4.5" Y="2.5" Width="1.5" />
+  <Enum Name="ThinkInBio.Scheduling.ScheduleState" Collapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAACAAAAAAAAQAAAAAAAAAAAAAAAAAoAAAAAAAAAAA=</HashCode>
-      <FileName>Scheduler.cs</FileName>
+      <FileName>ScheduleScheme.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Microsoft YaHei" Size="9" />

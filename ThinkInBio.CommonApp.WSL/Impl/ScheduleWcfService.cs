@@ -18,21 +18,15 @@ namespace ThinkInBio.CommonApp.WSL.Impl
         internal ScheduleManager ScheduleManager { get; set; }
         internal IExceptionHandler ExceptionHandler { get; set; }
 
-        public SchedulerSummary[] GetSchedulerList()
+        public ScheduleSchemeTO[] GetSchemeList()
         {
             try
             {
-                List<SchedulerSummary> list = new List<SchedulerSummary>();
-                IEnumerable<Scheduler> schedulerList = ScheduleManager.SchedulerList;
-                foreach (Scheduler scheduler in schedulerList)
+                List<ScheduleSchemeTO> list = new List<ScheduleSchemeTO>();
+                IEnumerable<ScheduleScheme> schemeList = ScheduleManager.SchemeList;
+                foreach (ScheduleScheme scheme in schemeList)
                 {
-                    SchedulerSummary summary = new SchedulerSummary();
-                    summary.Name = scheduler.Name;
-                    summary.Description = scheduler.Description;
-                    summary.State = scheduler.State;
-                    summary.LastStartTime = scheduler.LastStartTime.HasValue? scheduler.LastStartTime.Value.ToString(): "";
-                    summary.LastStopTime = scheduler.LastStopTime.HasValue ? scheduler.LastStopTime.Value.ToString() : "";
-                    list.Add(summary);
+                    list.Add(BuildScheduleSchemeTO(scheme));
                 }
                 return list.ToArray();
             }
@@ -41,6 +35,63 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
             }
+        }
+
+        public ScheduleSchemeTO ChangeSchemeState(string name, string state)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new WebFaultException<string>("name", HttpStatusCode.BadRequest);
+            }
+            bool stateBool = false;
+            try
+            {
+                stateBool = Convert.ToBoolean(state);
+            }
+            catch
+            {
+                throw new WebFaultException<string>("state", HttpStatusCode.BadRequest);
+            }
+            ScheduleScheme scheme = ScheduleManager.Get(name);
+            if (scheme == null)
+            {
+                throw new WebFaultException(HttpStatusCode.NotFound);
+            }
+            try
+            {
+                if (stateBool)
+                {
+                    scheme.Start();
+                }
+                else
+                {
+                    scheme.Stop();
+                }
+                return BuildScheduleSchemeTO(scheme);
+            }
+            catch (BusinessLayerException ex)
+            {
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        private ScheduleSchemeTO BuildScheduleSchemeTO(ScheduleScheme scheme)
+        {
+            ScheduleSchemeTO to = new ScheduleSchemeTO();
+            to.Name = scheme.Name;
+            to.Description = scheme.Description;
+            to.State = scheme.State;
+            to.LastStartTime = scheme.LastStartTime.HasValue ? scheme.LastStartTime.Value.ToString() : "";
+            to.LastStopTime = scheme.LastStopTime.HasValue ? scheme.LastStopTime.Value.ToString() : "";
+
+            ISchedule schedule = scheme.Schedule;
+            to.DelayedSeconds = schedule.DelayedSeconds;
+            to.RepeatSeconds = schedule.RepeatSeconds;
+            to.RepeatCount = schedule.RepeatCount;
+            to.Expression = schedule.Expression;
+
+            return to;
         }
 
     }

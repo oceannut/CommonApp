@@ -9,14 +9,14 @@ namespace ThinkInBio.Scheduling
     public class ScheduleManager
     {
 
-        internal Dictionary<string, Scheduler> Map { get; set; }
+        internal Dictionary<string, ScheduleScheme> Map { get; set; }
 
-        public IEnumerable<Scheduler> SchedulerList
+        public IEnumerable<ScheduleScheme> SchemeList
         {
             get
             {
-                List<Scheduler> list = new List<Scheduler>(Map.Values);
-                list.Sort(new Comparison<Scheduler>(
+                List<ScheduleScheme> list = new List<ScheduleScheme>(Map.Values);
+                list.Sort(new Comparison<ScheduleScheme>(
                     (e1, e2) =>
                     {
                         return e1.Name.CompareTo(e2.Name);
@@ -27,26 +27,42 @@ namespace ThinkInBio.Scheduling
 
         internal ScheduleManager()
         {
-            Map = new Dictionary<string, Scheduler>();
+            Map = new Dictionary<string, ScheduleScheme>();
         }
 
-        public void Add(Scheduler scheduler)
+        public void Add(ScheduleScheme scheme)
         {
-            if (scheduler == null)
+            if (scheme == null)
             {
                 throw new ArgumentNullException();
             }
-            if (string.IsNullOrWhiteSpace(scheduler.Name))
+            if (string.IsNullOrWhiteSpace(scheme.Name))
             {
-                scheduler.Name = new Guid().ToString();
+                scheme.Name = new Guid().ToString();
             }
-            if (!Map.ContainsKey(scheduler.Name))
+            if (!Map.ContainsKey(scheme.Name))
             {
-                Map.Add(scheduler.Name, scheduler);
+                Map.Add(scheme.Name, scheme);
             }
         }
 
-        public void Remove(Scheduler scheduler)
+        public ScheduleScheme Get(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException();
+            }
+            if (Map.ContainsKey(name))
+            {
+                return Map[name];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void Remove(ScheduleScheme scheduler)
         {
             if (scheduler == null || string.IsNullOrWhiteSpace(scheduler.Name))
             {
@@ -69,15 +85,18 @@ namespace ThinkInBio.Scheduling
 
         public void Init()
         {
-            foreach (Scheduler item in Map.Values)
+            foreach (ScheduleScheme item in Map.Values)
             {
-                item.Start();
+                if (item.IsAutoStart)
+                {
+                    item.Start();
+                }
             }
         }
 
         public void Destroy()
         {
-            foreach (Scheduler item in Map.Values)
+            foreach (ScheduleScheme item in Map.Values)
             {
                 item.Stop();
             }
