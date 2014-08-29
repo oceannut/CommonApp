@@ -9,7 +9,7 @@ namespace ThinkInBio.Common.Logging
     public interface ILogger
     {
 
-        void Log(string message);
+        void Log(object message);
 
     }
 

@@ -57,12 +57,29 @@
     <property name="IsAutoStart" value="false"/>
   </object>
 
+  <object id="MockJobD" type="ThinkInBio.Scheduling.MockExceptionJob, ThinkInBio.Scheduling">
+  </object>
+
+  <object id="MockScheduleD" type="ThinkInBio.Scheduling.Quartz.QuartzSchedule, ThinkInBio.Scheduling">
+    <constructor-arg name="schedulerFactory" ref="StdSchedulerFactory"/>
+    <constructor-arg name="interval" value="40"/>
+  </object>
+
+  <object id="MockScheduleSchemeD" type="ThinkInBio.Scheduling.ScheduleScheme, ThinkInBio.Scheduling">
+    <constructor-arg name="schedule" ref="MockScheduleD"/>
+    <constructor-arg name="job" ref="MockJobD"/>
+    <property name="Name" value="Mock Scheme D"/>
+    <property name="Description" value="Scheduling for the mock job D."/>
+    <property name="IsAutoStart" value="false"/>
+  </object>
+
   <object id="ScheduleManager" type="ThinkInBio.Scheduling.ScheduleManager, ThinkInBio.Scheduling" init-method="Init" destroy-method="Destroy">
     <property name="Map">
       <dictionary key-type="string" value-type="ThinkInBio.Scheduling.ScheduleScheme, ThinkInBio.Scheduling">
         <entry key="Mock Scheme A" value-ref="MockScheduleSchemeA" />
         <entry key="Mock Scheme B" value-ref="MockScheduleSchemeB" />
         <entry key="Mock Scheme C" value-ref="MockScheduleSchemeC" />
+        <entry key="Mock Scheme D" value-ref="MockScheduleSchemeD" />
       </dictionary>
     </property>
   </object>

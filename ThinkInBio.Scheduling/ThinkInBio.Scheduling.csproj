@@ -43,13 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mock\MockExceptionJob.cs" />
     <Compile Include="GenericJob.cs" />
     <Compile Include="IJob.cs" />
     <Compile Include="ISchedule.cs" />
-    <Compile Include="MockJob.cs" />
+    <Compile Include="Mock\MockJob.cs" />
     <Compile Include="Quartz\QuartzSchedule.cs" />
     <Compile Include="Quartz\QuartzJob.cs" />
-    <Compile Include="ScheduleException.cs" />
+    <None Include="ScheduleException.cs_" />
     <Compile Include="ScheduleManager.cs" />
     <Compile Include="ScheduleScheme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

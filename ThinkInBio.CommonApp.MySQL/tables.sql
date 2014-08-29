@@ -4,6 +4,7 @@ drop table cyUserRole;
 drop table cyCategory;
 drop table cyNotice;
 drop table cyBizNotification;
+drop table cyJobLog;
 
 
 create table cyUser
@@ -65,4 +66,15 @@ create table cyBizNotification
 	resourceId				VARCHAR(32)		NOT NULL,
 	PRIMARY KEY (id)
 );
+
+create table cyJobLog
+(
+	id						BIGINT	unsigned	NOT NULL AUTO_INCREMENT,
+	scope					VARCHAR(32)			NOT NULL,
+	count					INT					NOT NULL default 0,
+	timestamp				DATETIME			NOT NULL,
+	creation				DATETIME			NOT NULL,
+	PRIMARY KEY (id)
+);
+ALTER TABLE cyJobLog ADD INDEX timestamp_index  (timestamp);
 

@@ -45,6 +45,7 @@
     <Compile Include="Category.cs" />
     <None Include="GenericGuid.cs_" />
     <Compile Include="Auth\IAuthProvider.cs" />
+    <Compile Include="JobLog.cs" />
     <Compile Include="ICategoryable.cs" />
     <Compile Include="CategoryTree.cs" />
     <Compile Include="IDisuseable.cs" />

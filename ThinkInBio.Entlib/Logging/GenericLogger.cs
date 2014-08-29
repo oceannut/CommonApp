@@ -18,9 +18,9 @@ namespace ThinkInBio.Entlib.Logging
 
         private static LogWriter logWriter = EnterpriseLibraryContainer.Current.GetInstance<LogWriter>();
 
-        public void Log(string message)
+        public void Log(object message)
         {
-            if (string.IsNullOrWhiteSpace(message))
+            if (message == null)
             {
                 return;
             }
