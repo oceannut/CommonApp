@@ -120,6 +120,9 @@
   <data name="EmptyCode" xml:space="preserve">
     <value>The code is empty.</value>
   </data>
+  <data name="EmptyContent" xml:space="preserve">
+    <value>The content is empty.</value>
+  </data>
   <data name="EmptyName" xml:space="preserve">
     <value>The name is empty.</value>
   </data>

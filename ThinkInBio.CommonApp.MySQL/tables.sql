@@ -1,10 +1,21 @@
 ﻿
+
+delete from cyUser;
+delete from cyUserRole;
+delete from cyCategory;
+delete from cyNotice;
+delete from cyBizNotification;
+delete from cyJobLog;
+delete from cyIdiom;
+
+
 drop table cyUser;
 drop table cyUserRole;
 drop table cyCategory;
 drop table cyNotice;
 drop table cyBizNotification;
 drop table cyJobLog;
+drop table cyIdiom;
 
 
 create table cyUser
@@ -26,6 +37,11 @@ create table cyUserRole
 	_role					VARCHAR(32)		NOT NULL,
 	PRIMARY KEY (username,_role)
 );
+
+insert into cyUser(username,pwd,name,creation,modification)
+	values('admin','0DPiKuNIrrVmD8IUCuw1hQxNqZc=','admin',now(),now());
+insert into cyUserRole(username,_role)
+	values('admin','admin');
 
 create table cyCategory
 (
@@ -77,4 +93,14 @@ create table cyJobLog
 	PRIMARY KEY (id)
 );
 ALTER TABLE cyJobLog ADD INDEX timestamp_index  (timestamp);
+
+create table cyIdiom
+(
+	id						BIGINT	unsigned	NOT NULL AUTO_INCREMENT,
+	scope					VARCHAR(32)			NOT NULL,
+	content					VARCHAR(1024)		NOT NULL,
+	spell					VARCHAR(16)			NOT NULL,
+	modification			DATETIME			NOT NULL,
+	PRIMARY KEY (id)
+);
 

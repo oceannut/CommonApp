@@ -63,6 +63,8 @@
     </Compile>
     <Compile Include="ServiceModel\ServiceResponse.cs" />
     <Compile Include="ServiceModel\ServiceResponseCode.cs" />
+    <Compile Include="Utilities\ChineseToInitial.cs" />
+    <Compile Include="Utilities\ChineseToSpell.cs" />
     <Compile Include="Utilities\HashHelper.cs" />
   </ItemGroup>
   <ItemGroup>

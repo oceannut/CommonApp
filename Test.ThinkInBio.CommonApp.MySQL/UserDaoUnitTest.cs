@@ -28,19 +28,8 @@ namespace Test.ThinkInBio.CommonApp.MySQL
         [TestMethod]
         public void Demo()
         {
-            User user = new User("zsp", "zsp", new PlainPasswordProvider());
-            user.Name = "张少平";
-            user.Save(
-                (e) =>
-                {
-                    return false;
-                },
-                (e) =>
-                {
-                    userDao.Save(e);
-                });
 
-            user = new User("lj", "lj", new PlainPasswordProvider());
+            User user = new User("lj", "lj", new PlainPasswordProvider());
             user.Name = "李静";
             user.Save(
                 (e) =>
@@ -52,8 +41,8 @@ namespace Test.ThinkInBio.CommonApp.MySQL
                     userDao.Save(e);
                 });
 
-            user = new User("lsj", "lsj", new PlainPasswordProvider());
-            user.Name = "刘世娟";
+            user = new User("rbh", "rbh", new PlainPasswordProvider());
+            user.Name = "任宝宏";
             user.Save(
                 (e) =>
                 {
@@ -63,6 +52,19 @@ namespace Test.ThinkInBio.CommonApp.MySQL
                 {
                     userDao.Save(e);
                 });
+
+            user = new User("cqq", "cqq", new PlainPasswordProvider());
+            user.Name = "陈芊芊";
+            user.Save(
+                (e) =>
+                {
+                    return false;
+                },
+                (e) =>
+                {
+                    userDao.Save(e);
+                });
+
         }
 
         [TestMethod]

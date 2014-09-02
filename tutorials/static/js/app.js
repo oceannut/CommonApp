@@ -10,6 +10,7 @@ define(function (require) {
     require('../../app/common/js/category-controllers');
     require('../../app/common/js/user-controllers');
     require('../../app/common/js/notice-controllers');
+    require('../../app/common/js/idiom-controllers');
     require('../../app/common/js/schedule-controllers');
 
     angular.module('Tutorials', ['ngRoute',
@@ -19,6 +20,7 @@ define(function (require) {
             'category.controllers',
             'user.controllers',
             'notice.controllers',
+            'idiom.controllers',
             'schedule.controllers'
         ])
         .config(['$routeProvider', '$httpProvider',
@@ -131,6 +133,30 @@ define(function (require) {
                         controller: 'NoticeDetailsCtrl',
                         access: {
                             loginRequired: true
+                        }
+                    })
+                    .when('/idiom-overview/', {
+                        templateUrl: 'app/common/partials/idiom-overview.htm',
+                        controller: 'IdiomOverviewCtrl',
+                        access: {
+                            loginRequired: true,
+                            roles: ['admin']
+                        }
+                    })
+                    .when('/idiom-list/:scope/', {
+                        templateUrl: 'app/common/partials/idiom-list.htm',
+                        controller: 'IdiomListCtrl',
+                        access: {
+                            loginRequired: true,
+                            roles: ['admin']
+                        }
+                    })
+                    .when('/idiom-edit/:scope/:id/', {
+                        templateUrl: 'app/common/partials/idiom-edit.htm',
+                        controller: 'IdiomEditCtrl',
+                        access: {
+                            loginRequired: true,
+                            roles: ['admin']
                         }
                     })
                     .when('/schedule-list/', {

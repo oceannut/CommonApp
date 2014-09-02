@@ -40,11 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IIdiomService.cs" />
     <Compile Include="IJobLogService.cs" />
     <Compile Include="IBizNotificationService.cs" />
     <Compile Include="ICategoryService.cs" />
     <Compile Include="Impl\BizNotificationService.cs" />
     <Compile Include="Impl\CategoryService.cs" />
+    <Compile Include="Impl\IdiomService.cs" />
     <Compile Include="Impl\JobLogService.cs" />
     <Compile Include="Impl\NoticeService.cs" />
     <Compile Include="Impl\SignService.cs" />

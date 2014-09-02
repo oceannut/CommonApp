@@ -31,6 +31,11 @@ define(function (require) {
                     "url": "/notice-list/",
                     "active": ""
                 };
+                var idiomNav = {
+                    "name": "常用短语",
+                    "url": "/idiom-overview/",
+                    "active": ""
+                };
                 var scheduleNav = {
                     "name": "工作调度",
                     "url": "/schedule-list/",
@@ -55,7 +60,7 @@ define(function (require) {
 
                     $scope.appName = appName;
                     $scope.makeNavbarVisible();
-                    $scope.navList = [homeNav, categoryNav, userRoleNav, noticeNav, scheduleNav];
+                    $scope.navList = [homeNav, categoryNav, userRoleNav, noticeNav, idiomNav, scheduleNav];
 
                 }
 

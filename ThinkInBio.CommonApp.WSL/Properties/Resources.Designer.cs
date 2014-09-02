@@ -70,6 +70,15 @@ namespace ThinkInBio.CommonApp.WSL.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The content is empty..
+        /// </summary>
+        internal static string EmptyContent {
+            get {
+                return ResourceManager.GetString("EmptyContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The name is empty..
         /// </summary>
         internal static string EmptyName {
