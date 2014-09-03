@@ -49,6 +49,31 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             }
         }
 
+        public void UpdateUserPassword(string username, string oldPwd, string newPwd)
+        {
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                throw new WebFaultException<string>(R.EmptyUsername, HttpStatusCode.BadRequest);
+            }
+            if (string.IsNullOrWhiteSpace(oldPwd) || string.IsNullOrWhiteSpace(newPwd))
+            {
+                throw new WebFaultException<string>(R.EmptyPwd, HttpStatusCode.BadRequest);
+            }
+            try
+            {
+                bool autheticated = UserService.UpdateUserPassword(username, oldPwd, newPwd);
+                if (!autheticated)
+                {
+                    throw new WebFaultException(HttpStatusCode.Forbidden);
+                }
+            }
+            catch (BusinessLayerException ex)
+            {
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
+            }
+        }
+
         public void DeleteUser(string username)
         {
             if (string.IsNullOrWhiteSpace(username))

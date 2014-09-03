@@ -24,6 +24,14 @@ namespace ThinkInBio.CommonApp.WSL
         User UpdateUser(string username, string name, string group);
 
         [OperationContract]
+        [WebInvoke(Method = "PUT",
+            BodyStyle = WebMessageBodyStyle.WrappedRequest,
+            UriTemplate = "/user/{username}/pwd/",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        void UpdateUserPassword(string username, string oldPwd, string newPwd);
+
+        [OperationContract]
         [WebInvoke(Method = "DELETE",
             UriTemplate = "/user/{username}/",
             RequestFormat = WebMessageFormat.Json,

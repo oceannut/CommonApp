@@ -148,6 +148,20 @@ namespace ThinkInBio.CommonApp.MySQL
             return list;
         }
 
+        public void UpdatePwd(DateTime timeStamp, string username, string pwd)
+        {
+            DbTemplate.UpdateOrDelete(dataSource,
+                (command) =>
+                {
+                    command.CommandText = @"update cyUser
+                                                set pwd=@pwd,modification=@modification
+                                                where username=@username";
+                    command.Parameters.Add(DbFactory.CreateParameter("pwd", pwd));
+                    command.Parameters.Add(DbFactory.CreateParameter("modification", timeStamp));
+                    command.Parameters.Add(DbFactory.CreateParameter("username", username));
+                });
+        }
+
         public string GetPwd(string username)
         {
             return DbTemplate.Get<string>(dataSource,

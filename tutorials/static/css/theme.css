@@ -1,14 +1,15 @@
 ﻿body
 {
-    font-family: Georgia, "Times New Roman", Times, serif;
+    font-family: Georgia, "Times New Roman" , Times, serif;
     margin: 0;
     padding: 0;
     background: #CFE1ED url(../../static/img/bg.png) repeat;
+    position: relative;
 }
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6
 {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Helvetica Neue" , Helvetica, Arial, sans-serif;
     font-weight: normal;
     color: #333;
 }

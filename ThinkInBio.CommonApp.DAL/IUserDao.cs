@@ -11,6 +11,8 @@ namespace ThinkInBio.CommonApp.DAL
     public interface IUserDao : IDao<User>
     {
 
+        void UpdatePwd(DateTime timeStamp, string username, string pwd);
+
         string GetPwd(string username);
 
         bool UpdateWithRoles(User entity);

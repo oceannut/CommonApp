@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using ThinkInBio.Common.Audit;
+using ThinkInBio.Common.Caching;
 using ThinkInBio.Common.Exceptions;
 using ThinkInBio.CommonApp;
 using ThinkInBio.CommonApp.DAL;
@@ -13,6 +14,8 @@ namespace ThinkInBio.CommonApp.BLL.Impl
     public class UserService : IUserService
     {
 
+        internal IAuthProvider AuthProvider { get; set; }
+        internal ICache Session { get; set; }
         internal IUserDao UserDao { get; set; }
 
         public void SaveUser(User user)
@@ -34,6 +37,30 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             }
 
             UserDao.Update(user);
+        }
+
+        public bool UpdateUserPassword(string username, string oldPwd, string newPwd)
+        {
+            if (string.IsNullOrWhiteSpace(username)
+                || string.IsNullOrWhiteSpace(oldPwd)
+                || string.IsNullOrWhiteSpace(newPwd))
+            {
+                throw new ArgumentNullException();
+            }
+            User user = GetUser(username);
+            if (user == null)
+            {
+                throw new ObjectNotFoundException(username);
+            }
+            user.Pwd = UserDao.GetPwd(user.Username);
+            bool authenticated = user.Authenticate(oldPwd, AuthProvider);
+            if (authenticated)
+            {
+                UserDao.UpdatePwd(DateTime.Now, username, newPwd);
+                Session.Remove(username);
+                Session.Add(username, newPwd);
+            }
+            return authenticated;
         }
 
         public void DeleteUser(string username)

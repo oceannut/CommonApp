@@ -3,8 +3,10 @@
 define(function (require) {
 
     require('ng-route');
+    require('ng-local-storage');
 
     require('../../app/auth/js/auth-controllers');
+    require('../../app/common/js/client-controllers');
     require('../../app/common/js/index-controllers');
     require('../../app/common/js/home-controllers');
     require('../../app/common/js/category-controllers');
@@ -14,7 +16,9 @@ define(function (require) {
     require('../../app/common/js/schedule-controllers');
 
     angular.module('Tutorials', ['ngRoute',
+            'LocalStorageModule',
             'auth.controllers',
+            'client.controllers',
             'index.controllers',
             'home.controllers',
             'category.controllers',
@@ -23,91 +27,105 @@ define(function (require) {
             'idiom.controllers',
             'schedule.controllers'
         ])
-        .config(['$routeProvider', '$httpProvider',
-            function ($routeProvider, $httpProvider) {
+        .config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider',
+            function ($routeProvider, $httpProvider, localStorageServiceProvider) {
 
-                $routeProvider.
-                    when('/sign-in/', {
+                $routeProvider
+                    .when('/sign-in/', {
                         templateUrl: 'app/auth/partials/sign-in.htm',
                         controller: 'SignInCtrl'
-                    }).
-                    when('/sign-up/', {
+                    })
+                    .when('/sign-up/', {
                         templateUrl: 'app/auth/partials/sign-up.htm',
                         controller: 'SignUpCtrl'
-                    }).
-                    when('/sign-out/', {
+                    })
+                    .when('/sign-out/', {
                         templateUrl: 'app/auth/partials/sign-out.htm',
                         controller: 'SignOutCtrl'
-                    }).
-                    when('/not-authorised/', {
+                    })
+                    .when('/password-modify/:username/', {
+                        templateUrl: 'app/auth/partials/password-modify.htm',
+                        controller: 'PasswordModifyCtrl',
+                        access: {
+                            loginRequired: true
+                        }
+                    })
+                    .when('/not-authorised/', {
                         templateUrl: 'app/auth/partials/not-authorised.htm'
-                    }).
-                    when('/not-authenticated/', {
+                    })
+                    .when('/not-authenticated/', {
                         templateUrl: 'app/auth/partials/not-authenticated.htm',
                         controller: 'NotAuthenticatedCtrl'
-                    }).
-                    when('/session-out/', {
+                    })
+                    .when('/session-out/', {
                         templateUrl: 'app/auth/partials/session-out.htm',
                         controller: 'SessionOutCtrl'
-                    }).
-                    when('/home/', {
+                    })
+                    .when('/home/', {
                         templateUrl: 'app/common/partials/home.htm',
                         controller: 'HomeCtrl',
                         access: {
                             loginRequired: true
                         }
-                    }).
-                    when('/category-overview/', {
+                    })
+                    .when('/category-overview/', {
                         templateUrl: 'app/common/partials/category-overview.htm',
                         controller: 'CategoryOverviewCtrl',
                         access: {
                             loginRequired: true,
                             roles: ['admin']
                         }
-                    }).
-                    when('/category-list/:scope/', {
+                    })
+                    .when('/category-list/:scope/', {
                         templateUrl: 'app/common/partials/category-list.htm',
                         controller: 'CategoryListCtrl',
                         access: {
                             loginRequired: true,
                             roles: ['admin']
                         }
-                    }).
-                    when('/category-edit/:scope/:id/', {
+                    })
+                    .when('/category-edit/:scope/:id/', {
                         templateUrl: 'app/common/partials/category-edit.htm',
                         controller: 'CategoryEditCtrl',
                         access: {
                             loginRequired: true,
                             roles: ['admin']
                         }
-                    }).
-                    when('/user-role-overview/:which/', {
+                    })
+                    .when('/user-role-overview/:which/', {
                         templateUrl: 'app/common/partials/user-role-overview.htm',
                         controller: 'UserRoleOverviewCtrl',
                         access: {
                             loginRequired: true,
                             roles: ['admin']
                         }
-                    }).
-                    when('/user-role-assign/:username/', {
+                    })
+                    .when('/user-role-assign/:username/', {
                         templateUrl: 'app/common/partials/user-role-assign.htm',
                         controller: 'UserRoleAssignCtrl',
                         access: {
                             loginRequired: true,
                             roles: ['admin']
                         }
-                    }).
-                    when('/role-user-assign/:role/', {
+                    })
+                    .when('/role-user-assign/:role/', {
                         templateUrl: 'app/common/partials/role-user-assign.htm',
                         controller: 'RoleUserAssignCtrl',
                         access: {
                             loginRequired: true,
                             roles: ['admin']
                         }
-                    }).
-                    when('/user-setting/:username/', {
+                    })
+                    .when('/user-setting/:username/', {
                         templateUrl: 'app/common/partials/user-setting.htm',
                         controller: 'UserSettingCtrl',
+                        access: {
+                            loginRequired: true
+                        }
+                    })
+                    .when('/client-setting/:username/', {
+                        templateUrl: 'app/common/partials/client-setting.htm',
+                        controller: 'ClientSettingCtrl',
                         access: {
                             loginRequired: true
                         }
@@ -184,6 +202,9 @@ define(function (require) {
                         }
                     };
                 } ]);
+
+                localStorageServiceProvider.setPrefix('cully');
+                localStorageServiceProvider.setStorageCookieDomain('thinkinbio.com');
 
             } ])
         .run(['$http', '$rootScope', '$location', 'authorizationType', 'authorization', 'currentUser',

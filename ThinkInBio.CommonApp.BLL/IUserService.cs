@@ -12,6 +12,8 @@ namespace ThinkInBio.CommonApp.BLL
 
         void UpdateUser(User user);
 
+        bool UpdateUserPassword(string username, string oldPwd, string newPwd);
+
         void DeleteUser(string username);
 
         User GetUser(string username);
