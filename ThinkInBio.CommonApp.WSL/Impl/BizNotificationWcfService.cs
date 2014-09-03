@@ -200,14 +200,105 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             }
         }
 
-        public int GetBizNotificationCount(string box, string user, string date, string span)
-        {
-            throw new NotImplementedException();
-        }
+        //public int GetBizNotificationCount(string box, string user, string date, string span)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public BizNotification[] GetBizNotificationList(string box, string user, string date, string span, string start, string count)
         {
-            throw new NotImplementedException();
+            string sender = null;
+            string receiver = null;
+            switch (box)
+            {
+                case "inbox":
+                    receiver = user;
+                    break;
+                case "outbox":
+                    sender = user;
+                    break;
+                case "both":
+                    sender = user;
+                    receiver = user;
+                    break;
+                default:
+                    break;
+            }
+
+            DateTime d = DateTime.MinValue;
+            int spanInt = 0;
+            if ("null" != date && "null" != span)
+            {
+                try
+                {
+                    d = DateTime.Parse(date);
+                }
+                catch
+                {
+                    throw new WebFaultException<string>("date", HttpStatusCode.BadRequest);
+                }
+                try
+                {
+                    spanInt = Convert.ToInt32(span);
+                }
+                catch
+                {
+                    throw new WebFaultException<string>("span", HttpStatusCode.BadRequest);
+                }
+            }
+
+            int startInt = 0;
+            try
+            {
+                startInt = Convert.ToInt32(start);
+            }
+            catch
+            {
+                throw new WebFaultException<string>("start", HttpStatusCode.BadRequest);
+            }
+            int countInt = 0;
+            try
+            {
+                countInt = Convert.ToInt32(count);
+            }
+            catch
+            {
+                throw new WebFaultException<string>("count", HttpStatusCode.BadRequest);
+            }
+
+            DateTime? startTime = null;
+            DateTime? endTime = null;
+            if ("null" != date && "null" != span)
+            {
+                if (spanInt < 0)
+                {
+                    startTime = d.AddDays(spanInt + 1);
+                    endTime = new DateTime(d.Year, d.Month, d.Day, 23, 59, 59);
+                }
+                else
+                {
+                    startTime = new DateTime(d.Year, d.Month, d.Day);
+                    endTime = d.AddDays(spanInt).AddSeconds(-1);
+                }
+            }
+
+            try
+            {
+                IList<BizNotification> list = BizNotificationService.GetBizNotificationList(startTime, endTime, sender, receiver, null, startInt, countInt);
+                if (list != null)
+                {
+                    return list.ToArray();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (BusinessLayerException ex)
+            {
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
+            }
         }
 
     }

@@ -27,6 +27,10 @@ namespace ThinkInBio.CommonApp.BLL
 
         IList<BizNotification> GetUntreatedBizNotificationListByReceiver(string receiver, string resource);
 
+        IList<BizNotification> GetBizNotificationList(DateTime? startTime, DateTime? endTime,
+            string sender, string receiver, string resource,
+            int startRowIndex, int maxRowsCount);
+
     }
 
 }

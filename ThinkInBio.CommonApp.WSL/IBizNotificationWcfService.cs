@@ -104,10 +104,10 @@ namespace ThinkInBio.CommonApp.WSL
         /// <param name="date">起始日期。</param>
         /// <param name="span">时间范围。</param>
         /// <returns>返回通知记录的个数。</returns>
-        [OperationContract]
-        [WebGet(UriTemplate = "/notification/biz/{box}/{user}/time/{date}/{span}/",
-            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        int GetBizNotificationCount(string box, string user, string date, string span);
+        //[OperationContract]
+        //[WebGet(UriTemplate = "/notification/biz/{box}/{user}/time/{date}/{span}/",
+        //    RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        //int GetBizNotificationCount(string box, string user, string date, string span);
 
         /// <summary>
         /// 获取符合一定条件的通知记录。

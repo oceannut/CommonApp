@@ -84,5 +84,11 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             return BizNotificationDao.GetList(null, null, false, null, receiver, resource, null, false, 0, int.MaxValue);
         }
 
+        public IList<BizNotification> GetBizNotificationList(DateTime? startTime, DateTime? endTime, string sender, string receiver, 
+            string resource, int startRowIndex, int maxRowsCount)
+        {
+            return BizNotificationDao.GetList(startTime, endTime, null, sender, receiver, resource, null, false, startRowIndex, maxRowsCount);
+        }
+
     }
 }
