@@ -53,7 +53,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     });
                 return notification;
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -94,7 +94,11 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     });
                 return notification;
             }
-            catch (BusinessLayerException ex)
+            catch (WebFaultException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -123,7 +127,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             {
                 return BizNotificationService.GetUntreatedBizNotificationCountByReceiver(user);
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -149,7 +153,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     return null;
                 }
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -193,7 +197,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     return null;
                 }
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -294,7 +298,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     return null;
                 }
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);

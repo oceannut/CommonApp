@@ -52,6 +52,10 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     return user;
                 }
             }
+            catch (WebFaultException ex)
+            {
+                throw ex;
+            }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
@@ -78,6 +82,10 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 {
                     throw new WebFaultException(HttpStatusCode.Forbidden);
                 }
+            }
+            catch (WebFaultException ex)
+            {
+                throw ex;
             }
             catch (Exception ex)
             {

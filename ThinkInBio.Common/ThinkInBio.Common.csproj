@@ -46,7 +46,7 @@
     <Compile Include="Data\GenericDao.cs" />
     <Compile Include="Data\IDao.cs" />
     <Compile Include="Data\SQLHelper.cs" />
-    <Compile Include="ExceptionHandling\FileLogExceptionHandler.cs" />
+    <Compile Include="ExceptionHandling\SimpleFileLogExceptionHandler.cs" />
     <Compile Include="ExceptionHandling\IExceptionHandler.cs" />
     <Compile Include="Exceptions\AuthorizationException.cs" />
     <Compile Include="Exceptions\BusinessLayerException.cs" />
@@ -66,6 +66,7 @@
     <Compile Include="Utilities\ChineseToInitial.cs" />
     <Compile Include="Utilities\ChineseToSpell.cs" />
     <Compile Include="Utilities\HashHelper.cs" />
+    <Compile Include="Utilities\PathHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

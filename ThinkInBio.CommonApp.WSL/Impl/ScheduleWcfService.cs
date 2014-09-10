@@ -30,7 +30,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 }
                 return list.ToArray();
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -69,7 +69,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 }
                 return BuildScheduleSchemeTO(scheme);
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);

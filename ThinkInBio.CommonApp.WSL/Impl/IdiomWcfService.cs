@@ -40,7 +40,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 });
                 return idiom;
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -78,7 +78,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 });
                 return idiom;
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -101,7 +101,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             {
                 IdiomService.DeleteIdiom(idLong);
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -127,7 +127,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     return null;
                 }
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);

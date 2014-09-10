@@ -42,7 +42,11 @@ namespace ThinkInBio.CommonApp.WSL.Impl
 
                 return user;
             }
-            catch (BusinessLayerException ex)
+            catch (WebFaultException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -67,7 +71,11 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     throw new WebFaultException(HttpStatusCode.Forbidden);
                 }
             }
-            catch (BusinessLayerException ex)
+            catch (WebFaultException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -84,7 +92,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             {
                 UserService.DeleteUser(username);
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -101,7 +109,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             {
                 return UserService.GetUser(username);
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -122,7 +130,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     return null;
                 }
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -143,7 +151,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             {
                 UserService.SaveRole(username, role);
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -164,7 +172,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             {
                 UserService.DeleteRole(username, role);
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);

@@ -74,7 +74,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
 
                 return category;
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -149,7 +149,11 @@ namespace ThinkInBio.CommonApp.WSL.Impl
 
                 return category;
             }
-            catch (BusinessLayerException ex)
+            catch (WebFaultException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -206,7 +210,11 @@ namespace ThinkInBio.CommonApp.WSL.Impl
 
                 return category;
             }
-            catch (BusinessLayerException ex)
+            catch (WebFaultException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -234,7 +242,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             {
                 CategoryService.DeleteCategory(idLong);
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -262,7 +270,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             {
                 return CategoryService.GetCategory(idLong);
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -285,7 +293,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             {
                 return CategoryService.GetCategory(scope, code);
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -311,7 +319,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     return null;
                 }
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -337,7 +345,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     return null;
                 }
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);

@@ -63,6 +63,11 @@ namespace Test.ThinkInBio.Scheduling
             }
         }
 
+
+        public int DelayedSeconds
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 
 }

@@ -24,11 +24,6 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             {
                 return TimeStampService.NextTimeStamp();
             }
-            catch (BusinessLayerException ex)
-            {
-                ExceptionHandler.HandleException(ex);
-                throw new WebFaultException(HttpStatusCode.InternalServerError);
-            }
             catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
