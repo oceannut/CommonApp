@@ -20,6 +20,12 @@ define(function (require) {
                     query: { method: 'GET', params: { 'scope': '@scope' }, isArray: true }
                 });
             } ])
+        .factory('UsedCategoryListService', ['$resource', 'wcfApp', 'categoryWcfService',
+            function ($resource, wcfApp, categoryWcfService) {
+                return $resource(wcfApp + categoryWcfService + '/category/:scope/used/', {}, {
+                    query: { method: 'GET', params: { 'scope': '@scope' }, isArray: true }
+                });
+            } ])
         .factory('CodeCategoryService', ['$resource', 'wcfApp', 'categoryWcfService',
             function ($resource, wcfApp, categoryWcfService) {
                 return $resource(wcfApp + categoryWcfService + '/category/:scope/code/:code/', {}, {
@@ -33,6 +39,12 @@ define(function (require) {
                     update: { method: 'PUT', params: { 'scope': '@scope', 'id': '@id', 'parentId': '@parentId', 'name': '@name', 'code': '@code', 'description': '@description', 'icon': '@icon', 'sequence': '@sequence'} },
                     remove: { method: 'DELETE', params: { 'scope': '@scope', 'id': '@id'} },
                     get: { method: 'GET', params: { 'scope': '@scope', 'id': '@id'} }
+                });
+            } ])
+        .factory('DisusedCategoryService', ['$resource', 'wcfApp', 'categoryWcfService',
+            function ($resource, wcfApp, categoryWcfService) {
+                return $resource(wcfApp + categoryWcfService + '/category/:scope/:id/disused/:disused/', {}, {
+                    update: { method: 'PUT', params: { 'scope': '@scope', 'id': '@id', 'disused': '@disused'} }
                 });
             } ]);
 

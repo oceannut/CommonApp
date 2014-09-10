@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net">
+
+  <object id="StdSchedulerFactory" type="Quartz.Impl.StdSchedulerFactory, Quartz">
+  </object>
+
+  <object id="MockJobA" type="ThinkInBio.Scheduling.MockJob, ThinkInBio.Scheduling">
+    <property name="Name" value="Mock Job A"/>
+    <property name="Logger" ref="GenericLogger"/>
+  </object>
+
+  <object id="MockScheduleA" type="ThinkInBio.Scheduling.Quartz.QuartzSchedule, ThinkInBio.Scheduling">
+    <constructor-arg name="schedulerFactory" ref="StdSchedulerFactory"/>
+    <constructor-arg name="cronExpression" value="0/20 * * * * ?"/>
+  </object>
+
+  <object id="MockScheduleSchemeA" type="ThinkInBio.Scheduling.ScheduleScheme, ThinkInBio.Scheduling">
+    <constructor-arg name="schedule" ref="MockScheduleA"/>
+    <constructor-arg name="job" ref="MockJobA"/>
+    <property name="Name" value="Mock Scheme A"/>
+    <property name="Description" value="Scheduling for the mock job A."/>
+    <property name="IsAutoStart" value="true"/>
+  </object>
+
+  <object id="MockJobB" type="ThinkInBio.Scheduling.MockJob, ThinkInBio.Scheduling">
+    <property name="Name" value="Mock Job B"/>
+    <property name="Logger" ref="GenericLogger"/>
+  </object>
+
+  <object id="MockScheduleB" type="ThinkInBio.Scheduling.Quartz.QuartzSchedule, ThinkInBio.Scheduling">
+    <constructor-arg name="schedulerFactory" ref="StdSchedulerFactory"/>
+    <constructor-arg name="cronExpression" value="0/30 * * * * ?"/>
+  </object>
+
+  <object id="MockScheduleSchemeB" type="ThinkInBio.Scheduling.ScheduleScheme, ThinkInBio.Scheduling">
+    <constructor-arg name="schedule" ref="MockScheduleB"/>
+    <constructor-arg name="job" ref="MockJobB"/>
+    <property name="Name" value="Mock Scheme B"/>
+    <property name="Description" value="Scheduling for the mock job B."/>
+  </object>
+
+  <object id="MockJobC" type="ThinkInBio.Scheduling.MockJob, ThinkInBio.Scheduling">
+    <property name="Name" value="Mock Job C"/>
+    <property name="Logger" ref="GenericLogger"/>
+  </object>
+
+  <object id="MockScheduleC" type="ThinkInBio.Scheduling.Quartz.QuartzSchedule, ThinkInBio.Scheduling">
+    <constructor-arg name="schedulerFactory" ref="StdSchedulerFactory"/>
+    <constructor-arg name="interval" value="50"/>
+  </object>
+
+  <object id="MockScheduleSchemeC" type="ThinkInBio.Scheduling.ScheduleScheme, ThinkInBio.Scheduling">
+    <constructor-arg name="schedule" ref="MockScheduleC"/>
+    <constructor-arg name="job" ref="MockJobC"/>
+    <property name="Name" value="Mock Scheme C"/>
+    <property name="Description" value="Scheduling for the mock job C."/>
+    <property name="IsAutoStart" value="false"/>
+  </object>
+
+  <object id="MockJobD" type="ThinkInBio.Scheduling.MockExceptionJob, ThinkInBio.Scheduling">
+  </object>
+
+  <object id="MockScheduleD" type="ThinkInBio.Scheduling.Quartz.QuartzSchedule, ThinkInBio.Scheduling">
+    <constructor-arg name="schedulerFactory" ref="StdSchedulerFactory"/>
+    <constructor-arg name="interval" value="40"/>
+  </object>
+
+  <object id="MockScheduleSchemeD" type="ThinkInBio.Scheduling.ScheduleScheme, ThinkInBio.Scheduling">
+    <constructor-arg name="schedule" ref="MockScheduleD"/>
+    <constructor-arg name="job" ref="MockJobD"/>
+    <property name="Name" value="Mock Scheme D"/>
+    <property name="Description" value="Scheduling for the mock job D."/>
+    <property name="IsAutoStart" value="false"/>
+  </object>
+
+  <object id="ScheduleManager" type="ThinkInBio.Scheduling.ScheduleManager, ThinkInBio.Scheduling" init-method="Init" destroy-method="Destroy">
+    <property name="Map">
+      <dictionary key-type="string" value-type="ThinkInBio.Scheduling.ScheduleScheme, ThinkInBio.Scheduling">
+        <entry key="Mock Scheme A" value-ref="MockScheduleSchemeA" />
+        <entry key="Mock Scheme B" value-ref="MockScheduleSchemeB" />
+        <entry key="Mock Scheme C" value-ref="MockScheduleSchemeC" />
+        <entry key="Mock Scheme D" value-ref="MockScheduleSchemeD" />
+      </dictionary>
+    </property>
+  </object>
+
+</objects>

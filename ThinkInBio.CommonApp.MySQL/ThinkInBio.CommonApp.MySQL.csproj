@@ -46,6 +46,7 @@
     <Compile Include="JobLogDao.cs" />
     <Compile Include="NoticeDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimeStampDao.cs" />
     <Compile Include="UserDao.cs" />
   </ItemGroup>
   <ItemGroup>

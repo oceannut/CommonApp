@@ -1,0 +1,40 @@
+﻿<div class="story container" ng-init="init()">
+    <!-- Modal -->
+    <div class="modal fade" id="removeDialog" tabindex="-1" role="dialog" aria-labelledby="removeDialogLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="removeDialogLabel">
+                        <i class="fa fa-trash-o"></i>&nbsp;删除公告对话框</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="lead text-danger">
+                        确定要删除这个公告吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="remove()">
+                        确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-header">
+        <span class="lead"><i class="fa fa-bullhorn"></i>&nbsp;{{notice.Title}}</span>
+        <ul class="list-inline pull-right">
+            <li access="admin" ng-show="isEditable"><a data-toggle="modal" data-target="#removeDialog">
+                <i class="fa fa-trash-o"></i>&nbsp;删除</a></li>
+            <li access="admin" ng-show="isEditable"><a href="#/notice-edit/{{notice.Id}}/"><i class="fa fa-edit"></i>
+                &nbsp;编辑</a></li>
+            <li><a href="#/notice-list/"><i class="fa fa-level-up"></i>&nbsp;返回</a></li>
+        </ul>
+    </div>
+    <div class="alert {{alertMessageColor}} {{alertMessageVisible}}">
+        {{alertMessage}}</div>
+    <p>
+        {{notice.Content}}</p>
+</div>

@@ -45,6 +45,7 @@
     <Compile Include="IBizNotificationDao.cs" />
     <Compile Include="ICategoryDao.cs" />
     <Compile Include="INoticeDao.cs" />
+    <Compile Include="ITimeStampDao.cs" />
     <Compile Include="IUserDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

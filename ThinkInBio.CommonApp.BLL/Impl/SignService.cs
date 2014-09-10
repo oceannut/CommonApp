@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using ThinkInBio.Common.Audit;
 using ThinkInBio.Common.Caching;
 using ThinkInBio.CommonApp.DAL;
 
@@ -16,7 +15,6 @@ namespace ThinkInBio.CommonApp.BLL.Impl
         internal ICache Session { get; set; }
         internal IUserDao UserDao { get; set; }
 
-        [Trail("Sign", TrailMethodType.SignIn)]
         public bool SignIn(User user, string authPwd)
         {
             if (user == null)

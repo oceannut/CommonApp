@@ -50,9 +50,11 @@
     <Compile Include="Impl\JobLogService.cs" />
     <Compile Include="Impl\NoticeService.cs" />
     <Compile Include="Impl\SignService.cs" />
+    <Compile Include="Impl\TimeStampService.cs" />
     <Compile Include="Impl\UserService.cs" />
     <Compile Include="INoticeService.cs" />
     <Compile Include="ISignService.cs" />
+    <Compile Include="ITimeStampService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

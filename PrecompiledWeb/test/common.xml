@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net">
+
+  <object type="Spring.Objects.Factory.Config.PropertyPlaceholderConfigurer, Spring.Core">
+    <property name="ConfigSections" value="systemSettings"/>
+  </object>
+
+  <object id="FileLogExceptionHandler" type="ThinkInBio.Common.ExceptionHandling.FileLogExceptionHandler, ThinkInBio.Common">
+    <property name="Filename" value="sys_error.log"/>
+  </object>
+
+  <object id="LogOnlyExceptionHandler" type="ThinkInBio.Entlib.ExceptionHandling.LogOnlyExceptionHandler, ThinkInBio.Entlib">
+    <property name="InnerExceptionHandler" ref="FileLogExceptionHandler"/>
+  </object>
+
+  <object id="WrapExceptionHandler" type="ThinkInBio.Entlib.ExceptionHandling.WrapExceptionHandler, ThinkInBio.Entlib">
+    <property name="InnerExceptionHandler" ref="FileLogExceptionHandler"/>
+  </object>
+
+</objects>

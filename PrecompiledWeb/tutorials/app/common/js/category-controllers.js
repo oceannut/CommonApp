@@ -51,10 +51,12 @@ define(function (require) {
                 }
 
             } ])
-        .controller('CategoryListCtrl', ['$scope', '$location', '$log', '$routeParams', 'currentUser', 'CategoryListService', 'scopes',
-            function ($scope, $location, $log, $routeParams, currentUser, CategoryListService, scopes) {
+        .controller('CategoryListCtrl', ['$scope', '$location', '$log', '$routeParams', 'currentUser', 'scopes', 'CategoryListService', 'CategoryService',
+            function ($scope, $location, $log, $routeParams, currentUser, scopes, CategoryListService, CategoryService) {
 
                 $scope.init = function () {
+
+                    $scope.alertMessageVisible = 'hidden';
 
                     var scope = scopes.get($routeParams.scope);
                     $scope.scopeName = scope == null ? $routeParams.scope : scope.name;
@@ -65,9 +67,37 @@ define(function (require) {
                             .then(function (result) {
                                 $scope.categoryList = result;
                             }, function (error) {
+                                scope.alertMessageVisible = 'show';
+                                $scope.alertMessage = "提示：获取" + $scope.scopeName + "列表失败";
                                 $log.error(error);
                             });
 
+                }
+
+                $scope.select = function (item) {
+                    $scope.selectedItem = item;
+                }
+
+                $scope.remove = function () {
+                    CategoryService.remove({ "scope": $scope.scope,
+                        "id": $scope.selectedItem.Id
+                    })
+                        .$promise
+                            .then(function (result) {
+                                for (var i in $scope.categoryList) {
+                                    if ($scope.selectedItem.Id == $scope.categoryList[i].Id) {
+                                        $scope.categoryList.splice(i, 1);
+                                        break;
+                                    }
+                                }
+                            }, function (error) {
+                                $scope.alertMessageVisible = 'show';
+                                $scope.alertMessage = "提示：删除" + $scope.scopeName + "失败";
+                                $log.error(error);
+                            })
+                            .then(function () {
+                                $('#removeDialog').modal('hide');
+                            });
                 }
 
             } ])
@@ -80,6 +110,9 @@ define(function (require) {
 
                     $scope.category = {}
 
+                    $scope.alertMessageVisible = 'hidden';
+                    $scope.isLoading = false;
+
                     var scope = scopes.get($routeParams.scope);
                     $scope.scopeName = scope == null ? $routeParams.scope : scope.name;
                     $scope.category.Scope = $routeParams.scope;
@@ -91,11 +124,24 @@ define(function (require) {
                         } else {
                             $scope.actionModeIcon = "fa-edit";
                             $scope.actionMode = "编辑";
+                            CategoryService.get({ "scope": $routeParams.scope,
+                                "id": $scope.category.Id
+                            })
+                                .$promise
+                                    .then(function (result) {
+                                        $scope.category = result;
+                                    }, function (error) {
+                                        $scope.alertMessageVisible = 'show';
+                                        $scope.alertMessageColor = 'alert-danger';
+                                        $scope.alertMessage = "提示：获取" + $scope.scopeName + "失败";
+                                        $log.error(error);
+                                    })
+                                    .then(function () {
+                                        $scope.isLoading = false;
+                                    });
                         }
                     }
 
-                    $scope.alertMessageVisible = 'hidden';
-                    $scope.isLoading = false;
                     lastCode = $scope.category.Code;
                     $scope.codeDisabled = false;
 
@@ -127,7 +173,7 @@ define(function (require) {
                                     $scope.codeDisabled = false;
                                 });
 
-                    } else {
+                    } else if ($scope.category.Code == undefined || $scope.category.Code == "") {
                         $scope.codeStatus = "";
                         $scope.codeFeedback = "";
                         $scope.codeFeedbackText = "";
@@ -135,10 +181,13 @@ define(function (require) {
                 }
 
                 $scope.clear = function () {
-                    $scope.category.Id = '';
+                    $scope.actionModeIcon = "fa-plus";
+                    $scope.actionMode = "添加";
+                    $scope.category.Id = '0';
                     $scope.category.Name = '';
                     $scope.category.Code = '';
                     $scope.category.Description = '';
+                    lastCode = $scope.category.Code;
                     $scope.alertMessageVisible = 'hidden';
                 }
 

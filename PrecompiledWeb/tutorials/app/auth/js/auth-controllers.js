@@ -3,45 +3,69 @@
 define(function (require) {
 
     require('ng');
+    require('ng-cookies');
     require('../../../static/js/configs');
+    require('../../../static/js/events');
+    require('../../../static/js/directives');
     require('./auth-models');
     require('./auth-services');
     require('../../common/js/user-services');
-    require('../../common/js/common-cache');
 
     require('../../../static/css/sign.css');
 
-    angular.module('auth.controllers', ['configs', 'auth.models', 'auth.services', 'user.services', 'common.cache'])
-        .controller('SignInCtrl', ['$scope', '$location', '$log', 'currentUser', 'SignInService', 'userCache',
-            function ($scope, $location, $log, currentUser, SignInService, userCache) {
+    angular.module('auth.controllers', ['ngCookies', 'configs', 'events', 'directives', 'auth.models', 'auth.services', 'user.services'])
+        .controller('SignInCtrl', ['$scope', '$location', '$log', '$cookieStore', 'currentUser', 'eventbus', 'SignInService',
+            function ($scope, $location, $log, $cookieStore, currentUser, eventbus, SignInService) {
 
                 $scope.init = function () {
                     $scope.alertMessageVisible = 'hidden';
                     $scope.isLoging = false;
                     $scope.login = {};
+
+                    var usernameStored = $cookieStore.get('username');
+                    if (usernameStored !== undefined) {
+                        $scope.rememberMe = true;
+                        $scope.login.username = usernameStored;
+                        $scope.login.pwd = $cookieStore.get('pwd');
+                    } else {
+                        $scope.rememberMe = false;
+                    }
+
                 }
 
                 $scope.signin = function () {
+
+                    if ($scope.rememberMe) {
+                        var usernameStored = $cookieStore.get('username');
+                        if (usernameStored === undefined || usernameStored === null) {
+                            $cookieStore.put('username', $scope.login.username);
+                            $cookieStore.put('pwd', $scope.login.pwd);
+                        }
+                    } else {
+                        $cookieStore.remove('username');
+                        $cookieStore.remove('pwd')
+                    }
+
                     $scope.alertMessageVisible = 'hidden';
                     $scope.isLoging = true;
+
+                    var hashObj = new jsSHA($scope.login.pwd, 'TEXT');
+                    var hashPwd = hashObj.getHash(
+					    'SHA-1',
+					    'B64',
+					    parseInt(1, 10)
+                    );
+
                     SignInService.save({
                         'username': $scope.login.username,
-                        'pwd': $scope.login.pwd
+                        'pwd': hashPwd
                     })
                     .$promise
                         .then(function (result) {
-                            currentUser.sign_in($scope.login.username);
-                            $scope.$parent.makeNavbarVisible();
-                            $scope.$parent.loginUser.username = $scope.login.username;
-                            userCache.getAsync($scope.login.username, function (e) {
-                                if (e != null) {
-                                    currentUser.setName(e.Name);
-                                    $scope.$parent.loginUser.name = e.Name;
-                                } else {
-                                    $scope.$parent.loginUser.name = $scope.login.username;
-                                }
-                                $location.path('/category-overview/');
-                            });
+                            currentUser.sign_in($scope.login.username, hashPwd);
+                            currentUser.setDetails({ "name": result.Name, "roles": result.Roles });
+                            eventbus.broadcast("userSignIn", $scope.login.username);
+                            $location.path('/home/');
                         }, function (error) {
                             $scope.alertMessageVisible = 'show';
                             if (error.status == '400') {
@@ -61,25 +85,177 @@ define(function (require) {
                 }
 
             } ])
-        .controller('SignUpCtrl', ['$scope', '$location',
-            function ($scope, $location) {
+        .controller('SignUpCtrl', ['$scope', '$location', '$log', 'UserService', 'SignUpService', 'SignUpService2',
+            function ($scope, $location, $log, UserService, SignUpService, SignUpService2) {
+
+                var lastUsername;
 
                 $scope.init = function () {
-                    console.log("sign-up");
+                    $scope.alertMessageVisible = 'hidden';
+                    $scope.user = {};
+                    $scope.isUserExisted = undefined;
+                    lastUsername = $scope.user.username;
+                    $scope.isSamePwd = true;
+                    $scope.isBusy = false;
+                }
 
+                $scope.refreshCheckCode = function () {
+                    $scope.$emit('refreshCheckCode');
+                }
+
+                $scope.usernameChanged = function () {
+                    if (lastUsername != $scope.user.username && $scope.user.username != undefined && $scope.user.username != '') {
+                        lastUsername = $scope.user.username;
+                        $scope.usernameDisabled = true;
+                        $scope.usernameStatus = "";
+                        $scope.usernameFeedback = "fa-spin fa-spinner";
+                        $scope.usernameFeedbackText = "";
+
+                        SignUpService2.isUsernameExist($scope.user.username,
+                            function (data, status) {
+                                $scope.usernameDisabled = false;
+                                if (data === 'false') {
+                                    $scope.usernameStatus = "has-success";
+                                    $scope.usernameFeedback = "fa-check";
+                                } else {
+                                    $scope.usernameStatus = "has-error";
+                                    $scope.usernameFeedback = "fa-exclamation-triangle";
+                                    $scope.usernameFeedbackText = "此用户名已被使用，请换一个。";
+                                }
+                            },
+                            function (data, status) {
+                                $scope.usernameDisabled = false;
+                                $log.error(data);
+                            });
+                    } else if ($scope.user.username == undefined || $scope.user.username == "") {
+                        $scope.usernameStatus = "";
+                        $scope.usernameFeedback = "";
+                        $scope.usernameFeedbackText = "";
+                    }
+                }
+
+                $scope.pwd2Changed = function () {
+                    $scope.isSamePwd = $scope.user.pwd != undefined & $scope.user.pwd2 != undefined
+                                        & $scope.user.pwd2 == $scope.user.pwd;
                 }
 
                 $scope.signup = function () {
-                    console.log($scope.username);
+
+                    if ($scope.inputCheckcode === $scope.checkcode) {
+                        $scope.alertMessageVisible = 'hidden';
+                        $scope.isBusy = true;
+                        SignUpService.save({
+                            'username': $scope.user.username,
+                            'pwd': $scope.user.pwd,
+                            'name': $scope.user.name
+                        })
+                    .$promise
+                        .then(function (result) {
+                            $scope.isSuccess = true;
+                            $scope.alertMessageVisible = 'show';
+                            $scope.alertMessage = "提示：注册成功";
+                        }, function (error) {
+                            $scope.isSuccess = false;
+                            $scope.alertMessageVisible = 'show';
+                            $scope.alertMessage = "提示：注册失败";
+                            $log.error(error);
+                        })
+                        .then(function () {
+                            $scope.isBusy = false;
+                        });
+                    }
+                    else {
+                        $scope.alertMessageVisible = 'show';
+                        $scope.alertMessage = "提示：验证码输入错误";
+                        $scope.$emit('refreshCheckCode');
+                    }
+
                 }
 
             } ])
-        .controller('SignOutCtrl', ['$scope', 'currentUser',
-            function ($scope, currentUser) {
+        .controller('SignOutCtrl', ['$scope', 'currentUser', 'eventbus',
+            function ($scope, currentUser, eventbus) {
 
                 $scope.init = function () {
                     currentUser.sign_out();
-                    $scope.$parent.makeNavbarVisible();
+                    eventbus.broadcast("userSignOut", currentUser.username);
+                }
+
+            } ])
+        .controller('PasswordModifyCtrl', ['$scope', '$location', '$log', '$routeParams', 'currentUser', 'UserPasswordService',
+            function ($scope, $location, $log, $routeParams, currentUser, UserPasswordService) {
+
+                $scope.init = function () {
+                    $scope.alertMessageVisible = 'hidden';
+                    $scope.user = {};
+                    $scope.isSamePwd = true;
+                    $scope.isBusy = false;
+                }
+
+                $scope.newPwd2Changed = function () {
+                    $scope.isSamePwd = $scope.user.newPwd != undefined & $scope.user.newPwd2 != undefined
+                                        & $scope.user.newPwd2 == $scope.user.newPwd;
+                }
+
+                $scope.save = function () {
+
+                    var hashObj = new jsSHA($scope.user.oldPwd, 'TEXT');
+                    var hashOldPwd = hashObj.getHash(
+					    'SHA-1',
+					    'B64',
+					    parseInt(1, 10)
+                    );
+                    hashObj = new jsSHA($scope.user.newPwd, 'TEXT');
+                    var hashNewPwd = hashObj.getHash(
+					    'SHA-1',
+					    'B64',
+					    parseInt(1, 10)
+                    );
+
+                    $scope.alertMessageVisible = 'hidden';
+                    $scope.isBusy = true;
+                    UserPasswordService.update({
+                        'username': $routeParams.username,
+                        'oldPwd': hashOldPwd,
+                        'newPwd': hashNewPwd
+                    })
+                        .$promise
+                            .then(function (result) {
+                                $scope.isSuccess = true;
+                                $scope.alertMessage = "提示：修改成功";
+                                currentUser.changePwd(hashNewPwd);
+                            }, function (error) {
+                                $scope.isSuccess = false;
+                                if (error.status == '403') {
+                                    $scope.alertMessage = "提示：旧密码输入错误";
+                                } else {
+                                    $scope.alertMessage = "提示：修改失败";
+                                }
+                                $log.error(error);
+                            })
+                            .then(function () {
+                                $scope.alertMessageVisible = 'show';
+                                $scope.isBusy = false;
+                            });
+
+                }
+
+            } ])
+        .controller('SessionOutCtrl', ['$scope', '$location', 'currentUser', 'eventbus',
+            function ($scope, $location, currentUser, eventbus) {
+
+                $scope.init = function () {
+                    currentUser.sign_out();
+                    eventbus.broadcast("userSignOut", currentUser.username);
+                }
+
+            } ])
+        .controller('NotAuthenticatedCtrl', ['$scope', 'currentUser', 'eventbus',
+            function ($scope, currentUser, eventbus) {
+
+                $scope.init = function () {
+                    currentUser.sign_out();
+                    eventbus.broadcast("userSignOut", currentUser.username);
                 }
 
             } ]);

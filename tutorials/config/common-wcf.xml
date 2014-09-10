@@ -4,6 +4,11 @@
   <object id="DemoWcfService" type="ThinkInBio.CommonApp.WSL.Impl.DemoWcfService, ThinkInBio.CommonApp.WSL" singleton="false">
   </object>
 
+  <object id="TimeStampWcfService" type="ThinkInBio.CommonApp.WSL.Impl.TimeStampWcfService, ThinkInBio.CommonApp.WSL" singleton="false">
+    <property name="TimeStampService" ref="TimeStampService" />
+    <property name="ExceptionHandler" ref="LogOnlyExceptionHandler" />
+  </object>
+
   <object id="SignWcfService" type="ThinkInBio.CommonApp.WSL.Impl.SignWcfService, ThinkInBio.CommonApp.WSL" singleton="false">
     <property name="UserService" ref="UserService" />
     <property name="SignService" ref="SignService" />

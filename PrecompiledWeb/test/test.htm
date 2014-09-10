@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html ng-app="TestApp">
+<head>
+    <title>测试</title>
+</head>
+<body ng-controller="TestCtrl">
+    <input type="text" ng-model="name" />
+    <button ng-click="testPost()">测试post</button>
+    <button ng-click="testGet()">测试get</button>
+    {{result}}
+     <button ng-click="testPost2()">测试post2</button>
+    <button ng-click="testGet2()">测试get2</button>
+    {{result2}}
+    <script src="lib/angular.min.js" type="text/javascript"></script>
+    <script src="lib/angular-resource.min.js" type="text/javascript"></script>
+    <script src="config.js" type="text/javascript"></script>
+    <script src="services.js" type="text/javascript"></script>
+    <script src="test.js" type="text/javascript"></script>
+</body>
+</html>

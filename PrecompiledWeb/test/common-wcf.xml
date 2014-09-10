@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net">
+
+  <object id="DemoWcfService" type="ThinkInBio.CommonApp.WSL.Impl.DemoWcfService, ThinkInBio.CommonApp.WSL" singleton="false">
+  </object>
+
+  <object id="TimeStampWcfService" type="ThinkInBio.CommonApp.WSL.Impl.TimeStampWcfService, ThinkInBio.CommonApp.WSL" singleton="false">
+    <property name="TimeStampService" ref="TimeStampService" />
+    <property name="ExceptionHandler" ref="LogOnlyExceptionHandler" />
+  </object>
+
+</objects>
+

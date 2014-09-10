@@ -20,8 +20,32 @@
     <property name="InnerExceptionHandler" ref="FileLogExceptionHandler"/>
   </object>
 
+  <object id="GenericLogger" type="ThinkInBio.Entlib.Logging.GenericLogger, ThinkInBio.Entlib">
+  </object>
+
+  <object id="LogRefreshAction" type="ThinkInBio.Entlib.Caching.LogRefreshAction, ThinkInBio.Entlib">
+  </object>
+
+  <object id="SessionCache" type="ThinkInBio.Entlib.Caching.SlideTimingCache, ThinkInBio.Entlib">
+    <constructor-arg type="double" value="30"/>
+    <property name="CacheItemRefreshAction" ref="LogRefreshAction"/>
+  </object>
+
   <object id="ThrowsAdvice" type="ThinkInBio.Spring.Aop.ThrowsAdvice, ThinkInBio.Spring">
     <property name="ExceptionHandler" ref="WrapExceptionHandler"/>
+  </object>
+
+  <object id="SessionServiceAuthorizationManager" type="ThinkInBio.Spring.ServiceModel.SessionServiceAuthorizationManager, ThinkInBio.Spring">
+    <property name="Session" ref="SessionCache"/>
+  </object>
+
+  <object id="TrailAdvice" type="ThinkInBio.Spring.Aop.TrailAdvice, ThinkInBio.Spring">
+    <property name="ExceptionHandler" ref="FileLogExceptionHandler"/>
+  </object>
+
+  <object id="TrailAdvisor" type="Spring.Aop.Support.AttributeMatchMethodPointcutAdvisor, Spring.Aop">
+    <property name="Advice" ref="TrailAdvice"/>
+    <property name="Attribute" value="ThinkInBio.Common.Audit.TrailAttribute, ThinkInBio.Common" />
   </object>
 
   <object id="TxProxyConfigurationTemplate" abstract="true"
@@ -36,6 +60,7 @@
       </name-values>
     </property>
     <property name="PreInterceptors" ref="ThrowsAdvice"/>
+    <property name="PostInterceptors" ref="TrailAdvisor"/>
   </object>
 
 </objects>

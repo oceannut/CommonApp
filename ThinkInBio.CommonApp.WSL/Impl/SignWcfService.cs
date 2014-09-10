@@ -52,7 +52,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     return user;
                 }
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -79,7 +79,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                     throw new WebFaultException(HttpStatusCode.Forbidden);
                 }
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -116,7 +116,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             {
                 throw new WebFaultException(System.Net.HttpStatusCode.Forbidden);
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
@@ -133,7 +133,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             {
                 return UserService.IsUserExist(username);
             }
-            catch (BusinessLayerException ex)
+            catch (Exception ex)
             {
                 ExceptionHandler.HandleException(ex);
                 throw new WebFaultException(HttpStatusCode.InternalServerError);
