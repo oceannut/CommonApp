@@ -16,6 +16,7 @@ define(function (require) {
                     if (face === undefined || face === null) {
                         face = {
                             id: faceId,
+                            faceModel: null,
                             list: []
                         }
                         faces.push(face);
@@ -29,34 +30,87 @@ define(function (require) {
                     return face;
                 }
 
-                function sync(faceId, source) {
-                    var face = clear(faceId);
-                    _.each(source, function (item) {
-                        face.list.push(item);
-                    });
-                    $log.info(face.list.length + " objects of " + faceId + " cached");
-                }
-
-                function add(faceId, entity) {
+                function _add(face, entity, first) {
                     var added = false;
-                    var face = getFace(faceId);
                     var list = face.list;
                     if (entity !== undefined
                             && entity !== null
                             && _.isNumber(entity.Id)
                             && !_.some(list, function (item) { return item.Id === entity.Id; })) {
-                        list.push(entity);
+                        if (first) {
+                            list.unshift(entity);
+                        } else {
+                            list.push(entity);
+                        }
                         added = true;
                     }
                     return added;
                 }
 
-                function remove(faceId, id) {
-                    var removed = false;
-                    if (_.isNumber(id)) {
-                        var face = getFace(faceId);
+                function setModel(faceId, model) {
+                    var face = getFace(faceId);
+                    face.faceModel = model;
+                }
+
+                function getModel(faceId) {
+                    var face = getFace(faceId);
+                    return face.faceModel;
+                }
+
+                function add(faceId, entity) {
+                    var face = getFace(faceId);
+                    if (_.isArray(entity)) {
+                        var count = 0;
+                        _.each(entity, function (item) {
+                            if (_add(face, item, false)) {
+                                count++;
+                            }
+                        });
+                        return count;
+                    } else {
+                        return _add(face, entity, false);
+                    }
+                }
+
+                function insertFirst(faceId, entity) {
+                    var face = getFace(faceId);
+                    return _add(face, entity, true);
+                }
+
+                function replace(faceId, entity) {
+                    var update = false;
+                    var face = getFace(faceId);
+                    if (entity !== undefined
+                            && entity !== null
+                            && _.isNumber(entity.Id)) {
                         var list = face.list;
                         var len = list.length;
+                        for (var i = 0; i < len; i++) {
+                            if (list[i].Id === entity.Id) {
+                                list[i] = entity;
+                                update = true;
+                                break;
+                            }
+                        }
+                    }
+                    return update;
+                }
+
+                function remove(faceId, id) {
+                    var removed = false;
+                    var face = getFace(faceId);
+                    var list = face.list;
+                    var len = list.length;
+                    if (_.isFunction(id)) {
+                        for (var i = 0; i < len; i++) {
+                            if (id(list[i])) {
+                                list.splice(i, 1);
+                                removed = true;
+                                break;
+                            }
+                        }
+                    }
+                    else if (_.isNumber(id)) {
                         for (var i = 0; i < len; i++) {
                             if (list[i].Id === id) {
                                 list.splice(i, 1);
@@ -69,11 +123,34 @@ define(function (require) {
                 }
 
                 function get(faceId, id) {
-                    if (!_.isNumber(id)) {
+                    var face = getFace(faceId);
+                    if (_.isFunction(id)) {
+                        return _.find(face.list, function (item) { return id(item); });
+                    }
+                    else if (_.isNumber(id)) {
+                        return _.find(face.list, function (item) { return item.Id === id; });
+                    } else {
                         return null;
                     }
+                }
+
+                function init(faceId, source) {
+                    var face = clear(faceId);
+                    _.each(source, function (item) {
+                        face.list.push(item);
+                    });
+                    $log.info(face.list.length + " objects of " + faceId + " cached");
+                }
+
+                function pull(faceId, target) {
                     var face = getFace(faceId);
-                    return _.find(face.list, function (item) { return item.Id === id; });
+                    if (!_.isArray(target)) {
+                        target = [];
+                    }
+                    _.each(face.list, function (item) {
+                        target.push(item);
+                    });
+                    return target;
                 }
 
                 function info(faceId) {
@@ -82,10 +159,15 @@ define(function (require) {
                 }
 
                 return {
-                    sync: sync,
+                    setModel: setModel,
+                    getModel: getModel,
                     add: add,
+                    insertFirst: insertFirst,
+                    replace: replace,
                     remove: remove,
                     get: get,
+                    init: init,
+                    pull: pull,
                     info: info
                 }
 
