@@ -45,10 +45,12 @@
     <Compile Include="IBizNotificationWcfService.cs" />
     <Compile Include="ICategoryWcfService.cs" />
     <Compile Include="IDemoWcfService.cs" />
+    <Compile Include="IFileTransferWcfService.cs" />
     <Compile Include="IIdiomWcfService.cs" />
     <Compile Include="Impl\BizNotificationWcfService.cs" />
     <Compile Include="Impl\CategoryWcfService.cs" />
     <Compile Include="Impl\DemoWcfService.cs" />
+    <Compile Include="Impl\FileTransferWcfService.cs" />
     <Compile Include="Impl\IdiomWcfService.cs" />
     <Compile Include="Impl\NoticeWcfService.cs" />
     <Compile Include="Impl\ScheduleWcfService.cs" />

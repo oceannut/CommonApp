@@ -17,7 +17,7 @@ define(function (require) {
                     "active": "active"
                 };
                 var categoryNav = {
-                    "name": "信息分类",
+                    "name": "信息",
                     "url": "/category-overview/",
                     "active": ""
                 };
@@ -27,18 +27,23 @@ define(function (require) {
                     "active": ""
                 };
                 var noticeNav = {
-                    "name": "公告管理",
+                    "name": "公告",
                     "url": "/notice-list/",
                     "active": ""
                 };
                 var idiomNav = {
-                    "name": "常用短语",
+                    "name": "短语",
                     "url": "/idiom-overview/",
                     "active": ""
                 };
                 var scheduleNav = {
                     "name": "工作调度",
                     "url": "/schedule-list/",
+                    "active": ""
+                };
+                var fileTransferNav = {
+                    "name": "文件",
+                    "url": "/file-transfer-overview/",
                     "active": ""
                 };
 
@@ -60,7 +65,7 @@ define(function (require) {
 
                     $scope.appName = appName;
                     $scope.makeNavbarVisible();
-                    $scope.navList = [homeNav, categoryNav, userRoleNav, noticeNav, idiomNav, scheduleNav];
+                    $scope.navList = [homeNav, categoryNav, userRoleNav, noticeNav, idiomNav, scheduleNav, fileTransferNav];
 
                 }
 

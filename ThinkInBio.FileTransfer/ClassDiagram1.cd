@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ThinkInBio.FileTransfer.UploadFileValidator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAACAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>UploadFileValidator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ThinkInBio.FileTransfer.UploadFile" Collapsed="true">
+    <Position X="14.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgQAAAAAAAAQAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>UploadFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThinkInBio.FileTransfer.FilenameValidator" Collapsed="true">
+    <Position X="7.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FilenameValidator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThinkInBio.FileTransfer.AcceptableFileValidator" Collapsed="true">
+    <Position X="11.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AcceptableFileValidator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThinkInBio.FileTransfer.SizeValidator" Collapsed="true">
+    <Position X="9.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>SizeValidator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="ThinkInBio.FileTransfer.IUploadFileInterceptor" Collapsed="true">
+    <Position X="14.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>IUploadFileInterceptor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Microsoft YaHei" Size="9" />
+</ClassDiagram>

@@ -10,6 +10,13 @@
     <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="static/css/theme.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        /* Hide Angular JS elements before initializing */
+        .ng-cloak
+        {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar-wrapper" style="display: {{navbarVisible}};">
@@ -38,8 +45,8 @@
                                             <li><a href="#/password-modify/{{loginUser.username}}/"><i class="fa fa-key fa-fw"></i>
                                                 &nbsp;重设密码</a></li>
                                             <li class="divider"></li>
-                                            <li><a href="#/client-setting/{{loginUser.username}}/"><i class="fa fa-desktop fa-fw"></i>
-                                                &nbsp;客户端设置</a></li>
+                                            <li><a href="#/client-setting/{{loginUser.username}}/"><i class="fa fa-desktop fa-fw">
+                                            </i>&nbsp;客户端设置</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="#/sign-out/"><i class="fa fa-sign-out"></i>&nbsp;退出</a></li>
@@ -77,7 +84,7 @@
                 "ng-local-storage": "local-storage/angular-local-storage.min.js"
             },
             preload: [
-                'ng'
+                'ng',
               ]
         });
         seajs.use(['jquery', './static/js/app'], function (jquery, app) {

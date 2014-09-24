@@ -40,7 +40,7 @@
   </object>
 
   <object id="TrailAdvice" type="ThinkInBio.Spring.Aop.TrailAdvice, ThinkInBio.Spring">
-    <property name="ExceptionHandler" ref="FileLogExceptionHandler"/>
+    <property name="ExceptionHandler" ref="SimpleFileLogExceptionHandler"/>
   </object>
 
   <object id="TrailAdvisor" type="Spring.Aop.Support.AttributeMatchMethodPointcutAdvisor, Spring.Aop">

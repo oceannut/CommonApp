@@ -14,6 +14,7 @@ define(function (require) {
     require('../../app/common/js/notice-controllers');
     require('../../app/common/js/idiom-controllers');
     require('../../app/common/js/schedule-controllers');
+    require('../../app/common/js/file-transfer-controllers');
 
     angular.module('Tutorials', ['ngRoute',
             'LocalStorageModule',
@@ -25,7 +26,8 @@ define(function (require) {
             'user.controllers',
             'notice.controllers',
             'idiom.controllers',
-            'schedule.controllers'
+            'schedule.controllers',
+            'fileTransfer.controllers'
         ])
         .config(['$routeProvider', '$httpProvider', 'localStorageServiceProvider',
             function ($routeProvider, $httpProvider, localStorageServiceProvider) {
@@ -183,6 +185,14 @@ define(function (require) {
                         access: {
                             loginRequired: true,
                             roles: ['admin']
+                        }
+                    })
+                    .when('/file-transfer-overview/', {
+                        templateUrl: 'app/common/partials/file-transfer-overview.htm',
+                        controller: 'FileTransferOverviewCtrl',
+                        access: {
+                            loginRequired: true,
+                            roles: ['user', 'admin']
                         }
                     })
                     .otherwise({
