@@ -7,6 +7,7 @@ delete from cyNotice;
 delete from cyBizNotification;
 delete from cyJobLog;
 delete from cyIdiom;
+delete from cyFileTransferLog;
 
 
 drop table cyUser;
@@ -16,6 +17,7 @@ drop table cyNotice;
 drop table cyBizNotification;
 drop table cyJobLog;
 drop table cyIdiom;
+drop table cyFileTransferLog;
 
 
 create table cyUser
@@ -103,4 +105,18 @@ create table cyIdiom
 	modification			DATETIME			NOT NULL,
 	PRIMARY KEY (id)
 );
+
+create table cyFileTransferLog
+(
+	id						BIGINT	unsigned	NOT NULL AUTO_INCREMENT,
+	direction				TINYINT(1)			NOT NULL,
+	title					VARCHAR(255)		NOT NULL,
+	path					VARCHAR(255)		NOT NULL,
+	size					BIGINT				NOT NULL,
+	isRemoved				TINYINT(1)			NOT NULL default 0,
+	user					VARCHAR(32)			NOT NULL,
+	creation				DATETIME			NOT NULL,
+	PRIMARY KEY (id)
+);
+ALTER TABLE cyFileTransferLog ADD INDEX path_index  (path);
 

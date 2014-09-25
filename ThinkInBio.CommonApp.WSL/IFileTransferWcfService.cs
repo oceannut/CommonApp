@@ -6,6 +6,7 @@ using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 
+using ThinkInBio.FileTransfer;
 using ThinkInBio.CommonApp;
 
 namespace ThinkInBio.CommonApp.WSL
@@ -16,33 +17,46 @@ namespace ThinkInBio.CommonApp.WSL
     {
 
         [OperationContract]
-        [WebInvoke(Method = "POST",
-            UriTemplate = "/upload/")]
-        void UploadFile(Stream stream);
-
-        [OperationContract]
-        [WebInvoke(Method = "DELETE",
-            UriTemplate = "/upload/{user}/{fileId}/",
-            RequestFormat = WebMessageFormat.Json)]
-        void DeleteFile(string user, string fileId);
-
-        [OperationContract]
-        [WebGet(UriTemplate = "/upload/{user}/time/{date}/{span}/range/{start}/{count}/",
-            RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        FileTransferLog[] GetUploadFileList(string user, string date, string span, string start, string count);
+        [WebInvoke(Method = "PUT",
+            BodyStyle = WebMessageBodyStyle.WrappedRequest,
+            UriTemplate = "/upload/",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        void DeleteFile(UploadFile uploadFile);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
             BodyStyle = WebMessageBodyStyle.WrappedRequest,
-            UriTemplate = "/download/{user}/",
+            UriTemplate = "/uploadLog/{user}/0/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        byte[] DownloadFile(string user, string fileId);
+        void SaveUploadLog(string user, UploadFile[] uploadFiles);
 
         [OperationContract]
-        [WebGet(UriTemplate = "/download/{user}/time/{date}/{span}/range/{start}/{count}/",
+        [WebInvoke(Method = "PUT",
+            BodyStyle = WebMessageBodyStyle.WrappedRequest,
+            UriTemplate = "/uploadLog/{user}/:id/",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        void UpdateUploadLog4DeleteFile(string user, string id);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "/uploadLog/{user}/time/{date}/{span}/range/{start}/{count}/",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        FileTransferLog[] GetDownloadFileList(string user, string date, string span, string start, string count);
+        FileTransferLog[] GetUploadFileList(string user, string date, string span, string start, string count);
+
+        //[OperationContract]
+        //[WebInvoke(Method = "POST",
+        //    BodyStyle = WebMessageBodyStyle.WrappedRequest,
+        //    UriTemplate = "/download/{user}/",
+        //    RequestFormat = WebMessageFormat.Json,
+        //    ResponseFormat = WebMessageFormat.Json)]
+        //byte[] DownloadFile(string user, string fileId);
+
+        //[OperationContract]
+        //[WebGet(UriTemplate = "/download/{user}/time/{date}/{span}/range/{start}/{count}/",
+        //    RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
+        //FileTransferLog[] GetDownloadFileList(string user, string date, string span, string start, string count);
 
     }
 

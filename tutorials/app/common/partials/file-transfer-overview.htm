@@ -7,8 +7,9 @@
         <!-- The file input field used as target for the file upload widget -->
         <input id="fileupload" type="file" name="files[]" multiple>
     </span>
-    <input id="fileupload2" type="file" name="files2[]" multiple>
-    <button ng-click="upload()">上传</button>
+    <!--<input id="fileupload2" type="file" name="files2[]" multiple>
+    <button ng-click="upload()">
+        上传</button>-->
     <br />
     <br />
     <!-- The global progress bar -->
@@ -17,7 +18,14 @@
         </div>
     </div>
     <ul class="list-group">
-        <li class="list-group-item" ng-repeat="file in events.fileList"><span class="pull-right">
-            {{file.fileSize}}&nbsp;{{file.fileSizeUnit}}</span><a href="{{file.url}}" target="_blank">{{file.Name}}</a></li>
+        <li class="list-group-item" ng-repeat="file in events.fileList">
+            <h4 class="list-group-item-heading">
+                <i class="fa fa-trash-o pull-right" ng-click="remove(file)"></i><a href="{{file.Path}}"
+                    target="_blank">{{file.Name}}&nbsp;({{file.fileSize}}&nbsp;{{file.fileSizeUnit}})</a></h4>
+            <p class="list-group-item-text" ng-show="file.Error" style="color: Red;">
+                上传失败：{{file.Error}}</p>
+        </li>
     </ul>
+    <button class="btn btn-primary" ng-click="save()">
+        保存</button>
 </div>

@@ -9,13 +9,14 @@ define(function (require) {
     require('../../../lib/jquery-file-upload/js/vendor/jquery.ui.widget');
     require('../../../lib/jquery-file-upload/js/jquery.iframe-transport');
     require('../../../lib/jquery-file-upload/js/jquery.fileupload');
+    require('./file-transfer-services');
 
     require('../../../lib/jquery-file-upload/css/style.css');
     require('../../../lib/jquery-file-upload/css/jquery.fileupload.css');
 
-    angular.module('fileTransfer.controllers', [])
-        .controller('FileTransferOverviewCtrl', ['$scope', '$location', '$http', 'currentUser',
-            function ($scope, $location, $http, currentUser) {
+    angular.module('fileTransfer.controllers', ['fileTransfer.services'])
+        .controller('FileTransferOverviewCtrl', ['$scope', '$log', '$location', '$http', 'currentUser', 'UploadService', 'UploadLogService',
+            function ($scope, $log, $location, $http, currentUser, UploadService, UploadLogService) {
 
                 $scope.init = function () {
 
@@ -25,8 +26,7 @@ define(function (require) {
                     };
 
                     $('#fileupload').fileupload({
-                        //url: 'wcf/FileTransferWcfService.svc/upload/',
-                        url: 'web/upload',
+                        url: 'upload',
                         dataType: 'json',
                         start: function (e) {
                             $scope.$apply(function () {
@@ -43,7 +43,7 @@ define(function (require) {
                                 $scope.$apply(function () {
                                     _.each(data.result, function (item) {
                                         item.fileSizeUnit = "KB"
-                                        item.fileSize = Math.round(item.Size / 1024);
+                                        item.fileSize = Math.ceil(item.Size / 1024);
                                         if (item.fileSize > 1024) {
                                             item.fileSizeUnit = "MB"
                                             item.fileSize = Math.round(item.fileSize / 1024 * 100) / 100;
@@ -68,25 +68,56 @@ define(function (require) {
 
                 }
 
-                $scope.upload = function () {
-                    console.log(document.getElementById("fileupload2"));
-                    var fileData = document.getElementById("fileupload2").files[0];
-                    $.ajax({
-                        url: 'http://localhost:2539/tutorials/wcf/FileTransferWcfService.svc/upload/',
-                        type: 'POST',
-                        data: fileData,
-                        cache: false,
-                        dataType: 'json',
-                        processData: false, // Don't process the files
-                        contentType: "application/octet-stream", // Set content type to false as jQuery will tell the server its a query string request
-                        success: function (data) {
-                            console.log('successful..');
-                        },
-                        error: function (data) {
-                            console.log("error");
-                            console.log(data);
-                        }
-                    });
+                //                $scope.upload = function () {
+                //                    console.log(document.getElementById("fileupload2"));
+                //                    var fileData = document.getElementById("fileupload2").files[0];
+                //                    $.ajax({
+                //                        url: 'http://localhost:2539/tutorials/wcf/FileTransferWcfService.svc/upload/',
+                //                        type: 'POST',
+                //                        data: fileData,
+                //                        cache: false,
+                //                        dataType: 'json',
+                //                        processData: false, // Don't process the files
+                //                        contentType: "application/octet-stream", // Set content type to false as jQuery will tell the server its a query string request
+                //                        success: function (data) {
+                //                            console.log('successful..');
+                //                        },
+                //                        error: function (data) {
+                //                            console.log("error");
+                //                            console.log(data);
+                //                        }
+                //                    });
+                //                }
+
+                $scope.save = function () {
+                    UploadLogService.save({
+                        "user": currentUser.getUsername(),
+                        "uploadFiles": $scope.events.fileList
+                    })
+                    .$promise
+                        .then(function (result) {
+                            console.log("success");
+                        }, function (error) {
+
+                            $log.error(error);
+                        });
+                }
+
+                $scope.remove = function (file) {
+                    UploadService.remove({
+                        "uploadFile": file
+                    })
+                    .$promise
+                        .then(function (result) {
+                            for (var i in $scope.events.fileList) {
+                                if (file.Path === $scope.events.fileList[i].Path) {
+                                    $scope.events.fileList.splice(i, 1);
+                                    break;
+                                }
+                            }
+                        }, function (error) {
+                            $log.error(error);
+                        });
                 }
 
             } ]);

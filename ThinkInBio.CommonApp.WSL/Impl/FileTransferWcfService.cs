@@ -8,6 +8,7 @@ using System.ServiceModel.Web;
 
 using ThinkInBio.Common.Exceptions;
 using ThinkInBio.Common.ExceptionHandling;
+using ThinkInBio.FileTransfer;
 using ThinkInBio.CommonApp.BLL;
 using R = ThinkInBio.CommonApp.WSL.Properties.Resources;
 
@@ -17,56 +18,65 @@ namespace ThinkInBio.CommonApp.WSL.Impl
     {
 
         internal IExceptionHandler ExceptionHandler { get; set; }
+        internal IFileTransferLogService FileTransferLogService { get; set; }
+        internal FileTransferManager FileTransferManager { get; set; }
 
-        public void UploadFile(Stream stream)
+        public void DeleteFile(UploadFile uploadFile)
         {
-            //WebOperationContext context = WebOperationContext.Current;
-        //    Response.Clear();
-        //Response.AddHeader("Pragma", "no-cache");
-        //Response.AddHeader("Cache-Control", "no-store, no-cache, must-revalidate");
-        //Response.AddHeader("Content-Disposition", "inline; filename=\"files.json\"");
-        //Response.AddHeader("X-Content-Type-Options", "nosniff");
-        //Response.AddHeader("Access-Control-Allow-Origin", "*");
-        //Response.AddHeader("Access-Control-Allow-Methods", "OPTIONS, HEAD, GET, POST, PUT, DELETE");
-        //Response.AddHeader("Access-Control-Allow-Headers", "X-File-Name, X-File-Type, X-File-Size");
-            //context.OutgoingResponse.Headers.Clear();
-            //context.OutgoingResponse.Headers.Add("Pragma", "no-cache");
-            //context.OutgoingResponse.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate");
-            //context.OutgoingResponse.Headers.Add("Content-Disposition", "inline; filename=\"files.json\"");
-            //context.OutgoingResponse.Headers.Add("X-Content-Type-Options", "nosniff");
-            //context.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
-            //context.OutgoingResponse.Headers.Add("Access-Control-Allow-Methods", "OPTIONS, HEAD, GET, POST, PUT, DELETE");
-            //context.OutgoingResponse.Headers.Add("Access-Control-Allow-Headers", "X-File-Name, X-File-Type, X-File-Size");
-
-            long length = 0;
-            int readCount;
-            var buffer = new byte[8192];
-            while ((readCount = stream.Read(buffer, 0, buffer.Length)) != 0)
+            if (uploadFile == null || string.IsNullOrWhiteSpace(uploadFile.Path))
             {
-                length += readCount;
+                throw new WebFaultException<string>("empty path", HttpStatusCode.BadRequest);
             }
-
-            FileTransferLog log = new FileTransferLog();
-            log.FileSize = length;
-            //return log;
+            try
+            {
+                FileTransferManager.Delete(uploadFile.Path);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
+            }
         }
 
-        public void DeleteFile(string user, string fileId)
+        public void SaveUploadLog(string user, UploadFile[] uploadFiles)
+        {
+            if (string.IsNullOrWhiteSpace(user))
+            {
+                throw new WebFaultException<string>(R.EmptyUser, HttpStatusCode.BadRequest);
+            }
+            if (uploadFiles == null)
+            {
+                throw new WebFaultException<string>("No files selected.", HttpStatusCode.BadRequest);
+            }
+            try
+            {
+                List<FileTransferLog> logList = new List<FileTransferLog>();
+                if (uploadFiles.Length > 0)
+                {
+                    foreach (UploadFile item in uploadFiles)
+                    {
+                        FileTransferLog log = new FileTransferLog(user,
+                            item.Name, item.Size, item.Path,
+                            item.TimeStamp.HasValue ? item.TimeStamp.Value : DateTime.Now);
+                        log.Direction = FileTransferDirection.Upload;
+                        logList.Add(log);
+                    }
+                    FileTransferLogService.SaveFileTransferLog(logList);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public void UpdateUploadLog4DeleteFile(string user, string id)
         {
             throw new NotImplementedException();
         }
 
         public FileTransferLog[] GetUploadFileList(string user, string date, string span, string start, string count)
-        {
-            throw new NotImplementedException();
-        }
-
-        public byte[] DownloadFile(string user, string fileId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public FileTransferLog[] GetDownloadFileList(string user, string date, string span, string start, string count)
         {
             throw new NotImplementedException();
         }

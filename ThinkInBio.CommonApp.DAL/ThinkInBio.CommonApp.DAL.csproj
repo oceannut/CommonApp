@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IFileTransferLogDao.cs" />
     <Compile Include="IIdiomDao.cs" />
     <Compile Include="IJobLogDao.cs" />
     <Compile Include="IBizNotificationDao.cs" />

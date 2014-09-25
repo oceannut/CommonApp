@@ -15,7 +15,13 @@ namespace ThinkInBio.FileTransfer
         private LocalStorage defaultStorage;
 
         internal UploadFileValidator Validator { get; set; }
+        internal UploadFileBuilder Builder { get; set; }
         internal IDictionary<string, IStorage> StorageMap { get; set; }
+
+        public LocalStorage DefaultStorage
+        {
+            get { return defaultStorage; }
+        }
 
         public FileTransferManager()
             : this(null)
@@ -28,10 +34,6 @@ namespace ThinkInBio.FileTransfer
             if (string.IsNullOrWhiteSpace(rootDir))
             {
                 rootDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "files");
-                if (!Directory.Exists(rootDir))
-                {
-                    Directory.CreateDirectory(rootDir);
-                }
             }
             this.defaultStorage = new LocalStorage(rootDir);
         }
@@ -51,8 +53,31 @@ namespace ThinkInBio.FileTransfer
             {
                 return;
             }
+            if (Builder != null)
+            {
+                Builder.Handle(uploadFile);
+            }
+            try
+            {
+                IStorage storage = GetStorage(scope);
+                storage.Save(uploadFile, stream);
+            }
+            catch (Exception ex)
+            {
+                uploadFile.Error = "system errors";
+                throw ex;
+            }
+        }
+
+        public void Delete(string path)
+        {
+            Delete(null, path);
+        }
+
+        public void Delete(string scope, string path)
+        {
             IStorage storage = GetStorage(scope);
-            storage.Save(uploadFile, stream);
+            storage.Delete(path);
         }
 
         private IStorage GetStorage(string scope)

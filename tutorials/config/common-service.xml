@@ -58,6 +58,13 @@
   <object id="IdiomService" parent="TxProxyConfigurationTemplate">
     <property name="Target" ref="IdiomServiceTarget"/>
   </object>
+
+  <object id="FileTransferLogServiceTarget" type="ThinkInBio.CommonApp.BLL.Impl.FileTransferLogService, ThinkInBio.CommonApp.BLL">
+    <property name="FileTransferLogDao" ref="FileTransferLogDao" />
+  </object>
+  <object id="FileTransferLogService" parent="TxProxyConfigurationTemplate">
+    <property name="Target" ref="FileTransferLogServiceTarget"/>
+  </object>
   
 </objects>
 

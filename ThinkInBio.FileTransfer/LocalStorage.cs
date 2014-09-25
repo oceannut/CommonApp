@@ -36,7 +36,16 @@ namespace ThinkInBio.FileTransfer
             {
                 throw new ArgumentNullException();
             }
-            string path = Path.Combine(this.rootDir, uploadFile.Name);
+            if (string.IsNullOrWhiteSpace(uploadFile.Path))
+            {
+                throw new ArgumentException();
+            }
+            string path = Path.Combine(this.rootDir, uploadFile.Path);
+            string dir = Path.GetDirectoryName(path);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
             bool append = File.Exists(path) || uploadFile.Size > stream.Length;
 
             if (append)
@@ -60,7 +69,24 @@ namespace ThinkInBio.FileTransfer
 
         public void Save(UploadFile uploadFile, byte[] bytes)
         {
-            throw new NotImplementedException();
+            if (uploadFile == null || bytes == null || bytes.Length == 0)
+            {
+                throw new ArgumentNullException();
+            }
+            Save(uploadFile, new MemoryStream(bytes));
+        }
+
+        public void Delete(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                throw new ArgumentNullException();
+            }
+            string filename = Path.Combine(this.rootDir, path);
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
         }
 
     }

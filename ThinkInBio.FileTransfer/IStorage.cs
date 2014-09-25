@@ -16,6 +16,8 @@ namespace ThinkInBio.FileTransfer
 
         void Save(UploadFile uploadFile, byte[] bytes);
 
+        void Delete(string path);
+
     }
 
 }

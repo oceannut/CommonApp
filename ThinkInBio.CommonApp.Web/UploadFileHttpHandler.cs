@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Net;
 
 using ThinkInBio.Common.Utilities;
 using ThinkInBio.FileTransfer;
@@ -20,6 +21,15 @@ namespace ThinkInBio.CommonApp.Web
         {
             HttpRequest request = context.Request;
             HttpResponse response = context.Response;
+
+            response.Clear();
+            response.AddHeader("Pragma", "no-cache");
+            response.AddHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+            response.AddHeader("Content-Disposition", "inline; filename=\"files.json\"");
+            response.AddHeader("X-Content-Type-Options", "nosniff");
+            response.AddHeader("Access-Control-Allow-Origin", "*");
+            response.AddHeader("Access-Control-Allow-Methods", "OPTIONS, HEAD, GET, POST, PUT, DELETE");
+            response.AddHeader("Access-Control-Allow-Headers", "X-File-Name, X-File-Type, X-File-Size");
 
             HttpFileCollection httpFiles = request.Files;
             List<UploadFile> uploadFileList = new List<UploadFile>();

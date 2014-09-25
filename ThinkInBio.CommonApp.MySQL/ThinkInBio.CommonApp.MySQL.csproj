@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="BizNotificationDao.cs" />
     <Compile Include="CategoryDao.cs" />
+    <Compile Include="FileTransferLogDao.cs" />
     <Compile Include="IdiomDao.cs" />
     <Compile Include="JobLogDao.cs" />
     <Compile Include="NoticeDao.cs" />

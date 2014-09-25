@@ -27,6 +27,40 @@ namespace ThinkInBio.Common.Utilities
             return rootedFileName;
         }
 
+        public static string EnsureTargetFolderExists(string dir, DateTime timeStamp)
+        {
+            if (timeStamp == DateTime.MinValue)
+            {
+                throw new ArgumentNullException();
+            }
+            string rootDir = dir;
+            if (!Path.IsPathRooted(rootDir))
+            {
+                rootDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, rootDir);
+            }
+            if (!Directory.Exists(rootDir))
+            {
+                Directory.CreateDirectory(rootDir);
+            }
+            rootDir = Path.Combine(rootDir, timeStamp.ToString("yyyy"));
+            if (!Directory.Exists(rootDir))
+            {
+                Directory.CreateDirectory(rootDir);
+            }
+            rootDir = Path.Combine(rootDir, timeStamp.ToString("MM"));
+            if (!Directory.Exists(rootDir))
+            {
+                Directory.CreateDirectory(rootDir);
+            }
+            rootDir = Path.Combine(rootDir, timeStamp.ToString("dd"));
+            if (!Directory.Exists(rootDir))
+            {
+                Directory.CreateDirectory(rootDir);
+            }
+
+            return rootDir;
+        }
+
     }
 
 }
