@@ -31,5 +31,34 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             FileTransferLogDao.Save(col);
         }
 
+        public void UpdateFileTransferLog(FileTransferLog fileTransferLog)
+        {
+            if (fileTransferLog == null)
+            {
+                throw new ArgumentNullException();
+            }
+            FileTransferLogDao.Update(fileTransferLog);
+        }
+
+        public FileTransferLog GetFileTransferLog(long id)
+        {
+            if (id == 0)
+            {
+                throw new ArgumentNullException();
+            }
+            return FileTransferLogDao.Get(id);
+        }
+
+        public long GetFileTransferLogCount(DateTime? startTime, DateTime? endTime, string user, FileTransferDirection? direction)
+        {
+            return FileTransferLogDao.GetCount(startTime, endTime, user, direction);
+        }
+
+        public IList<FileTransferLog> GetFileTransferLogList(DateTime? startTime, DateTime? endTime, string user, FileTransferDirection? direction, 
+            int startRowIndex, int maxRowsCount)
+        {
+            return FileTransferLogDao.GetList(startTime, endTime, user, direction, false, startRowIndex, maxRowsCount);
+        }
+
     }
 }

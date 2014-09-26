@@ -16,8 +16,15 @@ define(function (require) {
             } ])
         .factory('UploadLogService', ['$resource', 'wcfApp', 'fileTransferWcfService',
             function ($resource, wcfApp, fileTransferWcfService) {
-                return $resource(wcfApp + fileTransferWcfService + '/uploadLog/:user/:id/', {}, {
-                    save: { method: 'POST', params: { 'user': '@user', 'id': '0', 'uploadFiles': '@uploadFiles'} }
+                return $resource(wcfApp + fileTransferWcfService + '/uploadLog/:id/', {}, {
+                    save: { method: 'POST', params: { 'id': '0', 'user': '@user', 'uploadFiles': '@uploadFiles' }, isArray: true },
+                    update: { method: 'PUT', params: { 'id': '@id'} }
+                });
+            } ])
+        .factory('UploadLogListService', ['$resource', 'wcfApp', 'fileTransferWcfService',
+            function ($resource, wcfApp, fileTransferWcfService) {
+                return $resource(wcfApp + fileTransferWcfService + '/uploadLog/:user/time/:date/:span/range/:start/:count/', {}, {
+                    save: { method: 'GET', params: { 'user': '@user', 'date': '@date', 'span': 'span', 'start': '@start', 'count': '@count' }, isArray: true }
                 });
             } ]);
 

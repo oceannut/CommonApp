@@ -10,5 +10,11 @@ namespace ThinkInBio.CommonApp.DAL
 {
     public interface IFileTransferLogDao : IDao<FileTransferLog>
     {
+
+        long GetCount(DateTime? startTime, DateTime? endTime, string user, FileTransferDirection? direction);
+
+        IList<FileTransferLog> GetList(DateTime? startTime, DateTime? endTime, string user, FileTransferDirection? direction,
+            bool asc, int startRowIndex, int maxRowsCount);
+
     }
 }

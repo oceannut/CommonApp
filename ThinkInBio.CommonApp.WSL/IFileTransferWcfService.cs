@@ -27,18 +27,18 @@ namespace ThinkInBio.CommonApp.WSL
         [OperationContract]
         [WebInvoke(Method = "POST",
             BodyStyle = WebMessageBodyStyle.WrappedRequest,
-            UriTemplate = "/uploadLog/{user}/0/",
+            UriTemplate = "/uploadLog/0/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        void SaveUploadLog(string user, UploadFile[] uploadFiles);
+        FileTransferLog[] SaveUploadLog(string user, UploadFile[] uploadFiles);
 
         [OperationContract]
         [WebInvoke(Method = "PUT",
             BodyStyle = WebMessageBodyStyle.WrappedRequest,
-            UriTemplate = "/uploadLog/{user}/:id/",
+            UriTemplate = "/uploadLog/{id}/",
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json)]
-        void UpdateUploadLog4DeleteFile(string user, string id);
+        void UpdateUploadLog4DeleteFile(string id);
 
         [OperationContract]
         [WebGet(UriTemplate = "/uploadLog/{user}/time/{date}/{span}/range/{start}/{count}/",
