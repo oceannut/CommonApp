@@ -9,6 +9,8 @@ define(function (require) {
     require('../../../lib/jquery-file-upload/js/vendor/jquery.ui.widget');
     require('../../../lib/jquery-file-upload/js/jquery.iframe-transport');
     require('../../../lib/jquery-file-upload/js/jquery.fileupload');
+    require('../../../lib/zeroClipboard/ZeroClipboard.min');
+    require('../../../static/js/configs');
     require('../../../static/js/utils');
     require('../../common/js/common-cache');
     require('./file-transfer-services');
@@ -16,10 +18,10 @@ define(function (require) {
     require('../../../lib/jquery-file-upload/css/style.css');
     require('../../../lib/jquery-file-upload/css/jquery.fileupload.css');
 
-    angular.module('fileTransfer.controllers', ['utils', 'common.cache', 'fileTransfer.services'])
-        .controller('FileTransferOverviewCtrl', ['$scope', '$log', '$location', '$http', 'currentUser', 'dateUtil', 'userCache',
+    angular.module('fileTransfer.controllers', ['configs', 'utils', 'common.cache', 'fileTransfer.services'])
+        .controller('FileTransferOverviewCtrl', ['$scope', '$log', '$location', '$http', 'currentUser', 'fileApp', 'dateUtil', 'userCache',
                                                     'UploadLogListService', 'UploadService', 'UploadLogService',
-            function ($scope, $log, $location, $http, currentUser, dateUtil, userCache,
+            function ($scope, $log, $location, $http, currentUser, fileApp, dateUtil, userCache,
                         UploadLogListService, UploadService, UploadLogService) {
 
                 var pageSize = 20;
@@ -38,6 +40,7 @@ define(function (require) {
                     userCache.get(item.User, function (e) {
                         item.userName = (e == null) ? item.User : e.Name;
                     });
+                    item.url = fileApp + '/' + item.Path.replace(/\\/g, '\/');
                 }
 
                 function load() {
@@ -87,6 +90,15 @@ define(function (require) {
                                         renderLog(item);
                                         $scope.events.logList.push(item);
                                     });
+
+                                    $scope.$on('$viewContentLoaded', function () {
+                                        var zeroClipboardClient = new ZeroClipboard($(".copy-button"));
+                                        console.log(zeroClipboardClient);
+                                    });
+
+                                    var zeroClipboardClient = new ZeroClipboard($(".copy-button"));
+                                    console.log(zeroClipboardClient);
+
                                 }
                             }, function (error) {
                                 $log.error(error);
@@ -99,6 +111,9 @@ define(function (require) {
                 }
 
                 $scope.init = function () {
+
+                    ZeroClipboard.config({ swfPath: "lib/zeroClipboard/ZeroClipboard.swf" });
+                    
 
                     $scope.faceModel = {
                         'staff': '',
@@ -248,6 +263,11 @@ define(function (require) {
                         .then(function () {
                             $scope.events.isLoading = false;
                         });
+                }
+
+                $scope.copyUrl = function (url) {
+                    console.log(url);
+
                 }
 
             } ]);

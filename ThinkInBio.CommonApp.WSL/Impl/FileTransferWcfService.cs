@@ -19,7 +19,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
 
         internal IExceptionHandler ExceptionHandler { get; set; }
         internal IFileTransferLogService FileTransferLogService { get; set; }
-        internal FileTransferManager FileTransferManager { get; set; }
+        
 
         public void DeleteFile(UploadFile uploadFile)
         {
@@ -29,7 +29,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
             }
             try
             {
-                FileTransferManager.Delete(uploadFile.Path);
+                FileTransferLogService.DeleteFile(uploadFile.Path);
             }
             catch (Exception ex)
             {
@@ -97,9 +97,7 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 {
                     throw new WebFaultException(HttpStatusCode.NotFound);
                 }
-                FileTransferManager.Delete(log.Path);
-                log.IsRemoved = true;
-                FileTransferLogService.UpdateFileTransferLog(log);
+                FileTransferLogService.UpdateFileTransferLog4DeleteFile(log);
             }
             catch (WebFaultException ex)
             {

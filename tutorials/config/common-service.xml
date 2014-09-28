@@ -61,6 +61,7 @@
 
   <object id="FileTransferLogServiceTarget" type="ThinkInBio.CommonApp.BLL.Impl.FileTransferLogService, ThinkInBio.CommonApp.BLL">
     <property name="FileTransferLogDao" ref="FileTransferLogDao" />
+    <property name="FileTransferManager" ref="FileTransferManager" />
   </object>
   <object id="FileTransferLogService" parent="TxProxyConfigurationTemplate">
     <property name="Target" ref="FileTransferLogServiceTarget"/>

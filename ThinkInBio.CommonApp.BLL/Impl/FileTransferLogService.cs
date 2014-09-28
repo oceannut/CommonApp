@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using ThinkInBio.FileTransfer;
 using ThinkInBio.Common.Exceptions;
 using ThinkInBio.CommonApp.DAL;
 
@@ -12,6 +13,7 @@ namespace ThinkInBio.CommonApp.BLL.Impl
     {
 
         internal IFileTransferLogDao FileTransferLogDao { get; set; }
+        internal FileTransferManager FileTransferManager { get; set; }
 
         public void SaveFileTransferLog(FileTransferLog fileTransferLog)
         {
@@ -31,13 +33,24 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             FileTransferLogDao.Save(col);
         }
 
-        public void UpdateFileTransferLog(FileTransferLog fileTransferLog)
+        public void UpdateFileTransferLog4DeleteFile(FileTransferLog fileTransferLog)
         {
             if (fileTransferLog == null)
             {
                 throw new ArgumentNullException();
             }
+            FileTransferManager.Delete(fileTransferLog.Path);
+            fileTransferLog.IsRemoved = true;
             FileTransferLogDao.Update(fileTransferLog);
+        }
+
+        public void DeleteFile(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                throw new ArgumentNullException();
+            }
+            FileTransferManager.Delete(path);
         }
 
         public FileTransferLog GetFileTransferLog(long id)

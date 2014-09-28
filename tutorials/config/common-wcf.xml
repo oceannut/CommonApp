@@ -53,7 +53,6 @@
 
   <object id="FileTransferWcfService" type="ThinkInBio.CommonApp.WSL.Impl.FileTransferWcfService, ThinkInBio.CommonApp.WSL" singleton="false">
     <property name="FileTransferLogService" ref="FileTransferLogService" />
-    <property name="FileTransferManager" ref="FileTransferManager" />
     <property name="ExceptionHandler" ref="LogOnlyExceptionHandler" />
   </object>
 

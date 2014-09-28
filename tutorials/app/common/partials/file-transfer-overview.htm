@@ -121,13 +121,20 @@
         {{events.alertMessage}}</div>
     <br />
     <ul class="list-group">
-        <li class="list-group-item" ng-repeat="log in events.logList"><i class="fa fa-trash-o pull-right hidden-print"
-            ng-click="removeLog(log)" ng-show="log.Id>0 && !log.IsRemoved"></i>
+        <li class="list-group-item" ng-repeat="log in events.logList">
+            <ul class="list-inline pull-right">
+                <li>{{log.userName}}于{{log.Creation | jsonDateFormat | date:'yyyy-MM-dd'}}上传</li>
+                <li ng-switch="log.Id>0 && !log.IsRemoved">&nbsp;<i ng-switch-when="true" class="fa fa-trash-o hidden-print"
+                    ng-click="removeLog(log)"> </i><span ng-switch-when="false">&nbsp;&nbsp;&nbsp;&nbsp;</span></li>
+            </ul>
             <h4 class="list-group-item-heading" ng-switch="log.IsRemoved">
-                <s ng-switch-when="true">{{log.Title}}</s><a ng-switch-when="false" href="{{file.Path}}"
-                    target="_blank">{{log.Title}}</a></h4>
-            <p class="list-group-item-text">
-                {{log.userName}}&nbsp;&nbsp;&mdash;&nbsp;&nbsp;{{log.fileSize}}&nbsp;{{log.fileSizeUnit}}&nbsp;&nbsp;&mdash;&nbsp;&nbsp;{{log.Creation | jsonDateFormat | date:'yyyy-MM-dd'}}</p>
+                <s ng-switch-when="true">{{log.Title}}</s><span ng-switch-when="false">{{log.Title}}&nbsp;({{log.fileSize}}&nbsp;{{log.fileSizeUnit}})</span></h4>
+            <p class="list-group-item-text text-nowrap" ng-hide="log.IsRemoved">
+                <a href="{{log.url}}" target="_blank">{{log.url}}</a>&nbsp;
+                <button class="btn btn-default btn-xs copy-button" data-clipboard-text="{{log.url}}">
+                    复制Url
+                </button>
+            </p>
         </li>
     </ul>
     <ul class="pager hidden-print">
@@ -136,4 +143,7 @@
         <li class="{{faceModel.nextBtnClass}}" ng-hide="events.isLoading"><a href="javascript:void(0);"
             ng-click="nextPage()">下一页</a></li>
     </ul>
+     <button class="btn btn-default btn-sm copy-button" data-clipboard-text="Copy hello!">
+                    复制
+                </button>
 </div>

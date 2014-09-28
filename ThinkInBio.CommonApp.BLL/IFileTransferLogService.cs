@@ -12,7 +12,9 @@ namespace ThinkInBio.CommonApp.BLL
 
         void SaveFileTransferLog(ICollection<FileTransferLog> col);
 
-        void UpdateFileTransferLog(FileTransferLog fileTransferLog);
+        void UpdateFileTransferLog4DeleteFile(FileTransferLog fileTransferLog);
+
+        void DeleteFile(string path);
 
         FileTransferLog GetFileTransferLog(long id);
 

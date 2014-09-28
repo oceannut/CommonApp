@@ -104,7 +104,7 @@ namespace Test.ThinkInBio.CommonApp.MySQL
             entity.Code = "dairy";
             entity.Name = "日志";
             entity.Scope = "log";
-            entity.Icon = "fa fa-sun-o";
+            entity.Icon = "fa fa-tencent-weibo";
             entity.Sequence = 0;
             entity.Save(null, (e) =>
             {
