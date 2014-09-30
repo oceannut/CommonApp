@@ -97,7 +97,10 @@ namespace ThinkInBio.CommonApp.WSL.Impl
                 {
                     throw new WebFaultException(HttpStatusCode.NotFound);
                 }
-                FileTransferLogService.UpdateFileTransferLog4DeleteFile(log);
+                log.DeleteFile((e) =>
+                {
+                    FileTransferLogService.UpdateFileTransferLog4DeleteFile(e);
+                });
             }
             catch (WebFaultException ex)
             {

@@ -39,8 +39,7 @@ namespace ThinkInBio.CommonApp.BLL.Impl
             {
                 throw new ArgumentNullException();
             }
-            FileTransferManager.Delete(fileTransferLog.Path);
-            fileTransferLog.IsRemoved = true;
+            DeleteFile(fileTransferLog.Path);
             FileTransferLogDao.Update(fileTransferLog);
         }
 
@@ -60,6 +59,15 @@ namespace ThinkInBio.CommonApp.BLL.Impl
                 throw new ArgumentNullException();
             }
             return FileTransferLogDao.Get(id);
+        }
+
+        public FileTransferLog GetFileTransferLog(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                throw new ArgumentNullException();
+            }
+            return FileTransferLogDao.Get(path);
         }
 
         public long GetFileTransferLogCount(DateTime? startTime, DateTime? endTime, string user, FileTransferDirection? direction)

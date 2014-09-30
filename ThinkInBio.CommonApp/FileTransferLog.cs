@@ -83,6 +83,15 @@ namespace ThinkInBio.CommonApp
         {
         }
 
+        public void DeleteFile(Action<FileTransferLog> action)
+        {
+            this.IsRemoved = true;
+            if (action != null)
+            {
+                action(this);
+            }
+        }
+
     }
 
 }

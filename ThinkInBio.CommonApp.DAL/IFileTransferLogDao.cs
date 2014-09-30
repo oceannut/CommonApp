@@ -11,6 +11,8 @@ namespace ThinkInBio.CommonApp.DAL
     public interface IFileTransferLogDao : IDao<FileTransferLog>
     {
 
+        FileTransferLog Get(string path);
+
         long GetCount(DateTime? startTime, DateTime? endTime, string user, FileTransferDirection? direction);
 
         IList<FileTransferLog> GetList(DateTime? startTime, DateTime? endTime, string user, FileTransferDirection? direction,

@@ -18,6 +18,8 @@ namespace ThinkInBio.CommonApp.BLL
 
         FileTransferLog GetFileTransferLog(long id);
 
+        FileTransferLog GetFileTransferLog(string path);
+
         long GetFileTransferLogCount(DateTime? startTime, DateTime? endTime, string user, FileTransferDirection? direction);
 
         IList<FileTransferLog> GetFileTransferLogList(DateTime? startTime, DateTime? endTime, string user, FileTransferDirection? direction,

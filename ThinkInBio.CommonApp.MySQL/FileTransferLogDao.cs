@@ -102,6 +102,21 @@ namespace ThinkInBio.CommonApp.MySQL
                 });
         }
 
+        public FileTransferLog Get(string path)
+        {
+            return DbTemplate.Get<FileTransferLog>(dataSource,
+                (command) =>
+                {
+                    command.CommandText = @"select id,direction,title,path,size,isRemoved,user,creation from cyFileTransferLog 
+                                                where path=@path";
+                    command.Parameters.Add(DbFactory.CreateParameter("path", path));
+                },
+                (reader) =>
+                {
+                    return Populate(reader);
+                });
+        }
+
         public long GetCount(DateTime? startTime, DateTime? endTime, string user, FileTransferDirection? direction)
         {
             List<KeyValuePair<string, object>> parameters = new List<KeyValuePair<string, object>>();
