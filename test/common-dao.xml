@@ -4,6 +4,10 @@
   <object id="TimeStampDao" type="ThinkInBio.CommonApp.MySQL.TimeStampDao, ThinkInBio.CommonApp.MySQL">
     <constructor-arg type="string" value="${db.dataSource}"/>
   </object>
+
+  <object id="UserDao" type="ThinkInBio.CommonApp.MySQL.UserDao, ThinkInBio.CommonApp.MySQL">
+    <constructor-arg type="string" value="${db.dataSource}"/>
+  </object>
   
 </objects>
 

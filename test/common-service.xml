@@ -4,6 +4,18 @@
   <object id="TimeStampService" type="ThinkInBio.CommonApp.BLL.Impl.TimeStampService, ThinkInBio.CommonApp.BLL">
     <property name="TimeStampDao" ref="TimeStampDao" />
   </object>
+
+  <object id="SignService" type="ThinkInBio.CommonApp.BLL.Impl.SignService, ThinkInBio.CommonApp.BLL">
+    <property name="AuthProvider" ref="PlainAuthProvider" />
+    <property name="Session" ref="SessionCache"/>
+    <property name="UserDao" ref="UserDao" />
+  </object>
+
+  <object id="UserService" type="ThinkInBio.CommonApp.BLL.Impl.UserService, ThinkInBio.CommonApp.BLL">
+    <property name="AuthProvider" ref="PlainAuthProvider" />
+    <property name="Session" ref="SessionCache"/>
+    <property name="UserDao" ref="UserDao" />
+  </object>
   
 </objects>
 

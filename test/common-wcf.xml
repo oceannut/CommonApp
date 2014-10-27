@@ -9,5 +9,17 @@
     <property name="ExceptionHandler" ref="LogOnlyExceptionHandler" />
   </object>
 
+  <object id="SignWcfService" type="ThinkInBio.CommonApp.WSL.Impl.SignWcfService, ThinkInBio.CommonApp.WSL" singleton="false">
+    <property name="UserService" ref="UserService" />
+    <property name="SignService" ref="SignService" />
+    <property name="PasswordProvider" ref="PlainPasswordProvider" />
+    <property name="ExceptionHandler" ref="LogOnlyExceptionHandler" />
+    <property name="DefaultRoles">
+      <list>
+        <value>user</value>
+      </list>
+    </property>
+  </object>
+
 </objects>
 

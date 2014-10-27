@@ -26,6 +26,14 @@ namespace ThinkInBio.CommonApp.WSL
         string Echo4Get(string name);
 
         [OperationContract]
+        [WebInvoke(Method = "POST",
+            BodyStyle = WebMessageBodyStyle.WrappedRequest,
+            UriTemplate = "/demo/test/{name}/",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json)]
+        string TestPost(string name, string what);
+
+        [OperationContract]
         [WebGet(UriTemplate = "/demo/service/path/",
             RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
         string GetServicePath();
